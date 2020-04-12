@@ -16,10 +16,12 @@
       <root url="jar://D:/work/kimonik/ideajar/commons-lang3-3.8.1.jar!/" />
       <root url="jar://D:/work/kimonik/ideajar/opencsv-4.5.jar!/" />
       <root url="jar://D:/work/kimonik/ideajar/commons-io-2.6.jar!/" />
+      <root url="jar://D:/work/mylibs/isoparser-1.1.21.jar!/" />
     </CLASSES>
     <JAVADOC />
     <SOURCES>
       <root url="jar://D:/work/kimonik/ideajar/gson-2.8.5-sources.jar!/" />
+      <root url="jar://D:/work/mylibs/isoparser-1.1.21-sources.jar!/" />
     </SOURCES>
   </library>
 </component>

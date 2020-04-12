@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="CopyApkFileToUsb:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/CopyApkFileToUsb_jar</output-path>
+    <root id="archive" name="CopyApkFileToUsb.jar">
+      <element id="module-output" name="CopyApkFileToUsb" />
+    </root>
+  </artifact>
+</component>
