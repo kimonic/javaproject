@@ -145,12 +145,16 @@ public class FtpDownload {
 
 
     //下载文件的第二种方法，优化了传输速度
-    public String downFileFromFtp(String fileName,String savePath) {
+    public String downFileFromFtp(String fileName, String savePath) {
         if (phaseListener != null) {
-            phaseListener.start("<br>开始从ftp复制文件" + fileName+"<br>");
+            phaseListener.start("<br>开始从ftp复制文件" + fileName + "<br>");
         }
         copySuccess = false;
-        File outputFile=new File(savePath);
+        System.out.println("=======================================");
+        System.out.println("传入的路径 =" + savePath);
+        File outputFile = new File(savePath);
+        System.out.println("获取的路径 =" + outputFile.getAbsolutePath());
+        System.out.println("=======================================");
 
         InputStream is = null;
         FileOutputStream fos = null;

@@ -67,8 +67,10 @@ public class Utils {
                 System.out.println(line);
                 line = br.readLine();
             }
-            return "<br>移除U盘成功";
+            System.out.println("apk安装成功!");
+            return "<br>apk安装成功!";
         } catch (Exception e) {
+            System.out.println("执行cmd命令出错!");
             return "<br><br>执行cmd命令出错<br>" + getExceptionInfo(e);
         }
 

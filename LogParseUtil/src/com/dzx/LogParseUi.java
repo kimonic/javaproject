@@ -13,7 +13,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.File;
-import java.lang.management.ThreadInfo;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -69,6 +69,15 @@ public class LogParseUi extends JFrame implements ActionListener {
      * 用于输入要筛选的条件,使用#进行分割
      */
     private JTextField mUploadApkToFtpTextField = new JTextField(10);
+
+    /**
+     * 要从ftp下载的apk的名称
+     */
+    private JLabel mDownloadApkFromFtpLabel = new JLabel("要下载的apk名称");
+    /**
+     * 输入要从ftp下载的apk的名称
+     */
+    private JTextField mDownloadApkFromFtpTextField = new JTextField(10);
 
 
     /**
@@ -138,9 +147,13 @@ public class LogParseUi extends JFrame implements ActionListener {
      */
     private int mFtpInfoPosition = 4;
     /**
+     * 下载apk的名称所在的行数
+     */
+    private int mDownloadApkFromFtpPosition = 6;
+    /**
      * ftp账号相关信息行数
      */
-    private int mResultInfoLabelPosition = 6;
+    private int mResultInfoLabelPosition = 7;
 
     /**
      * ftp账号相关信息
@@ -185,6 +198,11 @@ public class LogParseUi extends JFrame implements ActionListener {
                 , mMarginLeft + mLabelWidth + mLabelAndTextFieldGaps
                 , mMarginTop + (mLineGaps + mTextFieldHeight) * mUploadApkToFtpTextFieldPosition);
         mUploadApkToFtpTextField.setText("#huixiangjia_.apk#存储当前apk序号.txt");
+
+        labelAndTextFieldSet(mDownloadApkFromFtpLabel, mDownloadApkFromFtpTextField, mMarginLeft, mMarginTop + (mLabelHeight + mLineGaps) * mDownloadApkFromFtpPosition
+                , mMarginLeft + mLabelWidth + mLabelAndTextFieldGaps
+                , mMarginTop + (mLineGaps + mTextFieldHeight) * mDownloadApkFromFtpPosition);
+        mDownloadApkFromFtpTextField.setText("huixiangjia_022");
 
 
         ftpInfoSet();
@@ -239,7 +257,7 @@ public class LogParseUi extends JFrame implements ActionListener {
         int positionY = mMarginTop + (mLineGaps + mTextFieldHeight) * mFtpInfoPosition;
         textFieldSet(mFtpIpTextField, mMarginLeft, positionY);
 //        mFtpIpTextField.setText("10.18.216.92");
-        mFtpIpTextField.setText("192.168.0.12");
+        mFtpIpTextField.setText("10.18.205.10");
         textFieldSet(mFtpPortTextField, mMarginLeft + mLabelAndTextFieldGaps + mFtpTextFieldWidth, positionY);
         mFtpPortTextField.setText("21");
         textFieldSet(mFtpNameTextField, mMarginLeft + (mLabelAndTextFieldGaps + mFtpTextFieldWidth) * 2, positionY);
@@ -317,7 +335,7 @@ public class LogParseUi extends JFrame implements ActionListener {
             ApkFileSaveNameBean apkFileSaveNameBean = new Gson().fromJson(content, ApkFileSaveNameBean.class);
             File file = new File(apkFileSaveNameBean.getUploadPath());
             ftpUpload.putFileToFTpFastByPath(apkFileSaveNameBean.getUploadPath(), "/dzx/" + file.getName());
-            mResultInfo = mResultInfo + "<br>上传apk到ftp成功!   "+file.getName()+"<br>";
+            mResultInfo = mResultInfo + "<br>上传apk到ftp成功!   " + file.getName() + "<br>";
             mResultLabel.setText(mResultInfo + "</html>");
         }
 
@@ -329,6 +347,7 @@ public class LogParseUi extends JFrame implements ActionListener {
      * 从ftp下载文件并安装
      */
     private void downloadFromFtpAndInstall() {
+        String apkName = mDownloadApkFromFtpTextField.getText();
 
         FtpDownload ftpDownload = new FtpDownload(mFtpIpTextField.getText(),
                 TextUtils.getStringInt(mFtpPortTextField.getText()), mFtpNameTextField.getText(),
@@ -344,7 +363,8 @@ public class LogParseUi extends JFrame implements ActionListener {
             public void finish(String finishInfo) {
                 mResultInfo = mResultInfo + "从ftp下载apk完成<br>" + finishInfo + "<br> 开始安装apk<br>";
                 mResultLabel.setText(mResultInfo + "</html>");
-                Utils.runtimeCommand("adb install -r -d C:\\Users\\20313\\Desktop\\bug\\bug\\999.apk");
+                mResultInfo = mResultInfo + Utils.runtimeCommand("adb -s 192.168.137.172 install -r -d " + "C:\\Users\\dingzhixin.ex\\Desktop\\" + apkName + ".apk");
+                mResultLabel.setText(mResultInfo + "</html>");
             }
 
             @Override
@@ -360,7 +380,9 @@ public class LogParseUi extends JFrame implements ActionListener {
             }
         });
 
-        ftpDownload.downFileFromFtp("/tvb/huixiangjia_012.apk", "C:\\Users\\20313\\Desktop\\bug\\bug\\999.apk");
+
+//        ftpDownload.downFileFromFtp("/dzx/" + apkName+".apk", " C\\Users\\dingzhixin.ex\\Desktop\\123.apk");
+        ftpDownload.downFileFromFtp("/dzx/" + apkName + ".apk", "C:\\Users\\dingzhixin.ex\\Desktop\\" + apkName + ".apk");
     }
 
     /**
