@@ -79,6 +79,16 @@ public class LogParseUi extends JFrame implements ActionListener {
      */
     private JTextField mDownloadApkFromFtpTextField = new JTextField(10);
 
+    /**
+     * 执行adb命令
+     */
+    private JButton mExecuteCommandButton = new JButton(EXECUTE_COMMAND);
+    private JButton mChangeCommandButton = new JButton(CHANGE_COMMAND);
+    /**
+     * 执行命令响应的输入框
+     */
+    private JTextField mExecuteCommandTextField = new JTextField(10);
+
 
     /**
      * mMarginLeft   距离边框左边距
@@ -102,7 +112,7 @@ public class LogParseUi extends JFrame implements ActionListener {
      */
     private int mMarginLeft = 30, mMarginTop = 20, mLabelWidth = 200, mLabelHeight = 30;
     private int mLabelAndTextFieldGaps = 30, mTextFieldWidth = 360, mTextFieldHeight = 30, mLineGaps = 15;
-    private int mScreenShowPositionX = 250, mScreenPositionY = 150, mScreenShowWidth = 850, mScreenShowHeight = 600;
+    private int mScreenShowPositionX = 535, mScreenPositionY = 150, mScreenShowWidth = 850, mScreenShowHeight = 800;
     private int mResultLabelWidth = 800, mResultLabelHeight = 400;
     private int mLogParseButtonWidth = 180, mLogParseButtonHeight = 30, mButtonAndButtonGaps = 30;
     private int mInstallApkButtonWidth = 270, mInstallApkButtonHeight = 30;
@@ -117,6 +127,8 @@ public class LogParseUi extends JFrame implements ActionListener {
     private static final String LOG_PARSE_BUTTON_NAME = "开始解析日志";
     private static final String INSTALL_APK_BUTTON_NAME = "下载安装apk到指定位置";
     private static final String UPLOAD_APK_TO_FTP = "上传apk到ftp";
+    private static final String EXECUTE_COMMAND = "执行adb命令";
+    private static final String CHANGE_COMMAND = "改变adb命令";
 
     private JButton mLogParseButton = new JButton(LOG_PARSE_BUTTON_NAME);
     private JButton mInstallApkButton = new JButton(INSTALL_APK_BUTTON_NAME);
@@ -139,21 +151,27 @@ public class LogParseUi extends JFrame implements ActionListener {
      */
     private int mUploadApkToFtpTextFieldPosition = 3;
     /**
+     * 下载apk的名称所在的行数
+     */
+    private int mDownloadApkFromFtpPosition = 4;
+    /**
+     * 执行cmd命令行所在的位置
+     */
+    private int mExecuteCommandPosition = 5;
+
+    /**
      * 按钮行位置
      */
-    private int mButtonsPosition = 5;
+    private int mButtonsPosition = 7;
     /**
      * 执行信息显示的行数
      */
-    private int mFtpInfoPosition = 4;
+    private int mFtpInfoPosition = 6;
+
     /**
-     * 下载apk的名称所在的行数
+     * 最终执行结果所在行数
      */
-    private int mDownloadApkFromFtpPosition = 6;
-    /**
-     * ftp账号相关信息行数
-     */
-    private int mResultInfoLabelPosition = 7;
+    private int mResultInfoLabelPosition = 8;
 
     /**
      * ftp账号相关信息
@@ -199,10 +217,24 @@ public class LogParseUi extends JFrame implements ActionListener {
                 , mMarginTop + (mLineGaps + mTextFieldHeight) * mUploadApkToFtpTextFieldPosition);
         mUploadApkToFtpTextField.setText("#huixiangjia_.apk#存储当前apk序号.txt");
 
+        //要下载的apk名称
         labelAndTextFieldSet(mDownloadApkFromFtpLabel, mDownloadApkFromFtpTextField, mMarginLeft, mMarginTop + (mLabelHeight + mLineGaps) * mDownloadApkFromFtpPosition
                 , mMarginLeft + mLabelWidth + mLabelAndTextFieldGaps
                 , mMarginTop + (mLineGaps + mTextFieldHeight) * mDownloadApkFromFtpPosition);
         mDownloadApkFromFtpTextField.setText("huixiangjia_022");
+
+
+        //执行cmd命令
+        buttonAndTextFieldSet(mExecuteCommandButton, mExecuteCommandTextField, mMarginLeft, mMarginTop + (mLabelHeight + mLineGaps) * mExecuteCommandPosition
+                , mMarginLeft + mLabelWidth + mLabelAndTextFieldGaps
+                , mMarginTop + (mLineGaps + mTextFieldHeight) * mExecuteCommandPosition);
+        mExecuteCommandTextField.setText("adb connect 192.168.137.172");
+        mExecuteCommandButton.addActionListener(this);
+        mChangeCommandButton.setBounds(mMarginLeft + mLabelWidth + mLabelAndTextFieldGaps * 2 + mTextFieldWidth
+                , mMarginTop + (mLabelHeight + mLineGaps) * mExecuteCommandPosition
+                , mLabelWidth, mLabelHeight);
+        mChangeCommandButton.addActionListener(this);
+        mContainerPanel.add(mChangeCommandButton);
 
 
         ftpInfoSet();
@@ -289,6 +321,21 @@ public class LogParseUi extends JFrame implements ActionListener {
         mContainerPanel.add(textField);
     }
 
+
+    private void buttonAndTextFieldSet(JButton label, JTextField textField, int labelPositionX, int labelPositonY
+            , int textFieldPositionX, int textFieldPositionY) {
+        //设置label
+        label.setBounds(labelPositionX, labelPositonY, mLabelWidth, mLabelHeight);
+        mContainerPanel.add(label);
+
+
+        //设置textFiled
+        textField.setEnabled(true);
+        textField.setEditable(true);
+        textField.setBounds(textFieldPositionX, textFieldPositionY, mTextFieldWidth, mTextFieldHeight);
+        mContainerPanel.add(textField);
+    }
+
     @Override
     public void actionPerformed(ActionEvent e) {
         System.out.println("不同的点击事件=" + e.getActionCommand() + "=");
@@ -314,9 +361,56 @@ public class LogParseUi extends JFrame implements ActionListener {
                     uploadApkToFtp();
                 }
             }.start();
-        } else {
+        } else if (EXECUTE_COMMAND.equals(actionCommand)) {
+            new Thread() {
+                @Override
+                public void run() {
+                    executeCmdCommand();
+                }
+            }.start();
+        } else if (CHANGE_COMMAND.equals(actionCommand)) {
+
+            changeCmdCommand();
 
         }
+    }
+
+    private int mChangeCommandCount = 0;
+
+    /**
+     * 改变cmd命令
+     */
+    private void changeCmdCommand() {
+        if (mProcess != null) {
+            System.out.println("===============" + mProcess);
+            Utils.killProcessTree(mProcess);
+            mProcess = null;
+        }
+        if (mChangeCommandCount % 3 == 0) {
+            mExecuteCommandTextField.setText("adb -s 192.168.137.172 logcat -v threadtime > C:\\Users\\dingzhixin.ex\\Desktop\\1.txt ");
+        } else if (mChangeCommandCount % 3 == 1) {
+            mExecuteCommandTextField.setText("adb connect 192.168.137.172");
+        } else if (mChangeCommandCount % 3 == 2) {
+            mExecuteCommandTextField.setText("adb -s 192.168.137.172 shell input text 10987654321");
+        }
+        mChangeCommandCount++;
+
+    }
+
+    private Process mProcess;
+
+    /**
+     * 执行cmd命令
+     */
+    private void executeCmdCommand() {
+        Utils.setCommandExecuteListener(new Utils.CommandExecuteListener() {
+            @Override
+            public void executeProcess(Process process) {
+                mProcess = process;
+            }
+        });
+        mResultInfo = mResultInfo + Utils.runtimeCommand(mExecuteCommandTextField.getText());
+        mResultLabel.setText(mResultInfo + "</html>");
     }
 
     /**

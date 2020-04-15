@@ -1,9 +1,16 @@
 package com.dzx.util;
 
+import com.sun.jna.Pointer;
+import com.sun.jna.platform.win32.Kernel32;
+import com.sun.jna.platform.win32.WinNT;
+
 import javax.swing.filechooser.FileSystemView;
 import java.io.*;
+import java.lang.reflect.Field;
 
-/**工具类文件*/
+/**
+ * 工具类文件
+ */
 @SuppressWarnings({"WeakerAccess", "ResultOfMethodCallIgnored"})
 public class Utils {
     /**
@@ -56,19 +63,25 @@ public class Utils {
         try {//  '/c'执行完后关闭cmd窗口,最后的cmd命令有异常时会出现问题
             //  '/k'执行完命令后不关闭窗口,手动exit则不会出现异常引发的问题
             process = Runtime.getRuntime().exec("cmd.exe /c " + command);
+            if (mCommandExecuteListener != null) {
+                mCommandExecuteListener.executeProcess(process);
+            }
             int status = process.waitFor();
 
             System.out.println(status);
             InputStream in = process.getInputStream();
+            StringBuilder builder = new StringBuilder();
 
             BufferedReader br = new BufferedReader(new InputStreamReader(in));
             String line = br.readLine();
             while (line != null) {
                 System.out.println(line);
+                builder.append(line);
                 line = br.readLine();
             }
             System.out.println("apk安装成功!");
-            return "<br>apk安装成功!";
+            process.destroy();
+            return builder.toString();
         } catch (Exception e) {
             System.out.println("执行cmd命令出错!");
             return "<br><br>执行cmd命令出错<br>" + getExceptionInfo(e);
@@ -162,8 +175,43 @@ public class Utils {
             System.out.println("当前读取的文件内容是=" + stringBuilder.toString());
             return stringBuilder.toString();
         } catch (Exception e) {
-            System.out.println("读取文件内容出错="+getExceptionInfo(e));
+            System.out.println("读取文件内容出错=" + getExceptionInfo(e));
         }
         return "";
+    }
+
+    private static CommandExecuteListener mCommandExecuteListener;
+
+    public static void setCommandExecuteListener(CommandExecuteListener commandExecuteListener) {
+        mCommandExecuteListener = commandExecuteListener;
+    }
+
+    public interface CommandExecuteListener {
+        void executeProcess(Process process);
+    }
+
+    /**
+     * 杀死指定进程数，即包括process进程的所有子进程     *     * @param process
+     */
+    public static void killProcessTree(Process process) {
+        try {
+            if (process != null && process.isAlive()) {
+                Field f = process.getClass().getDeclaredField("handle");
+                f.setAccessible(true);
+                long handl = f.getLong(process);
+                Kernel32 kernel = Kernel32.INSTANCE;
+                WinNT.HANDLE handle = new WinNT.HANDLE();
+                handle.setPointer(Pointer.createConstant(handl));
+                int ret = kernel.GetProcessId(handle);
+                Long PID = Long.valueOf(ret);
+                String cmd = "cmd /c taskkill /PID " + PID + " /F /T ";
+                Runtime rt = Runtime.getRuntime();
+                Process killPrcess = rt.exec(cmd);
+                killPrcess.waitFor();
+                killPrcess.destroyForcibly();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }
