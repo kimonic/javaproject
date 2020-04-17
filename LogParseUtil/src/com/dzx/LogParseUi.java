@@ -112,7 +112,7 @@ public class LogParseUi extends JFrame implements ActionListener {
      */
     private int mMarginLeft = 30, mMarginTop = 20, mLabelWidth = 200, mLabelHeight = 30;
     private int mLabelAndTextFieldGaps = 30, mTextFieldWidth = 360, mTextFieldHeight = 30, mLineGaps = 15;
-    private int mScreenShowPositionX = 535, mScreenPositionY = 150, mScreenShowWidth = 850, mScreenShowHeight = 800;
+    private int mScreenShowPositionX = 535, mScreenPositionY = 150, mScreenShowWidth = 900, mScreenShowHeight = 800;
     private int mResultLabelWidth = 800, mResultLabelHeight = 400;
     private int mLogParseButtonWidth = 180, mLogParseButtonHeight = 30, mButtonAndButtonGaps = 30;
     private int mInstallApkButtonWidth = 270, mInstallApkButtonHeight = 30;
@@ -129,7 +129,13 @@ public class LogParseUi extends JFrame implements ActionListener {
     private static final String UPLOAD_APK_TO_FTP = "上传apk到ftp";
     private static final String EXECUTE_COMMAND = "执行adb命令";
     private static final String CHANGE_COMMAND = "改变adb命令";
+    private static final String KILL_PROCESS = "杀死命令进程";
+    private static final String CONNECT_DEVICE = "连接设备";
+    private static final String CLEAR_LOG = "清除日志";
 
+    private JButton mKillProcessButton = new JButton(KILL_PROCESS);
+    private JButton mClearLogButton = new JButton(CLEAR_LOG);
+    private JButton mConnectDeviceButton = new JButton(CONNECT_DEVICE);
     private JButton mLogParseButton = new JButton(LOG_PARSE_BUTTON_NAME);
     private JButton mInstallApkButton = new JButton(INSTALL_APK_BUTTON_NAME);
     private JButton mUploadApkToFtpButton = new JButton(UPLOAD_APK_TO_FTP);
@@ -196,6 +202,18 @@ public class LogParseUi extends JFrame implements ActionListener {
                 , mMarginLeft + mLabelWidth + mLabelAndTextFieldGaps
                 , mMarginTop);
 
+        //右边的button的开始x坐标
+        int rightButtonStartX = mMarginLeft + mLabelWidth + mLabelAndTextFieldGaps * 2 + mTextFieldWidth;
+        //右边的按钮的行增高距离,Y坐标
+        int rightButtonStepY = mLineGaps + mLabelHeight;
+
+        //杀死命令进程按钮
+        setButton(mKillProcessButton, rightButtonStartX, mMarginTop, mLabelWidth, mLabelHeight);
+        //adb连接设备
+        setButton(mConnectDeviceButton, rightButtonStartX, mMarginTop + rightButtonStepY, mLabelWidth, mLabelHeight);
+        //设置清除日志
+        setButton(mClearLogButton, rightButtonStartX, mMarginTop + rightButtonStepY * 2, mLabelWidth, mLabelHeight);
+
 
         //过滤条件相关设置
         labelAndTextFieldSet(mScreeningConditionsLabel, mScreeningConditionsTextField, mMarginLeft, mMarginTop + mLabelHeight + mLineGaps
@@ -230,14 +248,14 @@ public class LogParseUi extends JFrame implements ActionListener {
                 , mMarginTop + (mLineGaps + mTextFieldHeight) * mExecuteCommandPosition);
         mExecuteCommandTextField.setText("adb connect 192.168.137.172");
         mExecuteCommandButton.addActionListener(this);
-        mChangeCommandButton.setBounds(mMarginLeft + mLabelWidth + mLabelAndTextFieldGaps * 2 + mTextFieldWidth
+        //设置该病命令按钮
+        setButton(mChangeCommandButton, mMarginLeft + mLabelWidth + mLabelAndTextFieldGaps * 2 + mTextFieldWidth
                 , mMarginTop + (mLabelHeight + mLineGaps) * mExecuteCommandPosition
                 , mLabelWidth, mLabelHeight);
-        mChangeCommandButton.addActionListener(this);
-        mContainerPanel.add(mChangeCommandButton);
 
 
         ftpInfoSet();
+
 
         //执行按钮相关设置
         mLogParseButton.setBounds(mMarginLeft, mMarginTop + (mLabelHeight + mLineGaps) * mButtonsPosition,
@@ -307,6 +325,13 @@ public class LogParseUi extends JFrame implements ActionListener {
         mContainerPanel.add(textField);
     }
 
+    private void setButton(JButton button, int left, int top, int width, int height) {
+        button.setBounds(left, top, width, height);
+        mContainerPanel.add(button);
+        button.addActionListener(this);
+
+    }
+
 
     private void labelAndTextFieldSet(JLabel label, JTextField textField, int labelPositionX, int labelPositonY
             , int textFieldPositionX, int textFieldPositionY) {
@@ -372,6 +397,37 @@ public class LogParseUi extends JFrame implements ActionListener {
 
             changeCmdCommand();
 
+        } else if (KILL_PROCESS.equals(actionCommand)) {
+            killCmdProcess();
+        } else if (CONNECT_DEVICE.equals(actionCommand)) {
+            connectDevice();
+        }else if (CLEAR_LOG.equals(actionCommand)) {
+            clearLog();
+        }
+    }
+
+    /**清除日志*/
+    private void clearLog() {
+        mResultInfo = mResultInfo + Utils.runtimeCommand("adb  -s 192.168.137.172  shell logcat -c");
+        mResultLabel.setText(mResultInfo + "</html>");
+    }
+
+    /**
+     * 连接adb设备
+     */
+    private void connectDevice() {
+        mResultInfo = mResultInfo + Utils.runtimeCommand("adb  connect 192.168.137.172");
+        mResultLabel.setText(mResultInfo + "</html>");
+    }
+
+    /**
+     * 杀死正在执行的cmd进程
+     */
+    private void killCmdProcess() {
+        if (mProcess != null) {
+            System.out.println("===============" + mProcess);
+            Utils.killProcessTree(mProcess);
+            mProcess = null;
         }
     }
 
@@ -381,11 +437,7 @@ public class LogParseUi extends JFrame implements ActionListener {
      * 改变cmd命令
      */
     private void changeCmdCommand() {
-        if (mProcess != null) {
-            System.out.println("===============" + mProcess);
-            Utils.killProcessTree(mProcess);
-            mProcess = null;
-        }
+
         if (mChangeCommandCount % 3 == 0) {
             mExecuteCommandTextField.setText("adb -s 192.168.137.172 logcat -v threadtime > C:\\Users\\dingzhixin.ex\\Desktop\\1.txt ");
         } else if (mChangeCommandCount % 3 == 1) {

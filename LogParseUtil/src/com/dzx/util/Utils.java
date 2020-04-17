@@ -79,7 +79,7 @@ public class Utils {
                 builder.append(line);
                 line = br.readLine();
             }
-            System.out.println("apk安装成功!");
+            System.out.println("命令执行完成!" + builder.toString());
             process.destroy();
             return builder.toString();
         } catch (Exception e) {
