@@ -5,6 +5,7 @@ import com.dzx.util.*;
 import com.google.gson.Gson;
 
 import javax.swing.*;
+import javax.swing.border.CompoundBorder;
 import java.awt.*;
 import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.Transferable;
@@ -319,8 +320,9 @@ public class LogParseUi extends JFrame implements ActionListener {
         mResultLabel.setFont(new Font("宋体", Font.PLAIN, 20));
         mResultLabel.setHorizontalAlignment(SwingConstants.LEFT);
         mResultLabel.setVerticalAlignment(SwingConstants.TOP);
-//        mResultLabel.setBounds(0,0, mResultLabelWidth, mResultLabelHeight);
-        mResultInfoScrollPan.setBounds(mMarginLeft, mMarginTop + (mLabelHeight + mLineGaps) * mResultInfoLabelPosition, mResultLabelWidth, mResultLabelHeight);
+        mResultLabel.setBounds(10,10, mResultLabelWidth-30, mResultLabelHeight);
+        mResultInfoScrollPan.setBorder(new CompoundBorder(mResultInfoScrollPan.getBorder(), BorderFactory.createEmptyBorder(5, 10, 5, 5)));
+        mResultInfoScrollPan.setBounds(mMarginLeft, mMarginTop + (mLabelHeight + mLineGaps) * mResultInfoLabelPosition, mResultLabelWidth+35, mResultLabelHeight);
         //设置滚轮的滚动距离
         mResultInfoScrollPan.getVerticalScrollBar().setUnitIncrement(100);
         //设置JScrollPan的包含view
