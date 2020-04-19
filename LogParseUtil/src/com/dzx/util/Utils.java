@@ -66,22 +66,18 @@ public class Utils {
             if (mCommandExecuteListener != null) {
                 mCommandExecuteListener.executeProcess(process);
             }
-            int status = process.waitFor();
 
-            System.out.println(status);
             InputStream in = process.getInputStream();
-            StringBuilder builder = new StringBuilder();
+            InputStream error = process.getErrorStream();
+            String normalMessage = getInputStreamResult(in);
+            String errorMessage = getInputStreamResult(error);
+            System.out.println("输出流  = " + normalMessage);
+            System.out.println("错误流  = " + errorMessage);
 
-            BufferedReader br = new BufferedReader(new InputStreamReader(in));
-            String line = br.readLine();
-            while (line != null) {
-                System.out.println(line);
-                builder.append(line);
-                line = br.readLine();
-            }
-            System.out.println("命令执行完成!" + builder.toString());
+            int status = process.waitFor();
+            System.out.println("status = " + status);
             process.destroy();
-            return builder.toString();
+            return "命令执行完成!<br>正常输出 = " + normalMessage + "<br> 错误输出 = " + errorMessage;
         } catch (Exception e) {
             System.out.println("执行cmd命令出错!");
             return "<br><br>执行cmd命令出错<br>" + getExceptionInfo(e);
@@ -90,7 +86,27 @@ public class Utils {
     }
 
     /**
-     * 获取当前jar包所在路径
+     * 获取流的结果
+     */
+    public static String getInputStreamResult(InputStream inputStream) {
+        StringBuilder builder = new StringBuilder();
+
+        try {
+            BufferedReader br = new BufferedReader(new InputStreamReader(inputStream));
+            String line = null;
+            while ((line = br.readLine()) != null) {
+                System.out.println("命令行输出结果  = " + line);
+                builder.append(line);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return builder.toString();
+    }
+
+    /**
+     * 获取当前jar包所在路径i
      */
     public static String getJarPath(Class clz) {
         String jarPath = clz.getProtectionDomain().getCodeSource().getLocation().getPath();
