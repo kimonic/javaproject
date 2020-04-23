@@ -1,6 +1,7 @@
 package com.dzx;
 
 import com.dzx.bean.ApkFileSaveNameBean;
+import com.dzx.ui.MyButton;
 import com.dzx.util.*;
 import com.google.gson.Gson;
 
@@ -153,7 +154,7 @@ public class LogParseUi extends JFrame implements ActionListener {
      * 备用按钮
      */
     private JButton mSpareButton1 = new JButton("备用1");
-    private JButton mSpareButton2 = new JButton("备用2");
+    private MyButton mSpareButton2 = new MyButton("备用2");
 
 
     /**
@@ -320,9 +321,9 @@ public class LogParseUi extends JFrame implements ActionListener {
         mResultLabel.setFont(new Font("宋体", Font.PLAIN, 20));
         mResultLabel.setHorizontalAlignment(SwingConstants.LEFT);
         mResultLabel.setVerticalAlignment(SwingConstants.TOP);
-        mResultLabel.setBounds(10,10, mResultLabelWidth-30, mResultLabelHeight);
+        mResultLabel.setBounds(10, 10, mResultLabelWidth - 30, mResultLabelHeight);
         mResultInfoScrollPan.setBorder(new CompoundBorder(mResultInfoScrollPan.getBorder(), BorderFactory.createEmptyBorder(5, 10, 5, 5)));
-        mResultInfoScrollPan.setBounds(mMarginLeft, mMarginTop + (mLabelHeight + mLineGaps) * mResultInfoLabelPosition, mResultLabelWidth+35, mResultLabelHeight);
+        mResultInfoScrollPan.setBounds(mMarginLeft, mMarginTop + (mLabelHeight + mLineGaps) * mResultInfoLabelPosition, mResultLabelWidth + 35, mResultLabelHeight);
         //设置滚轮的滚动距离
         mResultInfoScrollPan.getVerticalScrollBar().setUnitIncrement(100);
         //设置JScrollPan的包含view
@@ -413,6 +414,8 @@ public class LogParseUi extends JFrame implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
+        System.out.println("当前点击的按钮" + e.getSource());
+
         mTargetIp = mConnectIpTextField.getText();
         System.out.println("不同的点击事件=" + e.getActionCommand() + "=");
         String actionCommand = e.getActionCommand();
@@ -455,6 +458,27 @@ public class LogParseUi extends JFrame implements ActionListener {
             connectDevice();
         } else if (CLEAR_LOG.equals(actionCommand)) {
             clearLog();
+        } else if ("备用1".equals(actionCommand)) {
+            JDialog dialog = new JDialog();
+            dialog.setTitle("展示文本");
+            dialog.setBounds(mScreenShowPositionX, mScreenPositionY, mScreenShowWidth, mScreenShowHeight);
+            JScrollPane jScrollPane = new JScrollPane();
+            JTextArea textArea = new JTextArea();
+            //设置超出换行
+            textArea.setLineWrap(true);
+            //设置内边距
+            textArea.setMargin(new Insets(20, 20, 20, 20));
+            //设置字体
+            textArea.setFont(new Font("宋体", Font.PLAIN, 20));
+            textArea.setBounds(10, 10, mScreenShowWidth - 10, mScreenShowHeight - 10);
+            jScrollPane.setBorder(new CompoundBorder(jScrollPane.getBorder(), BorderFactory.createEmptyBorder(5, 10, 5, 5)));
+            jScrollPane.setBounds(10, 10, mScreenShowWidth - 10, mScreenShowHeight - 10);
+            //设置滚轮的滚动距离
+            jScrollPane.getVerticalScrollBar().setUnitIncrement(100);
+            //设置JScrollPan的包含view
+            jScrollPane.setViewportView(textArea);
+            dialog.add(jScrollPane);
+            dialog.setVisible(true);
         }
     }
 
