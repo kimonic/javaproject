@@ -96,7 +96,7 @@ public class Utils {
             String line = null;
             while ((line = br.readLine()) != null) {
                 System.out.println("命令行输出结果  = " + line);
-                builder.append(line);
+                builder.append(line).append("<br>");
             }
         } catch (IOException e) {
             e.printStackTrace();
