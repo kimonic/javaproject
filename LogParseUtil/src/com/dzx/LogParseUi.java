@@ -505,8 +505,11 @@ public class LogParseUi extends JFrame implements ActionListener {
     private void killCmdProcess() {
         if (mProcess != null) {
             System.out.println("===============" + mProcess);
-            Utils.killProcessTree(mProcess);
-            mProcess = null;
+            int size = mProcess.size();
+            for (int i = 0; i < size; i++) {
+                Utils.killProcessTree(mProcess.get(i));
+            }
+            mProcess.clear();
         }
     }
 
@@ -528,7 +531,7 @@ public class LogParseUi extends JFrame implements ActionListener {
 
     }
 
-    private Process mProcess;
+    private List<Process> mProcess = new ArrayList<>();
 
     /**
      * 执行cmd命令
@@ -537,7 +540,7 @@ public class LogParseUi extends JFrame implements ActionListener {
         Utils.setCommandExecuteListener(new Utils.CommandExecuteListener() {
             @Override
             public void executeProcess(Process process) {
-                mProcess = process;
+                mProcess.add(process);
             }
         });
         mResultInfo = mResultInfo + Utils.runtimeCommand(mExecuteCommandTextField.getText());

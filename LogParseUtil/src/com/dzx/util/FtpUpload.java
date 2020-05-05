@@ -280,9 +280,7 @@ public class FtpUpload {
     }
 
 
-
-
-    public void putFileToFTpFastByPath(String apkPath,String ftpPath) {
+    public void putFileToFTpFastByPath(String apkPath, String ftpPath) {
         OutputStream os = null;
         InputStream fis = null;
         try {
@@ -291,13 +289,22 @@ public class FtpUpload {
             System.out.println("获取到的ftp的输出流=" + os);
 //            fis = new FileInputStream(new File("E:\\008.apk"));
             File file = new File(apkPath);
+            long fileSize = file.length();
+            long size = 0;
             fis = new FileInputStream(file);
             byte[] b = new byte[1024];
             int len;
             while ((len = fis.read(b)) != -1) {
+                size += len;
                 os.write(b, 0, len);
             }
-            System.out.println("上传文件到ftp成功!");
+            os.flush();
+            if (size == fileSize) {
+                System.out.println("上传文件到ftp成功!");
+            } else {
+                System.out.println("文件实际大小为 = " + fileSize + ",实际上传大小为  = "
+                        + size + ",文件上传不完整!");
+            }
         } catch (Exception ex) {
             System.out.println("上传文件到ftp失败:<br>" + getExceptionInfo(ex));
         } finally {
