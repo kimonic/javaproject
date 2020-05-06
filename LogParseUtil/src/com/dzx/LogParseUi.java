@@ -1,6 +1,7 @@
 package com.dzx;
 
 import com.dzx.bean.ApkFileSaveNameBean;
+import com.dzx.constants.Constants;
 import com.dzx.ui.MyButton;
 import com.dzx.util.*;
 import com.google.gson.Gson;
@@ -154,7 +155,7 @@ public class LogParseUi extends JFrame implements ActionListener {
      * 备用按钮
      */
     private JButton mSpareButton1 = new JButton("备用1");
-    private MyButton mSpareButton2 = new MyButton("备用2");
+    private MyButton mSpareButton2 = new MyButton("当前activity");
 
 
     /**
@@ -251,7 +252,7 @@ public class LogParseUi extends JFrame implements ActionListener {
         setButton(mClearLogButton, rightButtonStartX, mMarginTop + rightButtonStepY * 2, mLabelWidth, mLabelHeight);
         setButton(mSpareButton1, rightButtonStartX, mMarginTop + rightButtonStepY * 3, mLabelWidth, mLabelHeight);
         setButton(mSpareButton2, rightButtonStartX, mMarginTop + rightButtonStepY * 4, mLabelWidth, mLabelHeight);
-
+        mSpareButton2.setClickId(Constants.BUTTON_CLICK_ID_TOP_ACTIVITY);
 
         //过滤条件相关设置
         labelAndTextFieldSet(mScreeningConditionsLabel, mScreeningConditionsTextField, mMarginLeft, mMarginTop + mLabelHeight + mLineGaps
@@ -415,6 +416,21 @@ public class LogParseUi extends JFrame implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         System.out.println("当前点击的按钮" + e.getSource());
+        int clickId = -1;
+        if (e.getSource() instanceof MyButton) {
+            clickId = ((MyButton) e.getSource()).getClickId();
+        }
+        if (clickId == Constants.BUTTON_CLICK_ID_TOP_ACTIVITY) {
+            ThreadPoolUtil.getInstance().execute(new Runnable() {
+                @Override
+                public void run() {
+                    //注意执行adb命令时需要加""包裹命令,否则无法执行,|grep 不识别
+                    mResultInfo = mResultInfo + Utils.runtimeCommand("adb -s " + mTargetIp + " shell  \"dumpsys window |grep mCurrentF\"");
+                    mResultLabel.setText(mResultInfo + "</html>");
+                    showDialog(mResultInfo);
+                }
+            });
+        }
 
         mTargetIp = mConnectIpTextField.getText();
         System.out.println("不同的点击事件=" + e.getActionCommand() + "=");
@@ -480,6 +496,30 @@ public class LogParseUi extends JFrame implements ActionListener {
             dialog.add(jScrollPane);
             dialog.setVisible(true);
         }
+    }
+
+    private void showDialog(String content){
+        JDialog dialog = new JDialog();
+        dialog.setTitle("展示文本");
+        dialog.setBounds(mScreenShowPositionX, mScreenPositionY, mScreenShowWidth, mScreenShowHeight);
+        JScrollPane jScrollPane = new JScrollPane();
+        JTextArea textArea = new JTextArea();
+        //设置超出换行
+        textArea.setLineWrap(true);
+        //设置内边距
+        textArea.setMargin(new Insets(20, 20, 20, 20));
+        //设置字体
+        textArea.setFont(new Font("宋体", Font.PLAIN, 20));
+        textArea.setBounds(10, 10, mScreenShowWidth - 10, mScreenShowHeight - 10);
+        textArea.setText(content.replaceAll("<br>","\n").replaceAll("<html>",""));
+        jScrollPane.setBorder(new CompoundBorder(jScrollPane.getBorder(), BorderFactory.createEmptyBorder(5, 10, 5, 5)));
+        jScrollPane.setBounds(10, 10, mScreenShowWidth - 10, mScreenShowHeight - 10);
+        //设置滚轮的滚动距离
+        jScrollPane.getVerticalScrollBar().setUnitIncrement(100);
+        //设置JScrollPan的包含view
+        jScrollPane.setViewportView(textArea);
+        dialog.add(jScrollPane);
+        dialog.setVisible(true);
     }
 
     /**

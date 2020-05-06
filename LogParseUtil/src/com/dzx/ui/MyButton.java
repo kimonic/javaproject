@@ -36,11 +36,11 @@ public class MyButton extends JButton {
     }
 
 
-    public int getmClickId() {
+    public int getClickId() {
         return mClickId;
     }
 
-    public void setmClickId(int mClickId) {
-        this.mClickId = mClickId;
+    public void setClickId(int clickId) {
+        this.mClickId = clickId;
     }
 }

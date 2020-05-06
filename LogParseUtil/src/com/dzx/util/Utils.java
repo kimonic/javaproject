@@ -77,7 +77,7 @@ public class Utils {
             int status = process.waitFor();
             System.out.println("status = " + status);
             process.destroy();
-            return "命令执行完成!<br>正常输出 = " + normalMessage + "<br> 错误输出 = " + errorMessage;
+            return "命令执行完成!<br>正常输出  = <br>" + normalMessage + "<br> 错误输出 = <br>" + errorMessage;
         } catch (Exception e) {
             System.out.println("执行cmd命令出错!");
             return "<br><br>执行cmd命令出错<br>" + getExceptionInfo(e);
@@ -92,7 +92,7 @@ public class Utils {
         StringBuilder builder = new StringBuilder();
 
         try {
-            BufferedReader br = new BufferedReader(new InputStreamReader(inputStream));
+            BufferedReader br = new BufferedReader(new InputStreamReader(inputStream,"GB2312"));
             String line = null;
             while ((line = br.readLine()) != null) {
                 System.out.println("命令行输出结果  = " + line);
