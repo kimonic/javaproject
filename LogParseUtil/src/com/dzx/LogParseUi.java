@@ -20,7 +20,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-@SuppressWarnings("FieldCanBeLocal")
+@SuppressWarnings({"FieldCanBeLocal", "DuplicatedCode"})
 public class LogParseUi extends JFrame implements ActionListener {
 
     /**
@@ -154,7 +154,7 @@ public class LogParseUi extends JFrame implements ActionListener {
     /**
      * 备用按钮
      */
-    private JButton mSpareButton1 = new JButton("备用1");
+    private JButton mSpareButton1 = new JButton("清理AIOT");
     private MyButton mSpareButton2 = new MyButton("当前activity");
 
 
@@ -287,7 +287,7 @@ public class LogParseUi extends JFrame implements ActionListener {
                 , mMarginTop + (mLineGaps + mTextFieldHeight) * mExecuteCommandPosition);
         mExecuteCommandTextField.setText("adb connect " + mTargetIp);
         mExecuteCommandButton.addActionListener(this);
-        //设置该病命令按钮
+        //设置该命令按钮
         setButton(mChangeCommandButton, mMarginLeft + mLabelWidth + mLabelAndTextFieldGaps * 2 + mTextFieldWidth
                 , mMarginTop + (mLabelHeight + mLineGaps) * mExecuteCommandPosition
                 , mLabelWidth, mLabelHeight);
@@ -409,6 +409,7 @@ public class LogParseUi extends JFrame implements ActionListener {
         //设置textFiled
         textField.setEnabled(true);
         textField.setEditable(true);
+        textField.setFont(new Font("宋体", Font.PLAIN, 20));
         textField.setBounds(textFieldPositionX, textFieldPositionY, mTextFieldWidth, mTextFieldHeight);
         mContainerPanel.add(textField);
     }
@@ -474,31 +475,32 @@ public class LogParseUi extends JFrame implements ActionListener {
             connectDevice();
         } else if (CLEAR_LOG.equals(actionCommand)) {
             clearLog();
-        } else if ("备用1".equals(actionCommand)) {
-            JDialog dialog = new JDialog();
-            dialog.setTitle("展示文本");
-            dialog.setBounds(mScreenShowPositionX, mScreenPositionY, mScreenShowWidth, mScreenShowHeight);
-            JScrollPane jScrollPane = new JScrollPane();
-            JTextArea textArea = new JTextArea();
-            //设置超出换行
-            textArea.setLineWrap(true);
-            //设置内边距
-            textArea.setMargin(new Insets(20, 20, 20, 20));
-            //设置字体
-            textArea.setFont(new Font("宋体", Font.PLAIN, 20));
-            textArea.setBounds(10, 10, mScreenShowWidth - 10, mScreenShowHeight - 10);
-            jScrollPane.setBorder(new CompoundBorder(jScrollPane.getBorder(), BorderFactory.createEmptyBorder(5, 10, 5, 5)));
-            jScrollPane.setBounds(10, 10, mScreenShowWidth - 10, mScreenShowHeight - 10);
-            //设置滚轮的滚动距离
-            jScrollPane.getVerticalScrollBar().setUnitIncrement(100);
-            //设置JScrollPan的包含view
-            jScrollPane.setViewportView(textArea);
-            dialog.add(jScrollPane);
-            dialog.setVisible(true);
+        } else if ("清理AIOT".equals(actionCommand)) {
+            clearAIOT();
+//            JDialog dialog = new JDialog();
+//            dialog.setTitle("展示文本");
+//            dialog.setBounds(mScreenShowPositionX, mScreenPositionY, mScreenShowWidth, mScreenShowHeight);
+//            JScrollPane jScrollPane = new JScrollPane();
+//            JTextArea textArea = new JTextArea();
+//            //设置超出换行
+//            textArea.setLineWrap(true);
+//            //设置内边距
+//            textArea.setMargin(new Insets(20, 20, 20, 20));
+//            //设置字体
+//            textArea.setFont(new Font("宋体", Font.PLAIN, 20));
+//            textArea.setBounds(10, 10, mScreenShowWidth - 10, mScreenShowHeight - 10);
+//            jScrollPane.setBorder(new CompoundBorder(jScrollPane.getBorder(), BorderFactory.createEmptyBorder(5, 10, 5, 5)));
+//            jScrollPane.setBounds(10, 10, mScreenShowWidth - 10, mScreenShowHeight - 10);
+//            //设置滚轮的滚动距离
+//            jScrollPane.getVerticalScrollBar().setUnitIncrement(100);
+//            //设置JScrollPan的包含view
+//            jScrollPane.setViewportView(textArea);
+//            dialog.add(jScrollPane);
+//            dialog.setVisible(true);
         }
     }
 
-    private void showDialog(String content){
+    private void showDialog(String content) {
         JDialog dialog = new JDialog();
         dialog.setTitle("展示文本");
         dialog.setBounds(mScreenShowPositionX, mScreenPositionY, mScreenShowWidth, mScreenShowHeight);
@@ -511,7 +513,7 @@ public class LogParseUi extends JFrame implements ActionListener {
         //设置字体
         textArea.setFont(new Font("宋体", Font.PLAIN, 20));
         textArea.setBounds(10, 10, mScreenShowWidth - 10, mScreenShowHeight - 10);
-        textArea.setText(content.replaceAll("<br>","\n").replaceAll("<html>",""));
+        textArea.setText(content.replaceAll("<br>", "\n").replaceAll("<html>", ""));
         jScrollPane.setBorder(new CompoundBorder(jScrollPane.getBorder(), BorderFactory.createEmptyBorder(5, 10, 5, 5)));
         jScrollPane.setBounds(10, 10, mScreenShowWidth - 10, mScreenShowHeight - 10);
         //设置滚轮的滚动距离
@@ -530,6 +532,16 @@ public class LogParseUi extends JFrame implements ActionListener {
 //        mResultInfo = mResultInfo + Utils.runtimeCommand("adb shell \"logcat |grep DZX\"");
         mResultLabel.setText(mResultInfo + "</html>");
     }
+
+    /**
+     * 清理AIOT
+     */
+    private void clearAIOT() {
+        mResultInfo = mResultInfo + Utils.runtimeCommand("adb  -s " + mTargetIp + "  shell pm clear com.hisense.aiot");
+//        mResultInfo = mResultInfo + Utils.runtimeCommand("adb shell \"logcat |grep DZX\"");
+        mResultLabel.setText(mResultInfo + "</html>");
+    }
+
 
     /**
      * 连接adb设备
@@ -555,18 +567,50 @@ public class LogParseUi extends JFrame implements ActionListener {
 
     private int mChangeCommandCount = 0;
 
+    private int splitSize = 16;
+
     /**
      * 改变cmd命令
      */
     private void changeCmdCommand() {
 
-        if (mChangeCommandCount % 3 == 0) {
+        if (mChangeCommandCount % splitSize == 0) {//com.hisense.aiot/com.hisense.iot.partner.ui.PartnerAndAddDeviceActivity
             mExecuteCommandTextField.setText("adb -s " + mTargetIp + " logcat -v threadtime > C:\\Users\\dingzhixin.ex\\Desktop\\1.txt ");
-        } else if (mChangeCommandCount % 3 == 1) {
-            mExecuteCommandTextField.setText("adb connect " + mTargetIp);
-        } else if (mChangeCommandCount % 3 == 2) {
+        } else if (mChangeCommandCount % splitSize == 1) {
+            mExecuteCommandTextField.setText("adb -s " + mTargetIp + " shell am  start -n com.hisense.aiot/com.hisense.iot.brand.ui.BrandSelectActivity ");
+        } else if (mChangeCommandCount % splitSize == 2) {
             mExecuteCommandTextField.setText("adb -s " + mTargetIp + " shell input text 10987654321");
+        } else if (mChangeCommandCount % splitSize == 3) {
+            mExecuteCommandTextField.setText("adb -s " + mTargetIp + " shell am  start -n com.hisense.aiot/com.hisense.iot.partner.ui.PartnerAndAddDeviceActivity ");
+        } else if (mChangeCommandCount % splitSize == 4) {
+            mExecuteCommandTextField.setText("adb -s " + mTargetIp + " shell am  start -n com.hisense.aiot/com.hisense.iot.tips.ui.BluetoothPairActivity ");
+        } else if (mChangeCommandCount % splitSize == 5) {
+            mExecuteCommandTextField.setText("adb -s " + mTargetIp + " shell am  start -n com.hisense.aiot/com.hisense.iot.add.ui.AddInfraredDeviceActivity ");
+        } else if (mChangeCommandCount % splitSize == 6) {
+            mExecuteCommandTextField.setText("adb -s " + mTargetIp + " shell am  start -n com.hisense.aiot/com.hisense.iot.tips.ui.PairHintActivity ");
+        } else if (mChangeCommandCount % splitSize == 7) {
+            mExecuteCommandTextField.setText("adb -s " + mTargetIp + " shell am  start -n com.hisense.aiot/com.hisense.iot.pair.ui.PairInfraredCodeActivity ");
+        } else if (mChangeCommandCount % splitSize == 8) {
+            mExecuteCommandTextField.setText("adb -s " + mTargetIp + " shell am  start -n com.hisense.aiot/com.ju.iot.homepage.ui.HomeActivity ");
+        } else if (mChangeCommandCount % splitSize == 9) {
+            mExecuteCommandTextField.setText("adb -s " + mTargetIp + " shell am broadcast -a com.hisense.START_SOCIAL_FLOAT ");
+        } else if (mChangeCommandCount % splitSize == 10) {
+            mExecuteCommandTextField.setText("adb -s " + mTargetIp + " shell pm clear com.jamdeo.tv.vod ");
+        } else if (mChangeCommandCount % splitSize == 11) {
+            mExecuteCommandTextField.setText("adb -s " + mTargetIp + " shell pm clear  com.hisense.hitv.hicloud.account ");
+        } else if (mChangeCommandCount % splitSize == 12) {
+            mExecuteCommandTextField.setText("adb -s " + mTargetIp + " shell pm clear  com.hisense.service.message ");
+        } else if (mChangeCommandCount % splitSize == 13) {
+            mExecuteCommandTextField.setText("adb -s " + mTargetIp + " shell setprop log.tag.httpdns UT ");
+        } else if (mChangeCommandCount % splitSize == 14) {
+            mExecuteCommandTextField.setText("adb -s " + mTargetIp + " shell getprop log.tag.httpdns  ");
+        } else if (mChangeCommandCount % splitSize == 15) {
+            mExecuteCommandTextField.setText("adb -s " + mTargetIp + " shell setprop log.tag.httpdns SIT  ");
+        } else if (mChangeCommandCount % splitSize == 16) {
+            mExecuteCommandTextField.setText("adb -s " + mTargetIp + " shell am startservice -a com.hisense.service.message.MESSAGE  ");
         }
+
+
         mChangeCommandCount++;
 
     }

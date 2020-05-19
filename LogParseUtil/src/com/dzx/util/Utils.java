@@ -92,7 +92,7 @@ public class Utils {
         StringBuilder builder = new StringBuilder();
 
         try {
-            BufferedReader br = new BufferedReader(new InputStreamReader(inputStream,"GB2312"));
+            BufferedReader br = new BufferedReader(new InputStreamReader(inputStream, "GB2312"));
             String line = null;
             while ((line = br.readLine()) != null) {
                 System.out.println("命令行输出结果  = " + line);
@@ -207,7 +207,8 @@ public class Utils {
     }
 
     /**
-     * 杀死指定进程数，即包括process进程的所有子进程     *     * @param process
+     * 杀死指定进程数，即包括process进程的所有子进程
+     * @param process  进程
      */
     public static void killProcessTree(Process process) {
         try {
