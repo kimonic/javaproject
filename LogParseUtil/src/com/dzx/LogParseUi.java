@@ -332,6 +332,10 @@ public class LogParseUi extends JFrame implements ActionListener {
         mContainerPanel.add(mResultInfoScrollPan);
 
 
+//        View view=new View();
+//        view.setBounds(0,0, 500, 500);
+//        mContainerPanel.add(view);
+
         //将面板添加到程序窗口中
         this.add(mContainerPanel);
 
