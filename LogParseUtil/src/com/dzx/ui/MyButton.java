@@ -16,6 +16,11 @@ MyButton extends JButton {
     public MyButton() {
     }
 
+    public MyButton(int mClickId,String buttonName) {
+        super(buttonName);
+        this.mClickId = mClickId;
+    }
+
     public MyButton(Icon icon) {
         super(icon);
     }
