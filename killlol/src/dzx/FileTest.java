@@ -1,6 +1,5 @@
 package dzx;
 
-import java.io.File;
 import java.io.IOException;
 
 public class FileTest {
@@ -10,5 +9,7 @@ public class FileTest {
 //        System.out.println(file.getAbsolutePath());
 //        System.out.println(file.exists());
 //        file.createNewFile();
+
+        System.out.println("https:/iot-sys.hismarttv.com/3.0/iot/devices".replaceAll("/","_"));
     }
 }

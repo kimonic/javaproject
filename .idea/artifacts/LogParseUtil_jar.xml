@@ -3,13 +3,12 @@
     <output-path>$PROJECT_DIR$/out/artifacts/LogParseUtil_jar</output-path>
     <root id="archive" name="LogParseUtil.jar">
       <element id="module-output" name="LogParseUtil" />
-      <element id="extracted-dir" path="D:/../mylibs/gson-2.8.5.jar" path-in-jar="/" />
-      <element id="extracted-dir" path="D:/../mylibs/jsoup-1.12.2.jar" path-in-jar="/" />
-      <element id="extracted-dir" path="D:/../mylibs/commons-net-3.6.jar" path-in-jar="/" />
-      <element id="extracted-dir" path="D:/../mylibs/isoparser-1.1.21.jar" path-in-jar="/" />
-      <element id="extracted-dir" path="D:/../mylibs/isoparser-1.1.21-sources.jar" path-in-jar="/" />
-      <element id="extracted-dir" path="D:/../mylibs/org.apache.commons.io-2.4.jar" path-in-jar="/" />
-      <element id="library" level="project" name="mylibs" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/../../../mylibs/gson-2.8.5.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/../../../mylibs/jsoup-1.12.2.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/../../../mylibs/commons-net-3.6.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/../../../mylibs/isoparser-1.1.21.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/../../../mylibs/isoparser-1.1.21-sources.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/../../../mylibs/org.apache.commons.io-2.4.jar" path-in-jar="/" />
     </root>
   </artifact>
 </component>
