@@ -118,7 +118,7 @@ public class LogParseUi extends JFrame implements ActionListener {
      */
     private int mMarginLeft = 30, mMarginTop = 20, mLabelWidth = 200, mLabelHeight = 30;
     private int mLabelAndTextFieldGaps = 30, mTextFieldWidth = 360, mTextFieldHeight = 30, mLineGaps = 15;
-    private int mScreenShowPositionX = 535, mScreenPositionY = 150, mScreenShowWidth = 900, mScreenShowHeight = 800;
+    private int mScreenShowPositionX = 200, mScreenPositionY = 150, mScreenShowWidth = 1130, mScreenShowHeight = 800;
     private int mResultLabelWidth = 800, mResultLabelHeight = 350;
     private int mLogParseButtonWidth = 180, mLogParseButtonHeight = 30, mButtonAndButtonGaps = 30;
     private int mInstallApkButtonWidth = 270, mInstallApkButtonHeight = 30;
@@ -225,6 +225,27 @@ public class LogParseUi extends JFrame implements ActionListener {
     private String mTargetIp = "192.168.137.172";
     private JScrollPane mResultInfoScrollPan = new JScrollPane();
 
+
+    /**
+     * CMD命令相关按钮
+     */
+    private MyButton mAdbCommand1 = new MyButton(Constants.BUTTON_CLICK_ADB_COMMAND_1, "启动AIOT首页");
+    private MyButton mAdbCommand2 = new MyButton(Constants.BUTTON_CLICK_ADB_COMMAND_2, "开启debug日志开开关");
+    private MyButton mAdbCommand3 = new MyButton(Constants.BUTTON_CLICK_ADB_COMMAND_3, "启动品牌选择页面");
+    private MyButton mAdbCommand4 = new MyButton(Constants.BUTTON_CLICK_ADB_COMMAND_4, "启动蓝牙提示页面");
+    private MyButton mAdbCommand5 = new MyButton(Constants.BUTTON_CLICK_ADB_COMMAND_5, "启动红外配码提示页面");
+    private MyButton mAdbCommand6 = new MyButton(Constants.BUTTON_CLICK_ADB_COMMAND_6, "启动红外配码页面");
+    private MyButton mAdbCommand7 = new MyButton(Constants.BUTTON_CLICK_ADB_COMMAND_7, "启动添加红外设备页面");
+    private MyButton mAdbCommand8 = new MyButton(Constants.BUTTON_CLICK_ADB_COMMAND_8, "启动亲友圈页面");
+    private MyButton mAdbCommand9 = new MyButton(Constants.BUTTON_CLICK_ADB_COMMAND_9, "清理聚好看");
+    private MyButton mAdbCommand10 = new MyButton(Constants.BUTTON_CLICK_ADB_COMMAND_10, "清理AIOT");
+    private MyButton mAdbCommand11 = new MyButton(Constants.BUTTON_CLICK_ADB_COMMAND_11, "清理账号");
+    private MyButton mAdbCommand12 = new MyButton(Constants.BUTTON_CLICK_ADB_COMMAND_12, "清理消息服务");
+    private MyButton mAdbCommand13 = new MyButton(Constants.BUTTON_CLICK_ADB_COMMAND_13, "设置httpdns为UT");
+    private MyButton mAdbCommand14 = new MyButton(Constants.BUTTON_CLICK_ADB_COMMAND_14, "获取httpdns当前值");
+    private MyButton mAdbCommand15 = new MyButton(Constants.BUTTON_CLICK_ADB_COMMAND_15, "设置httpdns为SIT");
+    private MyButton mAdbCommand16 = new MyButton(Constants.BUTTON_CLICK_ADB_COMMAND_16, "启动消息服务广播");
+
     public LogParseUi() throws HeadlessException {
         //设置界面左上角显示的标题
         this.setTitle("Android日志解析辅助软件");
@@ -246,6 +267,7 @@ public class LogParseUi extends JFrame implements ActionListener {
 
         //杀死命令进程按钮
         setButton(mKillProcessButton, rightButtonStartX, mMarginTop, mLabelWidth, mLabelHeight);
+        System.out.println("位置===  " + rightButtonStartX);
         //adb连接设备
         setButton(mConnectDeviceButton, rightButtonStartX, mMarginTop + rightButtonStepY, mLabelWidth, mLabelHeight);
         //设置清除日志
@@ -295,6 +317,26 @@ public class LogParseUi extends JFrame implements ActionListener {
 
         ftpInfoSet();
 
+        //=====================================adb命令相关按钮=================================
+        int gap = 45;
+        setButton(mAdbCommand1, 880, 20, 200, 30);
+        setButton(mAdbCommand2, 880, 20 + 1 * gap, 200, 30);
+        setButton(mAdbCommand3, 880, 20 + 2 * gap, 200, 30);
+        setButton(mAdbCommand4, 880, 20 + 3 * gap, 200, 30);
+        setButton(mAdbCommand5, 880, 20 + 4 * gap, 200, 30);
+        setButton(mAdbCommand6, 880, 20 + 5 * gap, 200, 30);
+        setButton(mAdbCommand7, 880, 20 + 6 * gap, 200, 30);
+        setButton(mAdbCommand8, 880, 20 + 7 * gap, 200, 30);
+        setButton(mAdbCommand9, 880, 20 + 8 * gap, 200, 30);
+        setButton(mAdbCommand10, 880, 20 + 9 * gap, 200, 30);
+        setButton(mAdbCommand11, 880, 20 + 10 * gap, 200, 30);
+        setButton(mAdbCommand12, 880, 20 + 11 * gap, 200, 30);
+        setButton(mAdbCommand13, 880, 20 + 12 * gap, 200, 30);
+        setButton(mAdbCommand14, 880, 20 + 13 * gap, 200, 30);
+        setButton(mAdbCommand15, 880, 20 + 14 * gap, 200, 30);
+        setButton(mAdbCommand16, 880, 20 + 15 * gap, 200, 30);
+        //=====================================adb命令相关按钮=================================
+
 
         //执行按钮相关设置
         mLogParseButton.setBounds(mMarginLeft, mMarginTop + (mLabelHeight + mLineGaps) * mButtonsPosition,
@@ -331,6 +373,10 @@ public class LogParseUi extends JFrame implements ActionListener {
         mResultInfoScrollPan.setViewportView(mResultLabel);
         mContainerPanel.add(mResultInfoScrollPan);
 
+
+//        View view=new View();
+//        view.setBounds(0,0, 500, 500);
+//        mContainerPanel.add(view);
 
         //将面板添加到程序窗口中
         this.add(mContainerPanel);
@@ -417,6 +463,13 @@ public class LogParseUi extends JFrame implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         System.out.println("当前点击的按钮" + e.getSource());
+        mTargetIp = mConnectIpTextField.getText();
+        System.out.println("不同的点击事件=" + e.getActionCommand() + "=");
+        String actionCommand = e.getActionCommand();
+        System.out.println("触发事件的按钮  =" + ((JButton) (e.getSource())).getText());
+        mResultInfo = "<html>";
+        mResultLabel.setText(mResultInfo + "</html>");
+
         int clickId = -1;
         if (e.getSource() instanceof MyButton) {
             clickId = ((MyButton) e.getSource()).getClickId();
@@ -431,15 +484,28 @@ public class LogParseUi extends JFrame implements ActionListener {
                     showDialog(mResultInfo);
                 }
             });
-        }
-
-        mTargetIp = mConnectIpTextField.getText();
-        System.out.println("不同的点击事件=" + e.getActionCommand() + "=");
-        String actionCommand = e.getActionCommand();
-        System.out.println("触发事件的按钮  =" + ((JButton) (e.getSource())).getText());
-        mResultInfo = "<html>";
-//        mResultLabel.setText(mResultInfo + "</html>");
-        if (LOG_PARSE_BUTTON_NAME.equals(actionCommand)) {
+        } else if (clickId == Constants.BUTTON_CLICK_ADB_COMMAND_1) {
+            //注意执行adb命令时需要加""包裹命令,否则无法执行,|grep 不识别
+            mResultInfo = mResultInfo + Utils.runtimeCommand("adb -s " + mTargetIp + " shell am  start -n com.hisense.aiot/com.ju.iot.homepage.ui.HomeActivity ");
+            mResultLabel.setText(mResultInfo + "</html>");
+        } else if (clickId == Constants.BUTTON_CLICK_ADB_COMMAND_2) {
+            mResultInfo = mResultInfo + Utils.runtimeCommand("adb -s " + mTargetIp + " shell  setprop log.tag.JHK DEBUG ");
+            mResultLabel.setText(mResultInfo + "</html>");
+        } else if (clickId == Constants.BUTTON_CLICK_ADB_COMMAND_3) {
+        } else if (clickId == Constants.BUTTON_CLICK_ADB_COMMAND_4) {
+        } else if (clickId == Constants.BUTTON_CLICK_ADB_COMMAND_5) {
+        } else if (clickId == Constants.BUTTON_CLICK_ADB_COMMAND_6) {
+        } else if (clickId == Constants.BUTTON_CLICK_ADB_COMMAND_7) {
+        } else if (clickId == Constants.BUTTON_CLICK_ADB_COMMAND_8) {
+        } else if (clickId == Constants.BUTTON_CLICK_ADB_COMMAND_9) {
+        } else if (clickId == Constants.BUTTON_CLICK_ADB_COMMAND_10) {
+        } else if (clickId == Constants.BUTTON_CLICK_ADB_COMMAND_11) {
+        } else if (clickId == Constants.BUTTON_CLICK_ADB_COMMAND_12) {
+        } else if (clickId == Constants.BUTTON_CLICK_ADB_COMMAND_13) {
+        } else if (clickId == Constants.BUTTON_CLICK_ADB_COMMAND_14) {
+        } else if (clickId == Constants.BUTTON_CLICK_ADB_COMMAND_15) {
+        } else if (clickId == Constants.BUTTON_CLICK_ADB_COMMAND_16) {
+        } else if (LOG_PARSE_BUTTON_NAME.equals(actionCommand)) {
             //解析log
             executeLogParseButtonClick();
         } else if (INSTALL_APK_BUTTON_NAME.equals(actionCommand)) {
