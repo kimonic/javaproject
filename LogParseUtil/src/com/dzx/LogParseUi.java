@@ -231,7 +231,7 @@ public class LogParseUi extends JFrame implements ActionListener {
      */
     private MyButton mAdbCommand1 = new MyButton(Constants.BUTTON_CLICK_ADB_COMMAND_1, "启动AIOT首页");
     private MyButton mAdbCommand2 = new MyButton(Constants.BUTTON_CLICK_ADB_COMMAND_2, "开启debug日志开开关");
-    private MyButton mAdbCommand3 = new MyButton(Constants.BUTTON_CLICK_ADB_COMMAND_3, "启动品牌选择页面");
+    private MyButton mAdbCommand3 = new MyButton(Constants.BUTTON_CLICK_ADB_COMMAND_3, "启动虚拟体验中心");
     private MyButton mAdbCommand4 = new MyButton(Constants.BUTTON_CLICK_ADB_COMMAND_4, "启动蓝牙提示页面");
     private MyButton mAdbCommand5 = new MyButton(Constants.BUTTON_CLICK_ADB_COMMAND_5, "启动红外配码提示页面");
     private MyButton mAdbCommand6 = new MyButton(Constants.BUTTON_CLICK_ADB_COMMAND_6, "启动红外配码页面");
@@ -492,6 +492,8 @@ public class LogParseUi extends JFrame implements ActionListener {
             mResultInfo = mResultInfo + Utils.runtimeCommand("adb -s " + mTargetIp + " shell  setprop log.tag.JHK DEBUG ");
             mResultLabel.setText(mResultInfo + "</html>");
         } else if (clickId == Constants.BUTTON_CLICK_ADB_COMMAND_3) {
+            mResultInfo = mResultInfo + Utils.runtimeCommand("adb -s " + mTargetIp + " shell  am  start -n com.hisense.aiot/com.hisense.iot.ui.VirtualHomeActivity ");
+            mResultLabel.setText(mResultInfo + "</html>");
         } else if (clickId == Constants.BUTTON_CLICK_ADB_COMMAND_4) {
         } else if (clickId == Constants.BUTTON_CLICK_ADB_COMMAND_5) {
         } else if (clickId == Constants.BUTTON_CLICK_ADB_COMMAND_6) {
@@ -643,7 +645,7 @@ public class LogParseUi extends JFrame implements ActionListener {
         if (mChangeCommandCount % splitSize == 0) {//com.hisense.aiot/com.hisense.iot.partner.ui.PartnerAndAddDeviceActivity
             mExecuteCommandTextField.setText("adb -s " + mTargetIp + " logcat -v threadtime > C:\\Users\\dingzhixin.ex\\Desktop\\1.txt ");
         } else if (mChangeCommandCount % splitSize == 1) {
-            mExecuteCommandTextField.setText("adb -s " + mTargetIp + " shell am  start -n com.hisense.aiot/com.hisense.iot.brand.ui.BrandSelectActivity ");
+            mExecuteCommandTextField.setText("adb -s " + mTargetIp + " shell input text 111111 ");
         } else if (mChangeCommandCount % splitSize == 2) {
             mExecuteCommandTextField.setText("adb -s " + mTargetIp + " shell input text 10987654321");
         } else if (mChangeCommandCount % splitSize == 3) {
