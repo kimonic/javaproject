@@ -486,27 +486,56 @@ public class LogParseUi extends JFrame implements ActionListener {
             });
         } else if (clickId == Constants.BUTTON_CLICK_ADB_COMMAND_1) {
             //注意执行adb命令时需要加""包裹命令,否则无法执行,|grep 不识别
-            mResultInfo = mResultInfo + Utils.runtimeCommand("adb -s " + mTargetIp + " shell am  start -n com.hisense.aiot/com.ju.iot.homepage.ui.HomeActivity ");
-            mResultLabel.setText(mResultInfo + "</html>");
+            executeInSub(" shell am  start -n com.hisense.aiot/com.ju.iot.homepage.ui.HomeActivity ");
+//            mResultInfo = mResultInfo + Utils.runtimeCommand("adb -s " + mTargetIp + " shell am  start -n com.hisense.aiot/com.ju.iot.homepage.ui.HomeActivity ");
+//            mResultLabel.setText(mResultInfo + "</html>");
         } else if (clickId == Constants.BUTTON_CLICK_ADB_COMMAND_2) {
-            mResultInfo = mResultInfo + Utils.runtimeCommand("adb -s " + mTargetIp + " shell  setprop log.tag.JHK DEBUG ");
-            mResultLabel.setText(mResultInfo + "</html>");
+            executeInSub(" shell  setprop log.tag.JHK DEBUG ");
+//            mResultInfo = mResultInfo + Utils.runtimeCommand("adb -s " + mTargetIp + " shell  setprop log.tag.JHK DEBUG ");
+//            mResultLabel.setText(mResultInfo + "</html>");
         } else if (clickId == Constants.BUTTON_CLICK_ADB_COMMAND_3) {
-            mResultInfo = mResultInfo + Utils.runtimeCommand("adb -s " + mTargetIp + " shell  am  start -n com.hisense.aiot/com.hisense.iot.ui.VirtualHomeActivity ");
-            mResultLabel.setText(mResultInfo + "</html>");
+            executeInSub(" shell  am  start -n com.hisense.aiot/com.hisense.iot.ui.VirtualHomeActivity ");
+//            mResultInfo = mResultInfo + Utils.runtimeCommand("adb -s " + mTargetIp + " shell  am  start -n com.hisense.aiot/com.hisense.iot.ui.VirtualHomeActivity ");
+//            mResultLabel.setText(mResultInfo + "</html>");
         } else if (clickId == Constants.BUTTON_CLICK_ADB_COMMAND_4) {
+            executeInSub(" shell am  start -n com.hisense.aiot/com.hisense.iot.tips.ui.BluetoothPairActivity ");
         } else if (clickId == Constants.BUTTON_CLICK_ADB_COMMAND_5) {
+            executeInSub(" shell am  start -n com.hisense.aiot/com.hisense.iot.tips.ui.PairHintActivity ");
         } else if (clickId == Constants.BUTTON_CLICK_ADB_COMMAND_6) {
+
+            //启动红外配码页面
+            executeInSub(" shell am  start -n com.hisense.aiot/com.hisense.iot.pair.ui.PairInfraredCodeActivity ");
         } else if (clickId == Constants.BUTTON_CLICK_ADB_COMMAND_7) {
+
+            //启动添加红外设备页面
+            executeInSub(" shell am  start -n com.hisense.aiot/com.hisense.iot.add.ui.AddInfraredDeviceActivity ");
         } else if (clickId == Constants.BUTTON_CLICK_ADB_COMMAND_8) {
+            //启动亲友圈页面
+            executeInSub( " shell am broadcast -a com.hisense.START_SOCIAL_FLOAT ");
         } else if (clickId == Constants.BUTTON_CLICK_ADB_COMMAND_9) {
+            //清理聚好看
+            executeInSub(" shell pm clear com.jamdeo.tv.vod ");
         } else if (clickId == Constants.BUTTON_CLICK_ADB_COMMAND_10) {
+            //清理AIOT
+            executeInSub(" shell pm clear com.hisense.aiot ");
         } else if (clickId == Constants.BUTTON_CLICK_ADB_COMMAND_11) {
+            //清理账号
+            executeInSub( " shell pm clear  com.hisense.hitv.hicloud.account ");
         } else if (clickId == Constants.BUTTON_CLICK_ADB_COMMAND_12) {
+            //清理消息服务
+            executeInSub(" shell pm clear  com.hisense.service.message ");
         } else if (clickId == Constants.BUTTON_CLICK_ADB_COMMAND_13) {
+            //设置httpdns为UT
+            executeInSub(" shell setprop log.tag.httpdns UT ");
         } else if (clickId == Constants.BUTTON_CLICK_ADB_COMMAND_14) {
+            //获取httpdns当前值
+            executeInSub(" shell getprop log.tag.httpdns  ");
         } else if (clickId == Constants.BUTTON_CLICK_ADB_COMMAND_15) {
+            //设置httpdns为SIT
+            executeInSub(" shell setprop log.tag.httpdns SIT  ");
         } else if (clickId == Constants.BUTTON_CLICK_ADB_COMMAND_16) {
+            //启动消息服务广播
+            executeInSub( " shell am startservice -a com.hisense.service.message.MESSAGE  ");
         } else if (LOG_PARSE_BUTTON_NAME.equals(actionCommand)) {
             //解析log
             executeLogParseButtonClick();
@@ -566,6 +595,65 @@ public class LogParseUi extends JFrame implements ActionListener {
 //            dialog.add(jScrollPane);
 //            dialog.setVisible(true);
         }
+    }
+
+    private int splitSize = 3;
+    /**
+     * 改变cmd命令
+     */
+    private void changeCmdCommand() {
+
+        if (mChangeCommandCount % splitSize == 0) {
+            mExecuteCommandTextField.setText("adb -s " + mTargetIp + " logcat -v threadtime > C:\\Users\\dingzhixin.ex\\Desktop\\1.txt ");
+        } else if (mChangeCommandCount % splitSize == 1) {
+            mExecuteCommandTextField.setText("adb -s " + mTargetIp + " shell input text 111111 ");
+        } else if (mChangeCommandCount % splitSize == 2) {
+            mExecuteCommandTextField.setText("adb -s " + mTargetIp + " shell input text 10987654321");
+        }
+//        else if (mChangeCommandCount % splitSize == 3) {
+//            mExecuteCommandTextField.setText("adb -s " + mTargetIp + " shell  ");
+//        } else if (mChangeCommandCount % splitSize == 4) {
+//            mExecuteCommandTextField.setText("adb -s " + mTargetIp + " shell    ");
+//        } else if (mChangeCommandCount % splitSize == 5) {
+//            mExecuteCommandTextField.setText("adb -s " + mTargetIp + " shell    ");
+//        } else if (mChangeCommandCount % splitSize == 6) {
+//            mExecuteCommandTextField.setText("adb -s " + mTargetIp + " shell    ");
+//        } else if (mChangeCommandCount % splitSize == 7) {
+//            mExecuteCommandTextField.setText("adb -s " + mTargetIp + " shell  ");
+//        } else if (mChangeCommandCount % splitSize == 8) {
+//            mExecuteCommandTextField.setText("adb -s " + mTargetIp + " shell  ");
+//        } else if (mChangeCommandCount % splitSize == 9) {
+//            mExecuteCommandTextField.setText("adb -s " + mTargetIp + " shell ");
+//        } else if (mChangeCommandCount % splitSize == 10) {
+//            mExecuteCommandTextField.setText("adb -s " + mTargetIp + " shell ");
+//        } else if (mChangeCommandCount % splitSize == 11) {
+//            mExecuteCommandTextField.setText("adb -s " + mTargetIp + " shell  ");
+//        } else if (mChangeCommandCount % splitSize == 12) {
+//            mExecuteCommandTextField.setText("adb -s " + mTargetIp + " shell ");
+//        } else if (mChangeCommandCount % splitSize == 13) {
+//            mExecuteCommandTextField.setText("adb -s " + mTargetIp + " shell  ");
+//        } else if (mChangeCommandCount % splitSize == 14) {
+//            mExecuteCommandTextField.setText("adb -s " + mTargetIp + " shell   ");
+//        } else if (mChangeCommandCount % splitSize == 15) {
+//            mExecuteCommandTextField.setText("adb -s " + mTargetIp + " shell   ");
+//        } else if (mChangeCommandCount % splitSize == 16) {
+//            mExecuteCommandTextField.setText("adb -s " + mTargetIp + " shell   ");
+//        }
+
+
+        mChangeCommandCount++;
+
+    }
+
+    private void executeInSub(String command) {
+        ThreadPoolUtil.getInstance().execute(new Runnable() {
+            @Override
+            public void run() {
+                //注意执行adb命令时需要加""包裹命令,否则无法执行,|grep 不识别
+                mResultInfo = mResultInfo + Utils.runtimeCommand("adb -s " + mTargetIp + command);
+                mResultLabel.setText(mResultInfo + "</html>");
+            }
+        });
     }
 
     private void showDialog(String content) {
@@ -635,53 +723,8 @@ public class LogParseUi extends JFrame implements ActionListener {
 
     private int mChangeCommandCount = 0;
 
-    private int splitSize = 16;
-
-    /**
-     * 改变cmd命令
-     */
-    private void changeCmdCommand() {
-
-        if (mChangeCommandCount % splitSize == 0) {//com.hisense.aiot/com.hisense.iot.partner.ui.PartnerAndAddDeviceActivity
-            mExecuteCommandTextField.setText("adb -s " + mTargetIp + " logcat -v threadtime > C:\\Users\\dingzhixin.ex\\Desktop\\1.txt ");
-        } else if (mChangeCommandCount % splitSize == 1) {
-            mExecuteCommandTextField.setText("adb -s " + mTargetIp + " shell input text 111111 ");
-        } else if (mChangeCommandCount % splitSize == 2) {
-            mExecuteCommandTextField.setText("adb -s " + mTargetIp + " shell input text 10987654321");
-        } else if (mChangeCommandCount % splitSize == 3) {
-            mExecuteCommandTextField.setText("adb -s " + mTargetIp + " shell am  start -n com.hisense.aiot/com.hisense.iot.partner.ui.PartnerAndAddDeviceActivity ");
-        } else if (mChangeCommandCount % splitSize == 4) {
-            mExecuteCommandTextField.setText("adb -s " + mTargetIp + " shell am  start -n com.hisense.aiot/com.hisense.iot.tips.ui.BluetoothPairActivity ");
-        } else if (mChangeCommandCount % splitSize == 5) {
-            mExecuteCommandTextField.setText("adb -s " + mTargetIp + " shell am  start -n com.hisense.aiot/com.hisense.iot.add.ui.AddInfraredDeviceActivity ");
-        } else if (mChangeCommandCount % splitSize == 6) {
-            mExecuteCommandTextField.setText("adb -s " + mTargetIp + " shell am  start -n com.hisense.aiot/com.hisense.iot.tips.ui.PairHintActivity ");
-        } else if (mChangeCommandCount % splitSize == 7) {
-            mExecuteCommandTextField.setText("adb -s " + mTargetIp + " shell am  start -n com.hisense.aiot/com.hisense.iot.pair.ui.PairInfraredCodeActivity ");
-        } else if (mChangeCommandCount % splitSize == 8) {
-            mExecuteCommandTextField.setText("adb -s " + mTargetIp + " shell am  start -n com.hisense.aiot/com.ju.iot.homepage.ui.HomeActivity ");
-        } else if (mChangeCommandCount % splitSize == 9) {
-            mExecuteCommandTextField.setText("adb -s " + mTargetIp + " shell am broadcast -a com.hisense.START_SOCIAL_FLOAT ");
-        } else if (mChangeCommandCount % splitSize == 10) {
-            mExecuteCommandTextField.setText("adb -s " + mTargetIp + " shell pm clear com.jamdeo.tv.vod ");
-        } else if (mChangeCommandCount % splitSize == 11) {
-            mExecuteCommandTextField.setText("adb -s " + mTargetIp + " shell pm clear  com.hisense.hitv.hicloud.account ");
-        } else if (mChangeCommandCount % splitSize == 12) {
-            mExecuteCommandTextField.setText("adb -s " + mTargetIp + " shell pm clear  com.hisense.service.message ");
-        } else if (mChangeCommandCount % splitSize == 13) {
-            mExecuteCommandTextField.setText("adb -s " + mTargetIp + " shell setprop log.tag.httpdns UT ");
-        } else if (mChangeCommandCount % splitSize == 14) {
-            mExecuteCommandTextField.setText("adb -s " + mTargetIp + " shell getprop log.tag.httpdns  ");
-        } else if (mChangeCommandCount % splitSize == 15) {
-            mExecuteCommandTextField.setText("adb -s " + mTargetIp + " shell setprop log.tag.httpdns SIT  ");
-        } else if (mChangeCommandCount % splitSize == 16) {
-            mExecuteCommandTextField.setText("adb -s " + mTargetIp + " shell am startservice -a com.hisense.service.message.MESSAGE  ");
-        }
 
 
-        mChangeCommandCount++;
-
-    }
 
     private List<Process> mProcess = new ArrayList<>();
 
