@@ -154,7 +154,7 @@ public class LogParseUi extends JFrame implements ActionListener {
     /**
      * 备用按钮
      */
-    private JButton mSpareButton1 = new JButton("清理AIOT");
+    private JButton mSpareButton1 = new JButton("更改apk名称");
     private MyButton mSpareButton2 = new MyButton("当前activity");
 
 
@@ -511,7 +511,7 @@ public class LogParseUi extends JFrame implements ActionListener {
             executeInSub(" shell am  start -n com.hisense.aiot/com.hisense.iot.add.ui.AddInfraredDeviceActivity ");
         } else if (clickId == Constants.BUTTON_CLICK_ADB_COMMAND_8) {
             //启动亲友圈页面
-            executeInSub( " shell am broadcast -a com.hisense.START_SOCIAL_FLOAT ");
+            executeInSub(" shell am broadcast -a com.hisense.START_SOCIAL_FLOAT ");
         } else if (clickId == Constants.BUTTON_CLICK_ADB_COMMAND_9) {
             //清理聚好看
             executeInSub(" shell pm clear com.jamdeo.tv.vod ");
@@ -520,7 +520,7 @@ public class LogParseUi extends JFrame implements ActionListener {
             executeInSub(" shell pm clear com.hisense.aiot ");
         } else if (clickId == Constants.BUTTON_CLICK_ADB_COMMAND_11) {
             //清理账号
-            executeInSub( " shell pm clear  com.hisense.hitv.hicloud.account ");
+            executeInSub(" shell pm clear  com.hisense.hitv.hicloud.account ");
         } else if (clickId == Constants.BUTTON_CLICK_ADB_COMMAND_12) {
             //清理消息服务
             executeInSub(" shell pm clear  com.hisense.service.message ");
@@ -535,7 +535,7 @@ public class LogParseUi extends JFrame implements ActionListener {
             executeInSub(" shell setprop log.tag.httpdns SIT  ");
         } else if (clickId == Constants.BUTTON_CLICK_ADB_COMMAND_16) {
             //启动消息服务广播
-            executeInSub( " shell am startservice -a com.hisense.service.message.MESSAGE  ");
+            executeInSub(" shell am startservice -a com.hisense.service.message.MESSAGE  ");
         } else if (LOG_PARSE_BUTTON_NAME.equals(actionCommand)) {
             //解析log
             executeLogParseButtonClick();
@@ -572,8 +572,18 @@ public class LogParseUi extends JFrame implements ActionListener {
             connectDevice();
         } else if (CLEAR_LOG.equals(actionCommand)) {
             clearLog();
-        } else if ("清理AIOT".equals(actionCommand)) {
-            clearAIOT();
+        } else if ("更改apk名称".equals(actionCommand)) {
+            String apkName = mDownloadApkFromFtpTextField.getText();
+            int current = Integer.parseInt(apkName.split("_")[1]) + 1;
+            if (current < 10) {
+                mDownloadApkFromFtpTextField.setText(apkName.split("_")[0] + "_00" + current);
+            } else if (current + 1 < 100) {
+                mDownloadApkFromFtpTextField.setText(apkName.split("_")[0] + "_0" + current);
+            } else {
+                mDownloadApkFromFtpTextField.setText(apkName.split("_")[0] + "_" + current);
+            }
+
+//            clearAIOT();
 //            JDialog dialog = new JDialog();
 //            dialog.setTitle("展示文本");
 //            dialog.setBounds(mScreenShowPositionX, mScreenPositionY, mScreenShowWidth, mScreenShowHeight);
@@ -598,6 +608,7 @@ public class LogParseUi extends JFrame implements ActionListener {
     }
 
     private int splitSize = 3;
+
     /**
      * 改变cmd命令
      */
@@ -722,8 +733,6 @@ public class LogParseUi extends JFrame implements ActionListener {
     }
 
     private int mChangeCommandCount = 0;
-
-
 
 
     private List<Process> mProcess = new ArrayList<>();
