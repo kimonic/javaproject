@@ -1,18 +1,32 @@
 package com.dzx.util;
 
-import com.dzx.util.TextUtils;
-import com.sun.javaws.security.AppContextUtil;
-
 import java.io.*;
 import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
 import java.util.List;
 
 public class ParseLogUtil {
+
+    public static void main(String[] args) {
+        List<String> list = new ArrayList<>();
+        list.add("HXJ");
+//        list.add("deviceId");
+//        list.add("InitPresenter");
+//        list.add("HomePresenter");
+//        list.add("RequestBean");
+//        list.add("Connection: Route");
+//        list.add("gslbDns");
+        list.add("ActivityManager: Process com.hisense.aiot");
+
+        String result = parseLog("C:\\Users\\dingzhixin.ex\\Desktop\\新建文件夹\\log.txt", "C:\\Users\\dingzhixin.ex\\Desktop\\新建文件夹\\过滤.txt", list);
+        System.out.println(result);
+    }
+
     /**
      * @param targetFilePath 解析的文件路径
      * @param outputFilePath 输出的文件路径
      *                       line.contains("RequestBean") || line.contains("onReceive, deviceStatusChanged")
-     *                         || line.contains("click,controlView")
+     *                       || line.contains("click,controlView")
      */
     public static String parseLog(String targetFilePath, String outputFilePath, List<String> filterConditions) {
         String result = "";
@@ -21,7 +35,7 @@ public class ParseLogUtil {
             result = "要解析的文件不存在!";
             return result;
         }
-        System.out.println("文件是否存在"+targetFile.exists());
+        System.out.println("文件是否存在" + targetFile.exists());
         FileInputStream fileInputStream = null;
         BufferedReader bufferedReader = null;
         FileOutputStream fileOutputStream = null;
@@ -36,6 +50,7 @@ public class ParseLogUtil {
                 //包含过滤条件则输出到文件中
                 if (accordWithCondition(line, filterConditions)) {
                     bufferedWriter.write(line);
+                    System.out.println(line);
                     bufferedWriter.write("\n\n");
                 }
             }
