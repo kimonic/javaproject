@@ -42,7 +42,7 @@ public class FileUtil {
 
 
     /**
-     * 向文件中写入内容
+     * 向文件中写入内容覆盖
      */
     public static boolean outFileContent(File positionFile, String content) {
         boolean result = false;
@@ -52,6 +52,48 @@ public class FileUtil {
             BufferedWriter bufferedWriter = null;
             try {
                 fileOutputStream = new FileOutputStream(positionFile);
+                bufferedWriter = new BufferedWriter(new OutputStreamWriter(fileOutputStream));
+                bufferedWriter.write(content);
+                bufferedWriter.flush();
+                result = true;
+            } catch (IOException e) {
+                e.printStackTrace();
+            } finally {
+                try {
+                    if (fileOutputStream != null) {
+                        fileOutputStream.close();
+                    }
+                    if (bufferedWriter != null) {
+                        bufferedWriter.close();
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        System.out.println("写入文件成功  =" + result);
+        return result;
+    }
+
+    /**
+     * 向文件中写入内容 追加
+     */
+    public static boolean outFileContentAppend(File positionFile, String content) {
+        boolean result = false;
+
+        if (positionFile != null && !positionFile.exists()) {
+            try {
+                positionFile.createNewFile();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
+        if (positionFile.exists()) {
+            FileOutputStream fileOutputStream = null;
+            BufferedWriter bufferedWriter = null;
+            try {
+                fileOutputStream = new FileOutputStream(positionFile, true);
                 bufferedWriter = new BufferedWriter(new OutputStreamWriter(fileOutputStream));
                 bufferedWriter.write(content);
                 bufferedWriter.flush();

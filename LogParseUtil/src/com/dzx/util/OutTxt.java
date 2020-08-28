@@ -97,7 +97,7 @@ public class OutTxt {
      * 监控文件改变并输出最新内容
      */
     private static void monitor(String inputFile, int sleepInterval) {
-        List<String> list = Arrays.asList("InflateException", "OutOfMemoryError", "IllegalArgumentException");
+        List<String> list = Arrays.asList("InflateException", "OutOfMemoryError", "IllegalArgumentException","FATAL","DemoCrashHandler");
         TailerListener listener = new TailerListenerAdapter() {
             @Override
             public void handle(String line) {
@@ -112,7 +112,7 @@ public class OutTxt {
                 }
                 if (needOut) {
                     System.out.println(line);
-//                    FileUtil.outFileContent()
+                    FileUtil.outFileContentAppend(new File("C:\\Users\\dingzhixin.ex\\Desktop\\异常结果.txt"),line);
                 }
 
             }
