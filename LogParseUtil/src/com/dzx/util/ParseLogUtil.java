@@ -9,16 +9,19 @@ public class ParseLogUtil {
 
     public static void main(String[] args) {
         List<String> list = new ArrayList<>();
-        list.add("HXJ");
+//        list.add("HXJ");
 //        list.add("deviceId");
 //        list.add("InitPresenter");
 //        list.add("HomePresenter");
 //        list.add("RequestBean");
+//        list.add("HTTP2.Stack");
+        list.add("com.hisense.aiot");
+        list.add("appPackageName=com.hisense.aiot");
 //        list.add("Connection: Route");
 //        list.add("gslbDns");
-        list.add("ActivityManager: Process com.hisense.aiot");
+//        list.add("ActivityManager: Process com.hisense.aiot");
 
-        String result = parseLog("C:\\Users\\dingzhixin.ex\\Desktop\\新建文件夹\\log.txt", "C:\\Users\\dingzhixin.ex\\Desktop\\新建文件夹\\过滤.txt", list);
+        String result = parseLog("C:\\Users\\dingzhixin.ex\\Desktop\\新建文件夹\\log.txt.2", "C:\\Users\\dingzhixin.ex\\Desktop\\新建文件夹\\过滤.txt", list);
         System.out.println(result);
     }
 
