@@ -1,6 +1,7 @@
 package com.dzx.util;
 
 import java.io.*;
+import java.util.List;
 
 public class FileUtil {
     /**
@@ -8,6 +9,7 @@ public class FileUtil {
      */
     public static String getFileContent(File positionFile) {
         String result = "";
+        int count = 0;
 
         if (positionFile.exists()) {
             FileInputStream fileInputStream = null;
@@ -18,6 +20,15 @@ public class FileUtil {
                 bufferedReader = new BufferedReader(new InputStreamReader(fileInputStream));
                 String line = null;
                 while ((line = bufferedReader.readLine()) != null) {
+//                    if (
+////                            line.contains("IndexOutOfBoundsException")
+////                            || line.contains("UnsatisfiedLinkError")
+//                             line.contains("NullPointerException")
+//                            ) {
+//                        count++;
+//                        System.out.println(line);
+//                    } else {
+//                    }
                     builder.append(line);
                 }
                 result = builder.toString();
@@ -26,6 +37,9 @@ public class FileUtil {
             } finally {
                 try {
                     if (fileInputStream != null) {
+                        //UnsatisfiedLinkError   92次
+                        //IndexOutOfBoundsException   32次
+                        //NullPointerException   2次
                         fileInputStream.close();
                     }
                     if (bufferedReader != null) {
@@ -37,6 +51,55 @@ public class FileUtil {
             }
         }
         System.out.println("读取的文件内容    " + result);
+//        System.out.println("读取的文件内容  总行数   " + count);
+        return result;
+    }
+
+public static String getFileContentFiler(File positionFile, List<String>  list) {
+        String result = "";
+        int count = 0;
+
+        if (positionFile.exists()) {
+            FileInputStream fileInputStream = null;
+            BufferedReader bufferedReader = null;
+            try {
+                fileInputStream = new FileInputStream(positionFile);
+                StringBuilder builder = new StringBuilder();
+                bufferedReader = new BufferedReader(new InputStreamReader(fileInputStream));
+                String line = null;
+                while ((line = bufferedReader.readLine()) != null) {
+                    if (
+//                            line.contains("IndexOutOfBoundsException")
+//                            || line.contains("UnsatisfiedLinkError")
+                             line.contains("NullPointerException")
+                            ) {
+                        count++;
+                        System.out.println(line);
+                    } else {
+                    }
+                    builder.append(line);
+                }
+                result = builder.toString();
+            } catch (IOException e) {
+                e.printStackTrace();
+            } finally {
+                try {
+                    if (fileInputStream != null) {
+                        //UnsatisfiedLinkError   92次
+                        //IndexOutOfBoundsException   32次
+                        //NullPointerException   2次
+                        fileInputStream.close();
+                    }
+                    if (bufferedReader != null) {
+                        bufferedReader.close();
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        System.out.println("读取的文件内容    " + result);
+//        System.out.println("读取的文件内容  总行数   " + count);
         return result;
     }
 

@@ -11,6 +11,7 @@ import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.WatchEvent;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.CountDownLatch;
@@ -19,47 +20,39 @@ public class OutTxt {
 
 
     public static void main(String args[]) throws IOException {
-//        Desktop.getDesktop().open(new File("E:\\work\\resource\\aiot资料\\慧享家\\aiot第四期\\虚拟体验中心\\产品需求书_语音助手需求列表_V7.2.2_社交二代.xlsm"));
-//        OutputStream inputStream = Runtime.getRuntime().exec("explorer E:\\work\\resource\\aiot资料\\慧享家\\aiot第四期\\虚拟体验中心\\产品需求书_语音助手需求列表_V7.2.2_社交二代.xlsm").getOutputStream();
+//        List<String> list = new ArrayList<>(Arrays.asList("HXJ","DemoCrashHandler"));
+//        ParseLogUtil.parseLog("C:\\Users\\dingzhixin.ex\\Desktop\\TV日志，2020年09月02日09时56分39秒开始记录.log",
+//                "C:\\Users\\dingzhixin.ex\\Desktop\\解析结果.log", list);
+
+//        List<String> list = new ArrayList<>(Arrays.asList("isFinishing() = true","onDestroy"));
+//        ParseLogUtil.parseLog("C:\\Users\\dingzhixin.ex\\Desktop\\new 2.txt",
+//                "C:\\Users\\dingzhixin.ex\\Desktop\\解析结果1.log", list);
+
+//        new Thread(){
+//            @Override
+//            public void run() {
+//                while (true) {
+//                    Utils.runtimeCommand("adb -s 192.168.137.172 shell \"dumpsys meminfo com.hisense.aiot |grep -E \'Views|Activities\'  |grep -v  WebViews\"");
+//                    try {
+//                        sleep(3000);
+//                    } catch (InterruptedException e) {
+//                        e.printStackTrace();
+//                    }
+//                }
 //
-//        ArrayList<String> columnList = new ArrayList<String>();
-////        File file = new File("E:\\work\\resource\\aiot资料\\慧享家\\aiot第四期\\虚拟体验中心\\产品需求书_语音助手需求列表_V7.2.2_社交二代.xlsm");
-////        File file = new File("E:\\work\\resource\\aiot资料\\慧享家\\aiot第四期\\虚拟体验中心\\IOT平台指令协议-20200514(addvirtualcenter) (1).xlsx");
-//        File file = new File("C:\\Users\\dingzhixin.ex\\Desktop\\AIOT3.0.5总的冒烟用例.xlsx");
-////        FileWriter filewriter = new FileWriter("E:\\work\\resource\\aiot资料\\慧享家\\aiot第四期\\虚拟体验中心\\产品需求书_语音助手需求列表_V7.2.2_社交二代.xlsm");
-//        try {
-//            FileInputStream in = new FileInputStream(file);
-//
-//            XSSFWorkbook wb = new XSSFWorkbook(in);
-//
-//            Sheet sheet = wb.getSheetAt(0); //取得“测试.xlsx”中的第一个表单
-//            int firstRowNum = sheet.getFirstRowNum();
-//            int lastRowNum = sheet.getLastRowNum();
-//
-//            Row row = null;
-//            Cell cell_a = null;
-//            for (int i = firstRowNum + 1; i <= lastRowNum; i++) {
-//                row = sheet.getRow(i); //取得第i行 （从第二行开始取，因为第一行是表头）
-//                cell_a = row.getCell(1); //取得i行的第一列
-//                String cellValue = cell_a.getStringCellValue().trim();
-//                //System.out.println(cellValue);
-////                filewriter.write(cellValue + "\r\n");   //将取出的.xlsx表中的数据写入到txt文件中
-//                System.out.println(cellValue);
-//                columnList.add(cellValue);
 //            }
-////            filewriter.flush();
-////            filewriter.close();
-//
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
+//        }.start();
 
 
-//        renameFile("C:\\Users\\dingzhixin.ex\\Desktop\\01_ok_button");
-//        System.out.println("dsds".toString());
-//        testRequest();
-//        fortest();
-        monitor("C:\\Users\\dingzhixin.ex\\Desktop\\1.txt", 1000);
+        List<String>  list=new ArrayList<>();
+        list.add("1");
+        list.add("2");
+        list.add("3");
+        list.add(0,"4");
+        for (int i = 0; i < list.size(); i++) {
+            System.out.println(list.get(i));
+        }
+
     }
 
     private static void fortest() {
@@ -97,7 +90,7 @@ public class OutTxt {
      * 监控文件改变并输出最新内容
      */
     private static void monitor(String inputFile, int sleepInterval) {
-        List<String> list = Arrays.asList("InflateException", "OutOfMemoryError", "IllegalArgumentException","FATAL","DemoCrashHandler");
+        List<String> list = Arrays.asList("InflateException", "OutOfMemoryError", "IllegalArgumentException", "FATAL", "DemoCrashHandler");
         TailerListener listener = new TailerListenerAdapter() {
             @Override
             public void handle(String line) {
@@ -106,13 +99,13 @@ public class OutTxt {
                     if (line.contains(s)) {
                         needOut = true;
                     }
-                    if (line.contains("com.hisense.hitv.hicloud.a.y")){
+                    if (line.contains("com.hisense.hitv.hicloud.a.y")) {
                         needOut = false;
                     }
                 }
                 if (needOut) {
                     System.out.println(line);
-                    FileUtil.outFileContentAppend(new File("C:\\Users\\dingzhixin.ex\\Desktop\\异常结果.txt"),line);
+                    FileUtil.outFileContentAppend(new File("C:\\Users\\dingzhixin.ex\\Desktop\\异常结果.txt"), line + "\n\n");
                 }
 
             }
@@ -203,5 +196,51 @@ public class OutTxt {
         }
         mRunCount++;
         System.out.println("发起了请求    =  " + mRunCount);
+    }
+
+
+    private static void test() {
+        //        Desktop.getDesktop().open(new File("E:\\work\\resource\\aiot资料\\慧享家\\aiot第四期\\虚拟体验中心\\产品需求书_语音助手需求列表_V7.2.2_社交二代.xlsm"));
+//        OutputStream inputStream = Runtime.getRuntime().exec("explorer E:\\work\\resource\\aiot资料\\慧享家\\aiot第四期\\虚拟体验中心\\产品需求书_语音助手需求列表_V7.2.2_社交二代.xlsm").getOutputStream();
+//
+//        ArrayList<String> columnList = new ArrayList<String>();
+////        File file = new File("E:\\work\\resource\\aiot资料\\慧享家\\aiot第四期\\虚拟体验中心\\产品需求书_语音助手需求列表_V7.2.2_社交二代.xlsm");
+////        File file = new File("E:\\work\\resource\\aiot资料\\慧享家\\aiot第四期\\虚拟体验中心\\IOT平台指令协议-20200514(addvirtualcenter) (1).xlsx");
+//        File file = new File("C:\\Users\\dingzhixin.ex\\Desktop\\AIOT3.0.5总的冒烟用例.xlsx");
+////        FileWriter filewriter = new FileWriter("E:\\work\\resource\\aiot资料\\慧享家\\aiot第四期\\虚拟体验中心\\产品需求书_语音助手需求列表_V7.2.2_社交二代.xlsm");
+//        try {
+//            FileInputStream in = new FileInputStream(file);
+//
+//            XSSFWorkbook wb = new XSSFWorkbook(in);
+//
+//            Sheet sheet = wb.getSheetAt(0); //取得“测试.xlsx”中的第一个表单
+//            int firstRowNum = sheet.getFirstRowNum();
+//            int lastRowNum = sheet.getLastRowNum();
+//
+//            Row row = null;
+//            Cell cell_a = null;
+//            for (int i = firstRowNum + 1; i <= lastRowNum; i++) {
+//                row = sheet.getRow(i); //取得第i行 （从第二行开始取，因为第一行是表头）
+//                cell_a = row.getCell(1); //取得i行的第一列
+//                String cellValue = cell_a.getStringCellValue().trim();
+//                //System.out.println(cellValue);
+////                filewriter.write(cellValue + "\r\n");   //将取出的.xlsx表中的数据写入到txt文件中
+//                System.out.println(cellValue);
+//                columnList.add(cellValue);
+//            }
+////            filewriter.flush();
+////            filewriter.close();
+//
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+
+
+//        renameFile("C:\\Users\\dingzhixin.ex\\Desktop\\01_ok_button");
+//        System.out.println("dsds".toString());
+//        monitor("C:\\Users\\dingzhixin.ex\\Desktop\\1.txt", 1000);
+//        FileUtil.getFileContent(new File("C:\\Users\\dingzhixin.ex\\Desktop\\统计异常.txt"));
+
+
     }
 }

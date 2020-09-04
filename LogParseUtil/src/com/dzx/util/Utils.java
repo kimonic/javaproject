@@ -57,6 +57,11 @@ public class Utils {
 
     /**
      * Java执行cmd命令
+     *
+     * |grep -E  并列条件,满足任意一个则满足
+     * |grep -v  排除条件,满足则排除,优先级高于-E
+     * |grep 条件1 |grep  条件2   同时满足两个条件
+     * "adb -s 192.168.137.172 shell \"dumpsys meminfo com.hisense.aiot |grep -E \'Views|Activities\'  |grep -v  WebViews\""
      */
     public static String runtimeCommand(String command) {
         Process process;
@@ -71,8 +76,8 @@ public class Utils {
             InputStream error = process.getErrorStream();
             String normalMessage = getInputStreamResult(in);
             String errorMessage = getInputStreamResult(error);
-            System.out.println("输出流  = " + normalMessage);
-            System.out.println("错误流  = " + errorMessage);
+//            System.out.println("输出流  = " + normalMessage);
+//            System.out.println("错误流  = " + errorMessage);
 
             int status = process.waitFor();
             System.out.println("status = " + status);
