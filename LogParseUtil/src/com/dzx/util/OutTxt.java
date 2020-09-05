@@ -21,51 +21,46 @@ public class OutTxt {
 
     public static void main(String args[]) throws IOException {
 //        List<String> list = new ArrayList<>(Arrays.asList("HXJ","DemoCrashHandler"));
-//        ParseLogUtil.parseLog("C:\\Users\\dingzhixin.ex\\Desktop\\TV日志，2020年09月02日09时56分39秒开始记录.log",
-//                "C:\\Users\\dingzhixin.ex\\Desktop\\解析结果.log", list);
 
-//        List<String> list = new ArrayList<>(Arrays.asList("isFinishing() = true","onDestroy"));
-//        ParseLogUtil.parseLog("C:\\Users\\dingzhixin.ex\\Desktop\\new 2.txt",
-//                "C:\\Users\\dingzhixin.ex\\Desktop\\解析结果1.log", list);
+//        List<String> list = new ArrayList<>(Arrays.asList("android.widget.ImageView.","android.view.View.","android.graphics"));
+        List<String> list = new ArrayList<>(Arrays.asList("20200905"));
+        //根据条件过滤内容
+        filerFileAndOut("C:\\Users\\dingzhixin.ex\\Desktop\\data_2020-09-05 01_16_59 PM.tsv", list);
 
-//        new Thread(){
-//            @Override
-//            public void run() {
-//                while (true) {
-//                    Utils.runtimeCommand("adb -s 192.168.137.172 shell \"dumpsys meminfo com.hisense.aiot |grep -E \'Views|Activities\'  |grep -v  WebViews\"");
-//                    try {
-//                        sleep(3000);
-//                    } catch (InterruptedException e) {
-//                        e.printStackTrace();
-//                    }
-//                }
-//
-//            }
-//        }.start();
-
-
-        List<String>  list=new ArrayList<>();
-        list.add("1");
-        list.add("2");
-        list.add("3");
-        list.add(0,"4");
-        for (int i = 0; i < list.size(); i++) {
-            System.out.println(list.get(i));
-        }
-
+        //分析内存泄漏
+        analysisMemInfo();
     }
 
-    private static void fortest() {
-
-        int[] test = new int[100];
-
-
-        for (int i = 0; i < 100; i++) {
-            test[i] = i;
-        }
-        System.out.println(test.toString());
+    /**
+     * 根据条件过滤文件并输出内容到文件
+     */
+    public static void filerFileAndOut(String targetFilePath, String outFilePath, List<String> conditions) {
+        ParseLogUtil.parseLog(targetFilePath, outFilePath, conditions);
     }
 
+    public static void filerFileAndOut(String targetFilePath, List<String> conditions) {
+        filerFileAndOut(targetFilePath, "C:\\Users\\dingzhixin.ex\\Desktop\\解析结果1.log", conditions);
+    }
+
+    /**
+     * 持续输出内存使用情况内容,用于分析内存泄漏
+     */
+    public static void analysisMemInfo() {
+        new Thread() {
+            @Override
+            public void run() {
+                while (true) {
+                    Utils.runtimeCommand("adb -s 192.168.137.172 shell \"dumpsys meminfo com.hisense.aiot |grep -E \'Views|Activities\'  |grep -v  WebViews\"");
+                    try {
+                        sleep(3000);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+
+            }
+        }.start();
+    }
 
     public static void watchFileChange() {
         final DirWatcher dw;
@@ -115,6 +110,9 @@ public class OutTxt {
     }
 
 
+    /**
+     * 重命名文件名
+     */
     public static void renameFile(String filePath) {
         File file = new File(filePath);
 
