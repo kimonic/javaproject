@@ -6,6 +6,7 @@
       <module fileurl="file://$PROJECT_DIR$/LogParseUtil/LogParseUtil.iml" filepath="$PROJECT_DIR$/LogParseUtil/LogParseUtil.iml" />
       <module fileurl="file://$PROJECT_DIR$/javaproject.iml" filepath="$PROJECT_DIR$/javaproject.iml" />
       <module fileurl="file://$PROJECT_DIR$/killlol/killlol.iml" filepath="$PROJECT_DIR$/killlol/killlol.iml" />
+      <module fileurl="file://$PROJECT_DIR$/voicehandle/maoyan.iml" filepath="$PROJECT_DIR$/voicehandle/maoyan.iml" />
     </modules>
   </component>
 </project>

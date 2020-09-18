@@ -11,7 +11,6 @@ import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.WatchEvent;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.CountDownLatch;
@@ -20,12 +19,15 @@ public class OutTxt {
 
 
     public static void main(String args[]) throws IOException {
-//        List<String> list = new ArrayList<>(Arrays.asList("HXJ","DemoCrashHandler"));
+        //过滤异常及下载数据
+//        List<String> list = new ArrayList<>(Arrays.asList("HXJ","DemoCrashHandler","RequestBean"));
+        //过滤是否已经配置下载连接
+//        List<String> list = new ArrayList<>(Arrays.asList("getAppUpgradeInfoByPackageName"));
 
 //        List<String> list = new ArrayList<>(Arrays.asList("android.widget.ImageView.","android.view.View.","android.graphics"));
-        List<String> list = new ArrayList<>(Arrays.asList("20200905"));
+//        List<String> list = new ArrayList<>(Arrays.asList("anr ","ANR ","HXJ","HomeActivity","am_"));
         //根据条件过滤内容
-        filerFileAndOut("C:\\Users\\dingzhixin.ex\\Desktop\\data_2020-09-05 01_16_59 PM.tsv", list);
+//        filerFileAndOut("C:\\Users\\dingzhixin.ex\\Desktop\\33.txt", list);
 
         //分析内存泄漏
         analysisMemInfo();
