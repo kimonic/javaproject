@@ -19,17 +19,19 @@ public class FileUtil {
                 StringBuilder builder = new StringBuilder();
                 bufferedReader = new BufferedReader(new InputStreamReader(fileInputStream));
                 String line = null;
+                System.out.println("==============");
                 while ((line = bufferedReader.readLine()) != null) {
-//                    if (
-////                            line.contains("IndexOutOfBoundsException")
-////                            || line.contains("UnsatisfiedLinkError")
+                    if (
+//                            line.contains("IndexOutOfBoundsException")
+//                            || line.contains("UnsatisfiedLinkError")
 //                             line.contains("NullPointerException")
-//                            ) {
-//                        count++;
-//                        System.out.println(line);
-//                    } else {
-//                    }
-                    builder.append(line);
+                            line.contains("value = {\"additional\":\"\",\"area\"")
+                    ) {
+                        count++;
+                        System.out.println(line + "\n\n");
+                    } else {
+                    }
+                    builder.append(line).append("\n");
                 }
                 result = builder.toString();
             } catch (IOException e) {
@@ -50,12 +52,12 @@ public class FileUtil {
                 }
             }
         }
-        System.out.println("读取的文件内容    " + result);
+//        System.out.println("读取的文件内容    " + result);
 //        System.out.println("读取的文件内容  总行数   " + count);
         return result;
     }
 
-public static String getFileContentFiler(File positionFile, List<String>  list) {
+    public static String getFileContentFiler(File positionFile, List<String> list) {
         String result = "";
         int count = 0;
 
@@ -71,8 +73,8 @@ public static String getFileContentFiler(File positionFile, List<String>  list) 
                     if (
 //                            line.contains("IndexOutOfBoundsException")
 //                            || line.contains("UnsatisfiedLinkError")
-                             line.contains("NullPointerException")
-                            ) {
+                            line.contains("NullPointerException")
+                    ) {
                         count++;
                         System.out.println(line);
                     } else {
@@ -178,5 +180,14 @@ public static String getFileContentFiler(File positionFile, List<String>  list) 
         }
         System.out.println("写入文件成功  =" + result);
         return result;
+    }
+
+    public static void randomAccessFileReadFile(File  file){
+//        try {
+//            RandomAccessFile reader=new RandomAccessFile(file, "r");
+//            reader.read()
+//        } catch (FileNotFoundException e) {
+//            e.printStackTrace();
+//        }
     }
 }
