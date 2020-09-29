@@ -27,12 +27,15 @@ public class OutTxt {
 //        List<String> list = new ArrayList<>(Arrays.asList("anr ","ANR ","HXJ","HomeActivity","am_"));
         //根据条件过滤内容
 //        filerFileAndOut("C:\\Users\\dingzhixin.ex\\Desktop\\33.txt", list);
+        //过滤异常统计信息
+//        List<String> list = new ArrayList<>(Arrays.asList("8610030000010100000007120c9c6a3b"));
+//        filerFileAndOut("C:\\Users\\dingzhixin.ex\\Desktop\\data_2020-09-25 02_45_07 PM.tsv", list);
 
         //分析内存泄漏
 //        analysisMemInfo();
 
         monitor("C:\\Users\\dingzhixin.ex\\Desktop\\1.txt", 500);
-        
+
 
     }
 
@@ -90,26 +93,30 @@ public class OutTxt {
      * 监控文件改变并输出最新内容
      */
     private static void monitor(String inputFile, int sleepInterval) {
-//        List<String> list = Arrays.asList("InflateException", "OutOfMemoryError", "IllegalArgumentException", "FATAL", "DemoCrashHandler");
+        List<String> list = Arrays.asList("InflateException", "OutOfMemoryError", "IllegalArgumentException", "FATAL", "DemoCrashHandler","manager error","HXJ");
 //        List<String> list = Arrays.asList("SingleCardDeviceManger", "BluetoothVoiceTipFragment","IotManagerService");
-        List<String> list = Arrays.asList("HXJ", "homeId");
+        List<String> list1 = Arrays.asList("HXJ", "homeId");
         TailerListener listener = new TailerListenerAdapter() {
             @Override
             public void handle(String line) {
                 boolean needOut = false;
+                boolean needOut1 = false;
                 int count = 0;
                 for (String s : list) {
                     if (line.contains(s)) {
-                        count++;
-//                        needOut = true;
+//                        count++;
+                        needOut = true;
                     }
 //                    if (line.contains("com.hisense.hitv.hicloud.a.y")) {
 //                        needOut = false;
 //                    }
                 }
-//                if (needOut) {
-                if (count == list.size()) {
-                    System.out.println(line);
+                if (needOut) {
+
+                    if (!line.contains("HXJ")){
+                        System.out.println(line+"\n");
+                    }
+//                if (count == list.size()) {
                     FileUtil.outFileContentAppend(new File("C:\\Users\\dingzhixin.ex\\Desktop\\异常结果.txt"), line + "\n\n");
                 }
 

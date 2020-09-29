@@ -49,15 +49,18 @@ public class ParseLogUtil {
             fileOutputStream = new FileOutputStream(outputFilePath);
             bufferedWriter = new BufferedWriter(new OutputStreamWriter(fileOutputStream, StandardCharsets.UTF_8));
             String line = null;
+            int count = 0;
             while ((line = bufferedReader.readLine()) != null) {
                 //包含过滤条件则输出到文件中
                 if (accordWithCondition(line, filterConditions)) {
                     bufferedWriter.write(line);
                     System.out.println(line);
+                    count++;
                     bufferedWriter.write("\n\n");
                 }
             }
             bufferedWriter.flush();
+            System.out.println("总行数 = "+count);
             result = "文件解析成功!";
         } catch (IOException e) {
             e.printStackTrace();
