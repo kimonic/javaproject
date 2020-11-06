@@ -5,11 +5,13 @@ import com.dzx.watch.dir.WatcherResultHandler;
 import org.apache.commons.io.input.TailerListener;
 import org.apache.commons.io.input.TailerListenerAdapter;
 
+import javax.swing.filechooser.FileSystemView;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.WatchEvent;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.CountDownLatch;
@@ -25,16 +27,22 @@ public class OutTxt {
 
 //        List<String> list = new ArrayList<>(Arrays.asList("android.widget.ImageView.","android.view.View.","android.graphics"));
 //        List<String> list = new ArrayList<>(Arrays.asList("anr ","ANR ","HXJ","HomeActivity","am_"));
+//        List<String> list = new ArrayList<>(Arrays.asList("打开香薰机 ","关闭香薰机 ","onReceive, deviceStatusChanged","HomeActivity: |HXJ showStatus",
+//                "getHomeId"));
         //根据条件过滤内容
-//        filerFileAndOut("C:\\Users\\dingzhixin.ex\\Desktop\\33.txt", list);
+//        filerFileAndOut("C:\\Users\\dingzhixin.ex\\Desktop\\log.txt", list);
         //过滤异常统计信息
 //        List<String> list = new ArrayList<>(Arrays.asList("8610030000010100000007120c9c6a3b"));
-//        filerFileAndOut("C:\\Users\\dingzhixin.ex\\Desktop\\data_2020-09-25 02_45_07 PM.tsv", list);
+        List<String> list = new ArrayList<>(Arrays.asList("speech_CoreService: sort:chat;title","HXJ onReceive, deviceStatusChanged, msgContent"));
+        filerFileAndOut("C:\\Users\\dingzhixin.ex\\Desktop\\c4a89af25b9fcbdc673a0ffdfe497d05\\log.txt", list);
 
         //分析内存泄漏
 //        analysisMemInfo();
 
-        monitor("C:\\Users\\dingzhixin.ex\\Desktop\\1.txt", 500);
+//        monitor("C:\\Users\\dingzhixin.ex\\Desktop\\1.txt", 500);
+
+//        Utils.runtimeCommand("arp -a 192.168.137.172");
+//        Utils.runtimeCommand("nbtstat -a  192.168.137.172");
 
 
     }
@@ -93,9 +101,10 @@ public class OutTxt {
      * 监控文件改变并输出最新内容
      */
     private static void monitor(String inputFile, int sleepInterval) {
-        List<String> list = Arrays.asList("InflateException", "OutOfMemoryError", "IllegalArgumentException", "FATAL", "DemoCrashHandler","manager error","HXJ");
-//        List<String> list = Arrays.asList("SingleCardDeviceManger", "BluetoothVoiceTipFragment","IotManagerService");
-        List<String> list1 = Arrays.asList("HXJ", "homeId");
+//        List<String> list = Arrays.asList("InflateException", "OutOfMemoryError", "IllegalArgumentException", "FATAL", "DemoCrashHandler","manager error","has detached");
+        List<String> list = Arrays.asList("InflateException", "OutOfMemoryError", "IllegalArgumentException", "FATAL", "DemoCrashHandler", "manager error", "HXJ");
+//        List<String> list = Arrays.asList("SingleCardDeviceManger", "BluetoothVoiceTipFragment","IotManagerService","RequestBean");
+//        List<String> list1 = Arrays.asList("HXJ", "homeId");
         TailerListener listener = new TailerListenerAdapter() {
             @Override
             public void handle(String line) {
@@ -113,8 +122,8 @@ public class OutTxt {
                 }
                 if (needOut) {
 
-                    if (!line.contains("HXJ")){
-                        System.out.println(line+"\n");
+                    if (!line.contains("HXJ") || line.contains("has detached")) {
+                        System.out.println(line + "\n");
                     }
 //                if (count == list.size()) {
                     FileUtil.outFileContentAppend(new File("C:\\Users\\dingzhixin.ex\\Desktop\\异常结果.txt"), line + "\n\n");
@@ -292,5 +301,11 @@ public class OutTxt {
 //        FileUtil.getFileContent(new File("C:\\Users\\dingzhixin.ex\\Desktop\\统计异常.txt"));
 
 
+    }
+
+    public static void getDeskTopPath() {
+        FileSystemView fsv = FileSystemView.getFileSystemView();
+        File com = fsv.getHomeDirectory();    //这便是读取桌面路径的方法了
+        System.out.println("desktop path = " + com.getPath());
     }
 }

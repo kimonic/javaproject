@@ -754,7 +754,7 @@ public class LogParseUi extends JFrame implements ActionListener {
     /**
      * 上传文件到ftp
      */
-    private void uploadApkToFtp() {
+    private void uploadApkToFtp() {//com.ju.main.album.AlbumActivity
         String target = mUploadApkToFtpTextField.getText();
         String[] result = target.split("#");
         boolean success = FileRenameUtil.renameApkFile(result[0], result[1], result[2]);
