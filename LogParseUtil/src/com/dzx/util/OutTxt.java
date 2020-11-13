@@ -11,7 +11,6 @@ import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.WatchEvent;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.CountDownLatch;
@@ -33,13 +32,13 @@ public class OutTxt {
 //        filerFileAndOut("C:\\Users\\dingzhixin.ex\\Desktop\\log.txt", list);
         //过滤异常统计信息
 //        List<String> list = new ArrayList<>(Arrays.asList("8610030000010100000007120c9c6a3b"));
-        List<String> list = new ArrayList<>(Arrays.asList("speech_CoreService: sort:chat;title","HXJ onReceive, deviceStatusChanged, msgContent"));
-        filerFileAndOut("C:\\Users\\dingzhixin.ex\\Desktop\\c4a89af25b9fcbdc673a0ffdfe497d05\\log.txt", list);
+//        List<String> list = new ArrayList<>(Arrays.asList("speech_CoreService: sort:chat;title","HXJ onReceive, deviceStatusChanged, msgContent"));
+//        filerFileAndOut("C:\\Users\\dingzhixin.ex\\Desktop\\c4a89af25b9fcbdc673a0ffdfe497d05\\log.txt", list);
 
         //分析内存泄漏
 //        analysisMemInfo();
 
-//        monitor("C:\\Users\\dingzhixin.ex\\Desktop\\1.txt", 500);
+        monitor("C:\\Users\\dingzhixin.ex\\Desktop\\1.txt", 500);
 
 //        Utils.runtimeCommand("arp -a 192.168.137.172");
 //        Utils.runtimeCommand("nbtstat -a  192.168.137.172");
