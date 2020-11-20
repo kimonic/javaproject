@@ -13,8 +13,11 @@ public class Test1 {
 
 
 
-       String  target="";
-       System.out.println(target.substring(3));
+//       String  target="";
+//       System.out.println(target.substring(3));
+
+        String s="abcde";
+        System.out.println(s.substring(0,5));
 
     }
 }

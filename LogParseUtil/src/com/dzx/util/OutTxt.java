@@ -38,13 +38,32 @@ public class OutTxt {
         //分析内存泄漏
 //        analysisMemInfo();
 
-        monitor("C:\\Users\\dingzhixin.ex\\Desktop\\1.txt", 500);
+//        monitor("C:\\Users\\dingzhixin.ex\\Desktop\\1.txt", 500);
 
 //        Utils.runtimeCommand("arp -a 192.168.137.172");
 //        Utils.runtimeCommand("nbtstat -a  192.168.137.172");
+        handleJavaFile();
+
+    }
+
+    private static void handleJavaFile() throws IOException {
+        String result = FileUtil.getFileContent(new File("C:\\Users\\dingzhixin.ex\\Desktop\\12315.txt"));
+        int size = result.length();
+        StringBuilder builder = new StringBuilder();
+        for (int i = 0; i < size; i++) {
+            String s = result.substring(i, i + 1);
+            builder.append(s);
+            if ("{".equals(s)) {
+                builder.append("\n").append("    LUtils.e(TAG, \" = \" );\n");
+            }
+        }
+        File file = new File("C:\\Users\\dingzhixin.ex\\Desktop\\55555.java");
+        file.createNewFile();
+        FileUtil.outFileContent(file, builder.toString());
 
 
     }
+
 
     /**
      * 根据条件过滤文件并输出内容到文件
