@@ -28,8 +28,10 @@ public class OutTxt {
 //        List<String> list = new ArrayList<>(Arrays.asList("anr ","ANR ","HXJ","HomeActivity","am_"));
 //        List<String> list = new ArrayList<>(Arrays.asList("打开香薰机 ","关闭香薰机 ","onReceive, deviceStatusChanged","HomeActivity: |HXJ showStatus",
 //                "getHomeId"));
-        //根据条件过滤内容
-//        filerFileAndOut("C:\\Users\\dingzhixin.ex\\Desktop\\log.txt", list);
+//        List<String> list = new ArrayList<>(Arrays.asList("IotHomeCardViewStrategy","main"));
+//        List<String> list = new ArrayList<>(Arrays.asList("java.lang.","java.util","android."));
+//        根据条件过滤内容
+//        filerFileAndOut("C:\\Users\\dingzhixin.ex\\Desktop\\002.log", list);
         //过滤异常统计信息
 //        List<String> list = new ArrayList<>(Arrays.asList("8610030000010100000007120c9c6a3b"));
 //        List<String> list = new ArrayList<>(Arrays.asList("speech_CoreService: sort:chat;title","HXJ onReceive, deviceStatusChanged, msgContent"));
@@ -42,10 +44,15 @@ public class OutTxt {
 
 //        Utils.runtimeCommand("arp -a 192.168.137.172");
 //        Utils.runtimeCommand("nbtstat -a  192.168.137.172");
-        handleJavaFile();
-
+//        handleJavaFile();
+        File file = new File("C:\\Users\\dingzhixin.ex\\Desktop\\testbyteencode.txt");
+        FileUtil.readFileByBytes(file);
     }
 
+
+    /**
+     * 将Java类的方法全部添加日志输出,自动添加方法名
+     */
     private static void handleJavaFile() throws IOException {
         String result = FileUtil.getFileContent(new File("C:\\Users\\dingzhixin.ex\\Desktop\\12315.txt"));
         int size = result.length();

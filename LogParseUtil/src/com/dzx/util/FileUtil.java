@@ -1,7 +1,10 @@
 package com.dzx.util;
 
+
 import java.io.*;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class FileUtil {
     /**
@@ -182,12 +185,100 @@ public class FileUtil {
         return result;
     }
 
-    public static void randomAccessFileReadFile(File  file){
+    public static void randomAccessFileReadFile(File file) {
 //        try {
 //            RandomAccessFile reader=new RandomAccessFile(file, "r");
 //            reader.read()
 //        } catch (FileNotFoundException e) {
 //            e.printStackTrace();
 //        }
+    }
+
+
+    /**
+     * 通过字节流读取文件
+     */
+    public static void readFileByBytes(File file) {
+        if (file == null || !file.exists()) {
+            System.out.println("file is not exist");
+            return;
+        }
+        BufferedInputStream in = null;
+        try {
+            in = new BufferedInputStream(new FileInputStream(file));
+            byte[] temp = new byte[1024];
+            int size = 0;
+            while ((size = in.read(temp)) != -1) {
+                System.out.println("size = " + size);
+                StringBuilder stringBuilder = new StringBuilder();
+                StringBuilder stringBuilder1 = new StringBuilder();
+                int count = temp.length;
+                System.out.println(new String(temp));
+                System.out.println(new String(temp,"utf-8"));
+                for (int i = 0; i < size; i++) {
+                    stringBuilder.append(byteToBinaryString(temp[i])).append(",");
+                    stringBuilder1.append(temp[i]).append(",");
+                }//97,98,99,100,104,102,102,104,106,107,102,104,32,-60,-29,-70,-61,
+                System.out.println(stringBuilder.toString());
+                System.out.println(stringBuilder1.toString());
+            }
+            in.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            if (in != null) {
+                try {
+                    in.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+
+    /**
+     * 将byte字符转化为二进制字符串
+     */
+    public static String byteToBinaryString(Byte b) {
+        if (b == null) {
+            return "0";
+        }
+        return Integer.toBinaryString((b & 0xFF) + 0x100).substring(1);
+    }
+
+
+
+
+    /**
+
+     * 判断字符串是否是乱码
+     *
+     * @param strName 字符串
+     * @return 是否是乱码
+     */
+    public static boolean isMessyCode(String strName) {
+        try {
+            Pattern p = Pattern.compile("\\s*|\t*|\r*|\n*");
+            Matcher m = p.matcher(strName);
+            String after = m.replaceAll("");
+            String temp = after.replaceAll("\\p{P}", "");
+            char[] ch = temp.trim().toCharArray();
+
+            int length = (ch != null) ? ch.length : 0;
+            for (int i = 0; i < length; i++) {
+                char c = ch[i];
+                if (!Character.isLetterOrDigit(c)) {
+                    String str = "" + ch[i];
+                    if (!str.matches("[\u4e00-\u9fa5]+")) {
+                        return true;
+                    }
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return false;
+
     }
 }

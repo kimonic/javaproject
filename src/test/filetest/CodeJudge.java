@@ -1,12 +1,13 @@
 package test.filetest;
 
-import net.sf.json.util.NewBeanInstanceStrategy;
-import org.apache.commons.io.FileUtils;
-import org.apache.commons.lang3.CharSet;
+//import net.sf.json.util.NewBeanInstanceStrategy;
+//import org.apache.commons.io.FileUtils;
+//import org.apache.commons.lang3.CharSet;
+//
+//import java.nio.charset.Charset;
+//import java.util.Properties;
 
 import java.io.*;
-import java.nio.charset.Charset;
-import java.util.Properties;
 
 public class CodeJudge {
     public static void main(String[] args) {
