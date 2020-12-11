@@ -2,17 +2,23 @@ package com.dzx.util;
 
 import com.dzx.watch.dir.DirWatcher;
 import com.dzx.watch.dir.WatcherResultHandler;
+import com.gargoylesoftware.htmlunit.WebClient;
+import com.gargoylesoftware.htmlunit.html.HtmlPage;
+import com.gargoylesoftware.htmlunit.html.parser.HTMLParserListener;
+import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.input.TailerListener;
 import org.apache.commons.io.input.TailerListenerAdapter;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
 
 import javax.swing.filechooser.FileSystemView;
 import java.io.File;
 import java.io.IOException;
+import java.net.URL;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.WatchEvent;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 import java.util.concurrent.CountDownLatch;
 
 public class OutTxt {
@@ -45,8 +51,262 @@ public class OutTxt {
 //        Utils.runtimeCommand("arp -a 192.168.137.172");
 //        Utils.runtimeCommand("nbtstat -a  192.168.137.172");
 //        handleJavaFile();
-        File file = new File("C:\\Users\\dingzhixin.ex\\Desktop\\testbyteencode.txt");
-        FileUtil.readFileByBytes(file);
+//        encryption();
+//        File loadFile = new File("C:\\Users\\dingzhixin.ex\\Desktop\\00001.txt");
+//        File encryptionFile = new File("C:\\Users\\dingzhixin.ex\\Desktop\\乱码001.txt");
+//        File decryptFile = new File("C:\\Users\\dingzhixin.ex\\Desktop\\乱码002.txt");
+//        File convergence = new File("C:\\Users\\dingzhixin.ex\\Desktop\\乱码003.txt");
+//        encryption(200,loadFile,encryptionFile);
+//        decrypt(200, encryptionFile, decryptFile);
+//        interval( encryptionFile, decryptFile);
+//        convergence(decryptFile,convergence);
+
+//        Document document = Jsoup.connect("https://www.baidu.com/s?ie=utf-8&f=8&rsv_bp=1&rsv_idx=2&tn=baiduhome_pg&wd=Android%20%20%20&rsv_spt=1&oq=Android&rsv_pq=ab2a70100027a7f2&rsv_t=f1cayg5tN5WI1FODPZv%2FHTUcr0DvR8TlNhypj9FUM74dtsnn%2BVqI3b%2FojNajfQhEbVxt&rqlang=cn&rsv_enter=0&rsv_dl=tb&rsv_sug3=4&rsv_sug1=4&rsv_sug7=100&rsv_btype=t&inputT=1639&rsv_sug4=10793").get();
+//        System.out.println(document.body());
+//        parseHtml();
+
+//        parseLayout();
+//        parseRunMethod();
+        splitUrlParam();
+    }
+
+    private static void splitUrlParam(){
+        //专题  contentType
+//        String url="  http://vipcloud-launcher.hismarttv.com/vipcloud/specialfavorite/download?appVersionName=2020.5.0.0.13.0&deviceId=86100300000101000000071218006808&languageId=0&appVersionCode=2000000000&mac=00%3A63%3A18%3A00%3A68%3A08&accessToken=1ayD8BAFA4vJuJOwq-7M7PLemt-KKosaGaOl2Nm10iZovxRWz_j7vahUJtqhpRWy1Q7cInevo505E7RX3pZzCjPO2jljEX73eYDFPzhY_5IB6-xfGdv30uqFerWw-CR-mQda0VGe6zZ0uRHcFc1HvTHsfxv5tOVD7vFds-vVXdIlqU0AjrWwdgD5imMQ70LbYVcDjzAs1v&serialNo=c495585c5a121d9f8e1368f29591f9f2&license=1015&sourceType=1&appPackageName=com.jamdeo.tv.vod&timeStamp=1607594333&commonRandomId=cd5a7fe0-d8be-40f1-8116-e084a869a939&appVersion=01.102.136&productCode=HIKID&customerId=32822477&vipRight=%5B%7B%22rightProduct%22%3A%22vod%22%2C%22rightValue%22%3A%222%22%7D%2C%7B%22rightProduct%22%3A%22edu%22%2C%22rightValue%22%3A%222%22%7D%2C%7B%22rightProduct%22%3A%22educ%22%2C%22rightValue%22%3A%222%22%7D%5D&version=2020.5.0.0.13.0&subscriberId=203627496&otaVersion=0001AI0930&deviceExt=MSD648\n";
+        //绘本  contentType=21002
+//        String url="http://vipcloud-launcher.hismarttv.com/vipcloud/favorite/download?appVersionName=2020.5.0.0.13.0&deviceId=86100300000101000000071218006808&languageId=0&appVersionCode=2000000000&mac=00%3A63%3A18%3A00%3A68%3A08&accessToken=1ayD8BAFA4vJuJOwq-7M7PLemt-KKosaGaOl2Nm10iZovxRWz_j7vahUJtqhpRWy1Q7cInevo505E7RX3pZzCjPO2jljEX73eYDFPzhY_5IB6-xfGdv30uqFerWw-CR-mQda0VGe6zZ0uRHcFc1HvTHsfxv5tOVD7vFds-vVXdIlqU0AjrWwdgD5imMQ70LbYVcDjzAs1v&contentType=21002&serialNo=c495585c5a121d9f8e1368f29591f9f2&license=1015&sourceType=1&appPackageName=com.jamdeo.tv.vod&timeStamp=1607594393&commonRandomId=2734f330-d55b-4f48-a3a6-0638e6fcea8b&appVersion=01.102.136&productCode=HIKID&customerId=32822477&vipRight=%5B%7B%22rightProduct%22%3A%22vod%22%2C%22rightValue%22%3A%222%22%7D%2C%7B%22rightProduct%22%3A%22edu%22%2C%22rightValue%22%3A%222%22%7D%2C%7B%22rightProduct%22%3A%22educ%22%2C%22rightValue%22%3A%222%22%7D%5D&version=2020.5.0.0.13.0&subscriberId=203627496&otaVersion=0001AI0930&deviceExt=MSD648\n";
+        //听学  contentType=19006
+//        String url="http://vipcloud-launcher.hismarttv.com/vipcloud/favorite/download?appVersionName=2020.5.0.0.13.0&deviceId=86100300000101000000071218006808&languageId=0&appVersionCode=2000000000&mac=00%3A63%3A18%3A00%3A68%3A08&accessToken=1ayD8BAFA4vJuJOwq-7M7PLemt-KKosaGaOl2Nm10iZovxRWz_j7vahUJtqhpRWy1Q7cInevo505E7RX3pZzCjPO2jljEX73eYDFPzhY_5IB6-xfGdv30uqFerWw-CR-mQda0VGe6zZ0uRHcFc1HvTHsfxv5tOVD7vFds-vVXdIlqU0AjrWwdgD5imMQ70LbYVcDjzAs1v&contentType=19006&serialNo=c495585c5a121d9f8e1368f29591f9f2&license=1015&sourceType=1&appPackageName=com.jamdeo.tv.vod&timeStamp=1607594483&commonRandomId=e33875f5-ca5f-4385-8616-fb0a40df77a3&appVersion=01.102.136&productCode=HIKID&customerId=32822477&vipRight=%5B%7B%22rightProduct%22%3A%22vod%22%2C%22rightValue%22%3A%222%22%7D%2C%7B%22rightProduct%22%3A%22edu%22%2C%22rightValue%22%3A%222%22%7D%2C%7B%22rightProduct%22%3A%22educ%22%2C%22rightValue%22%3A%222%22%7D%5D&version=2020.5.0.0.13.0&subscriberId=203627496&otaVersion=0001AI0930&deviceExt=MSD648\n";
+        //课程 contentType=2001,1001
+        String url="http://vipcloud-launcher.hismarttv.com/vipcloud/favorite/download?appVersionName=2020.5.0.0.13.0&deviceId=86100300000101000000071218006808&languageId=0&appVersionCode=2000000000&mac=00%3A63%3A18%3A00%3A68%3A08&accessToken=1ayD8BAFA4vJuJOwq-7M7PLemt-KKosaGaOl2Nm10iZovxRWz_j7vahUJtqhpRWy1Q7cInevo505E7RX3pZzCjPO2jljEX73eYDFPzhY_5IB6-xfGdv30uqFerWw-CR-mQda0VGe6zZ0uRHcFc1HvTHsfxv5tOVD7vFds-vVXdIlqU0AjrWwdgD5imMQ70LbYVcDjzAs1v&contentType=2001%2C1001&serialNo=c495585c5a121d9f8e1368f29591f9f2&license=1015&sourceType=1&appPackageName=com.jamdeo.tv.vod&timeStamp=1607594562&commonRandomId=10a639d0-ed43-43ec-b94b-edce95397203&appVersion=01.102.136&productCode=HIKID&customerId=32822477&vipRight=%5B%7B%22rightProduct%22%3A%22vod%22%2C%22rightValue%22%3A%222%22%7D%2C%7B%22rightProduct%22%3A%22edu%22%2C%22rightValue%22%3A%222%22%7D%2C%7B%22rightProduct%22%3A%22educ%22%2C%22rightValue%22%3A%222%22%7D%5D&version=2020.5.0.0.13.0&subscriberId=203627496&otaVersion=0001AI0930&deviceExt=MSD648\n";
+        String[] result=url.split("&");
+        for (String s : result) {
+            LUtils.i(s);
+        }
+    }
+
+    /**
+     * 解析Android studio 抓取的方法运行文件
+     */
+    private static void parseRunMethod() throws IOException {
+        List<String> list = FileUtils.readLines(new File("C:\\Users\\dingzhixin.ex\\Desktop\\runmethod.txt"));
+        int count = 0;
+        for (String s : list) {
+            if (s.contains("main")&&s.contains("ju.")) {
+                count++;
+                System.out.println(s);
+            }
+        }
+
+        System.out.println("总行数  =  " + count);
+    }
+
+    /**
+     * 解析adb dumpsys activity top输出内容
+     */
+    private static void parseLayout() throws IOException {
+        List<String> list = FileUtils.readLines(new File("C:\\Users\\dingzhixin.ex\\Desktop\\superbaby.txt"));
+        String start = "View Hierarchy";
+        List<DataParseBean> result = new ArrayList<>();
+        boolean isStart = false;
+        int count = 0;
+        for (String string : list) {
+            if (string.contains(start)) {
+                isStart = true;
+                continue;
+            }
+            count++;
+            if (isStart&&!TextUtils.isEmpty(string)) {
+                result.add(new DataParseBean(getSpaceCount(string), count, string));
+                System.out.println(getSpaceCount(string) + "  =  "+string);
+
+            }
+        }
+//        int first = 0;
+//        int second = 0;
+//        Map<Integer, List<DataParseBean>> map = new TreeMap<>();
+//        int size = result.size();
+//
+//
+//        for (int i = 0; i < size; i++) {
+//            DataParseBean dataParseBean = result.get(i);
+//            if (dataParseBean.spaceCount == 0) {
+//                continue;
+//            }
+//            if (map.get(dataParseBean.spaceCount) == null) {
+//                List<DataParseBean> list1 = new ArrayList<>();
+//                list1.add(dataParseBean);
+//                map.put(dataParseBean.spaceCount, list1);
+//            } else {
+//                map.get(dataParseBean.spaceCount).add(dataParseBean);
+//            }
+//        }
+//        for (Integer integer : map.keySet()) {
+//            List<DataParseBean> list1 = map.get(integer);
+//            for (DataParseBean dataParseBean : list1) {
+//                System.out.println(dataParseBean.position + "  =  " + dataParseBean.spaceCount + "  =  " + dataParseBean.content);
+//            }
+//        }
+    }
+
+    public static class DataParseBean {//2708-3004  2830-3006  2854-2920
+        public int spaceCount;
+        public int position;
+        public String content;
+
+        public DataParseBean(int spaceCount, String content) {
+            this.spaceCount = spaceCount;
+            this.content = content;
+        }
+
+        public DataParseBean(int spaceCount, int position, String content) {
+            this.spaceCount = spaceCount;
+            this.position = position;
+            this.content = content;
+        }
+    }
+
+    private static int getSpaceCount(String s) {
+        if (TextUtils.isEmpty(s)) {
+            return 0;
+        }
+        String temp = s + "A";
+        int start = temp.length();
+        int end = temp.trim().length();
+
+
+        return start - end;
+    }
+
+    public static void parseHtml() throws IOException {
+        //Htmlunit模拟的浏览器，设置css,js等支持及其它的一些简单设置
+        WebClient browser = new WebClient();
+        browser.getOptions().setCssEnabled(false);
+        browser.getOptions().setJavaScriptEnabled(true);
+        browser.getOptions().setThrowExceptionOnScriptError(false);
+
+        //获取页面
+        HtmlPage htmlPage = browser.getPage("https://fanyi.baidu.com/?aldtype=16047#en/zh/top");
+        //设置等待js的加载时间
+        browser.waitForBackgroundJavaScript(30000);
+        browser.setHTMLParserListener(new HTMLParserListener() {
+            @Override
+            public void error(String s, URL url, String s1, int i, int i1, String s2) {
+
+            }
+
+            @Override
+            public void warning(String s, URL url, String s1, int i, int i1, String s2) {
+
+            }
+        });
+        //使用xml的方式解析获取到jsoup的document对象
+        Document doc = Jsoup.parse(htmlPage.asXml());
+        System.out.println(doc.body());
+
+    }
+
+    private static void interval(File loadFile, File saveFile) throws IOException {
+        String content = FileUtil.getFileContent(loadFile);
+        StringBuilder builder = new StringBuilder();
+        char[] chars = content.toCharArray();
+        int length = chars.length;
+        Random random = new Random();
+        for (int i = 0; i < length; i++) {
+            builder.append(chars[i]).append((char) (random.nextInt('z') % ('z' - 'a' + 1) + 'a'));
+        }
+        if (!saveFile.exists()) {
+            saveFile.createNewFile();
+        }
+        FileUtil.outFileContent(saveFile, builder.toString());
+    }
+
+    private static void convergence(File loadFile, File saveFile) throws IOException {
+        String content = FileUtil.getFileContent(loadFile);
+        StringBuilder builder1 = new StringBuilder();
+        StringBuilder builder2 = new StringBuilder();
+        char[] chars = content.toCharArray();
+        int length = chars.length;
+        for (int i = 0; i < length; i++) {
+            if (i % 2 == 0) {
+                builder1.append(chars[i]);
+            } else {
+                builder2.append(chars[i]);
+            }
+        }
+        System.out.println(builder1.toString());
+        System.out.println(builder2.toString());
+        if (!saveFile.exists()) {
+            saveFile.createNewFile();
+        }
+        FileUtil.outFileContent(saveFile, builder1.toString());
+    }
+
+    private static void decrypt(int subLength, File loadFile, File saveFile) throws IOException {
+        String content = FileUtil.getFileContent(loadFile);
+        int size = content.length();
+        int surplus = size % subLength;
+        int count;
+        if (surplus == 0) {
+            count = size / subLength;
+        } else {
+            count = size / subLength + 1;
+        }
+        StringBuilder builder = new StringBuilder();
+
+        int position = 0;
+        List<List<String>> lists = new ArrayList<>();
+        List<String> list = new ArrayList<>();
+        for (int i = 0; i < subLength; i++) {
+            if (i < surplus - 1) {
+                if (position + count < size) {
+                    list.add(content.substring(position, position + count));
+                    position += count;
+                } else {
+                    list.add(content.substring(position, size));
+                    position = size;
+                }
+            } else {
+                if (position + count < size) {
+                    list.add(content.substring(position, position + count - 1));
+                    position += count - 1;
+                } else {
+                    list.add(content.substring(position, size));
+                    position = size;
+                }
+            }
+        }
+
+        int resultSize = list.size();
+        int resultLength = list.get(0).length();
+        for (int i = 0; i < resultLength; i++) {
+            for (int j = 0; j < resultSize; j++) {
+                if (list.get(j).length() > i) {
+                    builder.append(list.get(j).substring(i, i + 1));
+                }
+            }
+        }
+        if (!saveFile.exists()) {
+            saveFile.createNewFile();
+        }
+        FileUtil.outFileContent(saveFile, builder.toString());
+    }
+
+    private static void encryption(int subLength, File loadFile, File saveFile) throws IOException {
+        String content = FileUtil.getFileContent(loadFile);
+        StringBuilder builder = new StringBuilder();
+        int size = content.length();
+        for (int i = 0; i < subLength; i++) {
+            for (int j = 0; j < size; j++) {
+                if (j % subLength == i) {
+                    builder.append(content.substring(j, j + 1));
+                }
+            }
+        }
+        if (!saveFile.exists()) {
+            saveFile.createNewFile();
+        }
+        FileUtil.outFileContent(saveFile, builder.toString());
     }
 
 

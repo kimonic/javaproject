@@ -246,9 +246,6 @@ public class FileUtil {
         return Integer.toBinaryString((b & 0xFF) + 0x100).substring(1);
     }
 
-
-
-
     /**
 
      * 判断字符串是否是乱码
@@ -279,6 +276,10 @@ public class FileUtil {
         }
 
         return false;
+
+    }
+
+    public static void convertFile(){
 
     }
 }
