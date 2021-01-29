@@ -18,14 +18,14 @@ public class ImageTest {
 
     public static void main(String[] args) {
 //        editImage("C:\\Users\\dingzhixin.ex\\Desktop\\999.png");
-//        createImage();
+        createImage();
 //        try {
 //            String result = calculateGreen("C:\\Users\\dingzhixin.ex\\Desktop\\Image_20201112154347.png");
 //            System.out.println(result);
 //        } catch (Exception e) {
 //            e.printStackTrace();
 //        }
-        byteReadFile();
+//        byteReadFile();
 
     }
 
@@ -321,25 +321,46 @@ public class ImageTest {
 
     public static void createImage() {
         //得到图片缓冲区
-        BufferedImage bi = new BufferedImage(150, 70, BufferedImage.TYPE_INT_ARGB);//INT精确度达到一定,RGB三原色，高度70,宽度150
+        BufferedImage bi = new BufferedImage(150, 150, BufferedImage.TYPE_INT_ARGB);//INT精确度达到一定,RGB三原色，高度70,宽度150
+
+        for (int i = 0; i < 150; i++) {
+            for (int j = 0; j < 150; j++) {
+                if (j > 20 && j < 30 && i > 20 && i < 130) {
+                    bi.setRGB(i, j, Color.CYAN.getRGB());
+                } else if (j > 30 && j < 130 && i > 70 && i < 80) {
+                    bi.setRGB(i, j, Color.CYAN.getRGB());
+                } else {
+                    bi.setRGB(i, j, Color.BLACK.getRGB());
+                }
+
+                if (j > 115 && j < 130 && i > 60 && i < 75 && j - i == 55) {
+                    int m = i - 10;
+                    for (int k = m; k < i; k++) {
+                        System.out.println(k + " == "+ j);
+                        bi.setRGB(k, j, Color.CYAN.getRGB());
+                    }
+                }
+            }
+        }
 
 //得到它的绘制环境(这张图片的笔)
-        Graphics2D g2 = (Graphics2D) bi.getGraphics();
+//        Graphics2D g2 = (Graphics2D) bi.getGraphics();
 
-        g2.fillRect(0, 0, 150, 70);//填充一个矩形 左上角坐标(0,0),宽70,高150;填充整张图片
+//        g2.fillRect(0, 0, 150, 150);//填充一个矩形 左上角坐标(0,0),宽70,高150;填充整张图片
 //设置颜色
-        g2.setColor(Color.WHITE);
-        g2.fillRect(0, 0, 150, 70);//填充整张图片(其实就是设置背景颜色)
+//        g2.setColor(Color.WHITE);
+//        g2.fillRect(0, 0, 150, 150);//填充整张图片(其实就是设置背景颜色)
 
-        g2.setColor(Color.RED);
-        g2.drawRect(0, 0, 150 - 1, 70 - 1); //画边框
+//        g2.setColor(Color.RED);
+//        g2.fillRect(0, 0, 150, 150); //画边框
 
-        g2.setFont(new Font("宋体", Font.BOLD, 18)); //设置字体:字体、字号、大小
-        g2.setColor(Color.BLACK);//设置背景颜色
-
-        g2.drawString("HelloWorld", 3, 50); //向图片上写字符串
+//        g2.setFont(new Font("宋体", Font.BOLD, 18)); //设置字体:字体、字号、大小
+//        g2.setColor(Color.BLACK);//设置背景颜色
+//
+//        g2.drawString("HelloWorld", 3, 50); //向图片上写字符串
         try {
             ImageIO.write(bi, "JPEG", new FileOutputStream("C:\\Users\\dingzhixin.ex\\Desktop\\a.jpg"));//保存图片 JPEG表示保存格式
+            ImageIO.write(bi, "PNG", new FileOutputStream("C:\\Users\\dingzhixin.ex\\Desktop\\a.png"));//保存图片 JPEG表示保存格式
         } catch (IOException e) {
             e.printStackTrace();
         }

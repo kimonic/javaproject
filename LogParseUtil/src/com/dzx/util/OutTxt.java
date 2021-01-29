@@ -12,13 +12,17 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 
 import javax.swing.filechooser.FileSystemView;
+import java.awt.*;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.WatchEvent;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Random;
 import java.util.concurrent.CountDownLatch;
 
 public class OutTxt {
@@ -36,8 +40,11 @@ public class OutTxt {
 //                "getHomeId"));
 //        List<String> list = new ArrayList<>(Arrays.asList("IotHomeCardViewStrategy","main"));
 //        List<String> list = new ArrayList<>(Arrays.asList("java.lang.","java.util","android."));
+//        List<String> list = new ArrayList<>(Arrays.asList("ActivityManager: START u0", "HXJ"));
+//        List<String> list = new ArrayList<>(Arrays.asList("HisensePhoneWindowHelper", "HXJ"));
+//        List<String> list = new ArrayList<>(Arrays.asList("HXJ"));
 //        根据条件过滤内容
-//        filerFileAndOut("C:\\Users\\dingzhixin.ex\\Desktop\\002.log", list);
+//        filerFileAndOut("C:\\Users\\dingzhixin.ex\\Desktop\\bug\\log.txt", list);
         //过滤异常统计信息
 //        List<String> list = new ArrayList<>(Arrays.asList("8610030000010100000007120c9c6a3b"));
 //        List<String> list = new ArrayList<>(Arrays.asList("speech_CoreService: sort:chat;title","HXJ onReceive, deviceStatusChanged, msgContent"));
@@ -46,7 +53,7 @@ public class OutTxt {
         //分析内存泄漏
 //        analysisMemInfo();
 
-//        monitor("C:\\Users\\dingzhixin.ex\\Desktop\\1.txt", 500);
+        monitor("C:\\Users\\dingzhixin.ex\\Desktop\\1.txt", 500);
 
 //        Utils.runtimeCommand("arp -a 192.168.137.172");
 //        Utils.runtimeCommand("nbtstat -a  192.168.137.172");
@@ -67,10 +74,69 @@ public class OutTxt {
 
 //        parseLayout();
 //        parseRunMethod();
-        splitUrlParam();
+//        splitUrlParam();
+//        testRobot();
+//        textCompare();
+//        renameFile("E:\\work\\resource\\aiot资料\\慧享家\\Aiot 12月份资料\\12.31风扇和空气净化器\\12.31风扇和空气净化器\\03 Res\\空气净化器\\序列帧",
+//                "aircleaner_anim_");
+//        outFilenameAppend("C:\\Users\\dingzhixin.ex\\Desktop\\验证温度\\风扇");
+//        renameImg("E:\\work\\resource\\aiot资料\\慧享家\\Aiot 12月份资料\\12.31风扇和空气净化器\\12.31风扇和空气净化器\\03 Res\\空气净化器\\序列帧");
     }
 
-    private static void splitUrlParam(){
+
+    private static void renameImg(String filePath) {
+        File file = new File(filePath);
+        String[] files = file.list();
+        int length = files.length;
+        for (int i = 0; i < length; i++) {
+            String result = files[i].replaceAll("air_on_", "").replaceAll(".png", "");
+            System.out.println(result);
+            if (result.length() == 4) {
+                result = "0"+result;
+            } else if (result.length() == 3) {
+                result = "00"+result;
+            } else if (result.length() == 2) {
+                result = "000"+result;
+            }else {
+
+            }
+            File file1 = new File(filePath, files[i]);
+            File file2 = new File(filePath, "air_on_" + result + ".png");
+            System.out.println(files[i] + "  =======  " + file1.renameTo(file2));
+
+
+        }
+
+    }
+
+    private static void textCompare() {
+        String s1 = "{\"startupType\":4,\"startupUrl\":[{\"key\":\"startupType\",\"value\":1,\"type\":\"int\"},{\"key\":\"packageName\",\"value\":\"com.jamdeo.tv.vod\",\"type\":\"String\"},{\"key\":\"className\",\"value\":\"com.jamdeo.tv.vod.detail.ContentDetailActivity\",\"type\":\"String\"},{\"key\":\"uri\",\"value\":\"content://com.jamdeo.data.vod/content_detail?source=JAMDEO_CLOUD&programSeriesId=%s\",\"type\":\"String\"},{\"key\":\"com.jamdeo.UiInterpreter.EXTRA_DETAIL_VIEW_TRIGGER\",\"value\":0,\"type\":\"int\"},{\"key\":\"srcPackageName\",\"value\":\"%s\",\"type\":\"String\"},{\"key\":\"realClass\",\"value\":\"com.jamdeo.tv.vod.detail.ContentDetailActivity\",\"type\":\"String\"},{\"key\":\"typecode\",\"value\":1002,\"type\":\"int\"},{\"key\":\"superAppParam\",\"value\":{\"productCode\":\"8\",\"id\":\"6567\",\"name\":\"\",\"typeCode\":\"8001\",\"subTypeCode\":\"\",\"packageVipId\":\"\",\"albumType\":\"2\",\"navigationId\":\"\"},\"type\":\"String\"}]}";
+        String s2 = "{\"startupType\":4,\"startupUrl\":[{\"key\":\"startupType\",\"value\":1,\"type\":\"int\"},{\"key\":\"packageName\",\"value\":\"com.jamdeo.tv.vod\",\"type\":\"String\"},{\"key\":\"className\",\"value\":\"com.jamdeo.tv.vod.detail.ContentDetailActivity\",\"type\":\"String\"},{\"key\":\"uri\",\"value\":\"content://com.jamdeo.data.vod/content_detail?source=JAMDEO_CLOUD&programSeriesId=%s\",\"type\":\"String\"},{\"key\":\"com.jamdeo.UiInterpreter.EXTRA_DETAIL_VIEW_TRIGGER\",\"value\":0,\"type\":\"int\"},{\"key\":\"srcPackageName\",\"value\":\"%s\",\"type\":\"String\"},{\"key\":\"realClass\",\"value\":\"com.jamdeo.tv.vod.detail.ContentDetailActivity\",\"type\":\"String\"},{\"key\":\"typecode\",\"value\":1002,\"type\":\"int\"},{\"key\":\"superAppParam\",\"value\":{\"productCode\":\"8\",\"id\":\"4844\",\"name\":\"\",\"typeCode\":\"8001\",\"subTypeCode\":\"\",\"packageVipId\":\"\",\"albumType\":\"2\",\"navigationId\":\"\"},\"type\":\"String\"}]}";
+        LUtils.i("s1.length = ", s1.length(), " , s2.length = ", s2.length());
+        int size = Math.min(s1.length(), s2.length());
+        for (int i = 0; i < size; i++) {
+            if (s1.charAt(i) != s2.charAt(i)) {
+                LUtils.i(s1.charAt(i), " === ", s2.charAt(i));
+                LUtils.i("i = ", i);
+            }
+        }
+
+        LUtils.i(s1.substring(650, 750));
+        LUtils.i(s2.substring(650, 750));
+
+
+    }
+
+    private static void testRobot() {
+        try {
+            Robot robot = new Robot();
+            robot.mouseMove(1800, 1000);
+        } catch (AWTException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private static void splitUrlParam() {
         //专题  contentType
 //        String url="  http://vipcloud-launcher.hismarttv.com/vipcloud/specialfavorite/download?appVersionName=2020.5.0.0.13.0&deviceId=86100300000101000000071218006808&languageId=0&appVersionCode=2000000000&mac=00%3A63%3A18%3A00%3A68%3A08&accessToken=1ayD8BAFA4vJuJOwq-7M7PLemt-KKosaGaOl2Nm10iZovxRWz_j7vahUJtqhpRWy1Q7cInevo505E7RX3pZzCjPO2jljEX73eYDFPzhY_5IB6-xfGdv30uqFerWw-CR-mQda0VGe6zZ0uRHcFc1HvTHsfxv5tOVD7vFds-vVXdIlqU0AjrWwdgD5imMQ70LbYVcDjzAs1v&serialNo=c495585c5a121d9f8e1368f29591f9f2&license=1015&sourceType=1&appPackageName=com.jamdeo.tv.vod&timeStamp=1607594333&commonRandomId=cd5a7fe0-d8be-40f1-8116-e084a869a939&appVersion=01.102.136&productCode=HIKID&customerId=32822477&vipRight=%5B%7B%22rightProduct%22%3A%22vod%22%2C%22rightValue%22%3A%222%22%7D%2C%7B%22rightProduct%22%3A%22edu%22%2C%22rightValue%22%3A%222%22%7D%2C%7B%22rightProduct%22%3A%22educ%22%2C%22rightValue%22%3A%222%22%7D%5D&version=2020.5.0.0.13.0&subscriberId=203627496&otaVersion=0001AI0930&deviceExt=MSD648\n";
         //绘本  contentType=21002
@@ -78,11 +144,12 @@ public class OutTxt {
         //听学  contentType=19006
 //        String url="http://vipcloud-launcher.hismarttv.com/vipcloud/favorite/download?appVersionName=2020.5.0.0.13.0&deviceId=86100300000101000000071218006808&languageId=0&appVersionCode=2000000000&mac=00%3A63%3A18%3A00%3A68%3A08&accessToken=1ayD8BAFA4vJuJOwq-7M7PLemt-KKosaGaOl2Nm10iZovxRWz_j7vahUJtqhpRWy1Q7cInevo505E7RX3pZzCjPO2jljEX73eYDFPzhY_5IB6-xfGdv30uqFerWw-CR-mQda0VGe6zZ0uRHcFc1HvTHsfxv5tOVD7vFds-vVXdIlqU0AjrWwdgD5imMQ70LbYVcDjzAs1v&contentType=19006&serialNo=c495585c5a121d9f8e1368f29591f9f2&license=1015&sourceType=1&appPackageName=com.jamdeo.tv.vod&timeStamp=1607594483&commonRandomId=e33875f5-ca5f-4385-8616-fb0a40df77a3&appVersion=01.102.136&productCode=HIKID&customerId=32822477&vipRight=%5B%7B%22rightProduct%22%3A%22vod%22%2C%22rightValue%22%3A%222%22%7D%2C%7B%22rightProduct%22%3A%22edu%22%2C%22rightValue%22%3A%222%22%7D%2C%7B%22rightProduct%22%3A%22educ%22%2C%22rightValue%22%3A%222%22%7D%5D&version=2020.5.0.0.13.0&subscriberId=203627496&otaVersion=0001AI0930&deviceExt=MSD648\n";
         //课程 contentType=2001,1001
-        String url="http://vipcloud-launcher.hismarttv.com/vipcloud/favorite/download?appVersionName=2020.5.0.0.13.0&deviceId=86100300000101000000071218006808&languageId=0&appVersionCode=2000000000&mac=00%3A63%3A18%3A00%3A68%3A08&accessToken=1ayD8BAFA4vJuJOwq-7M7PLemt-KKosaGaOl2Nm10iZovxRWz_j7vahUJtqhpRWy1Q7cInevo505E7RX3pZzCjPO2jljEX73eYDFPzhY_5IB6-xfGdv30uqFerWw-CR-mQda0VGe6zZ0uRHcFc1HvTHsfxv5tOVD7vFds-vVXdIlqU0AjrWwdgD5imMQ70LbYVcDjzAs1v&contentType=2001%2C1001&serialNo=c495585c5a121d9f8e1368f29591f9f2&license=1015&sourceType=1&appPackageName=com.jamdeo.tv.vod&timeStamp=1607594562&commonRandomId=10a639d0-ed43-43ec-b94b-edce95397203&appVersion=01.102.136&productCode=HIKID&customerId=32822477&vipRight=%5B%7B%22rightProduct%22%3A%22vod%22%2C%22rightValue%22%3A%222%22%7D%2C%7B%22rightProduct%22%3A%22edu%22%2C%22rightValue%22%3A%222%22%7D%2C%7B%22rightProduct%22%3A%22educ%22%2C%22rightValue%22%3A%222%22%7D%5D&version=2020.5.0.0.13.0&subscriberId=203627496&otaVersion=0001AI0930&deviceExt=MSD648\n";
-        String[] result=url.split("&");
+        String url = "http://vipcloud-launcher.hismarttv.com/vipcloud/favorite/download?appVersionName=2020.5.0.0.13.0&deviceId=86100300000101000000071218006808&languageId=0&appVersionCode=2000000000&mac=00%3A63%3A18%3A00%3A68%3A08&accessToken=1ayD8BAFA4vJuJOwq-7M7PLemt-KKosaGaOl2Nm10iZovxRWz_j7vahUJtqhpRWy1Q7cInevo505E7RX3pZzCjPO2jljEX73eYDFPzhY_5IB6-xfGdv30uqFerWw-CR-mQda0VGe6zZ0uRHcFc1HvTHsfxv5tOVD7vFds-vVXdIlqU0AjrWwdgD5imMQ70LbYVcDjzAs1v&contentType=2001%2C1001&serialNo=c495585c5a121d9f8e1368f29591f9f2&license=1015&sourceType=1&appPackageName=com.jamdeo.tv.vod&timeStamp=1607594562&commonRandomId=10a639d0-ed43-43ec-b94b-edce95397203&appVersion=01.102.136&productCode=HIKID&customerId=32822477&vipRight=%5B%7B%22rightProduct%22%3A%22vod%22%2C%22rightValue%22%3A%222%22%7D%2C%7B%22rightProduct%22%3A%22edu%22%2C%22rightValue%22%3A%222%22%7D%2C%7B%22rightProduct%22%3A%22educ%22%2C%22rightValue%22%3A%222%22%7D%5D&version=2020.5.0.0.13.0&subscriberId=203627496&otaVersion=0001AI0930&deviceExt=MSD648\n";
+        String[] result = url.split("&");
         for (String s : result) {
             LUtils.i(s);
         }
+
     }
 
     /**
@@ -92,7 +159,7 @@ public class OutTxt {
         List<String> list = FileUtils.readLines(new File("C:\\Users\\dingzhixin.ex\\Desktop\\runmethod.txt"));
         int count = 0;
         for (String s : list) {
-            if (s.contains("main")&&s.contains("ju.")) {
+            if (s.contains("main") && s.contains("ju.")) {
                 count++;
                 System.out.println(s);
             }
@@ -116,9 +183,9 @@ public class OutTxt {
                 continue;
             }
             count++;
-            if (isStart&&!TextUtils.isEmpty(string)) {
+            if (isStart && !TextUtils.isEmpty(string)) {
                 result.add(new DataParseBean(getSpaceCount(string), count, string));
-                System.out.println(getSpaceCount(string) + "  =  "+string);
+                System.out.println(getSpaceCount(string) + "  =  " + string);
 
             }
         }
@@ -387,9 +454,10 @@ public class OutTxt {
      */
     private static void monitor(String inputFile, int sleepInterval) {
 //        List<String> list = Arrays.asList("InflateException", "OutOfMemoryError", "IllegalArgumentException", "FATAL", "DemoCrashHandler","manager error","has detached");
-        List<String> list = Arrays.asList("InflateException", "OutOfMemoryError", "IllegalArgumentException", "FATAL", "DemoCrashHandler", "manager error", "HXJ");
+//        List<String> list = Arrays.asList("InflateException", "OutOfMemoryError", "IllegalArgumentException", "FATAL", "DemoCrashHandler", "manager error", "HXJ");
 //        List<String> list = Arrays.asList("SingleCardDeviceManger", "BluetoothVoiceTipFragment","IotManagerService","RequestBean");
 //        List<String> list1 = Arrays.asList("HXJ", "homeId");
+        List<String> list = Arrays.asList("updateSceneView()", "updateByPartnerStatus","mAssistView.isFocusable()","firstRequestFocus");
         TailerListener listener = new TailerListenerAdapter() {
             @Override
             public void handle(String line) {
@@ -406,10 +474,11 @@ public class OutTxt {
 //                    }
                 }
                 if (needOut) {
+                    System.out.println(line + "\n");
 
-                    if (!line.contains("HXJ") || line.contains("has detached")) {
-                        System.out.println(line + "\n");
-                    }
+//                    if (!line.contains("HXJ") || line.contains("has detached")) {
+//                        System.out.println(line + "\n");
+//                    }
 //                if (count == list.size()) {
                     FileUtil.outFileContentAppend(new File("C:\\Users\\dingzhixin.ex\\Desktop\\异常结果.txt"), line + "\n\n");
                 }
@@ -459,17 +528,48 @@ public class OutTxt {
     /**
      * 重命名文件名
      */
-    public static void renameFile(String filePath) {
+    public static void renameFile(String filePath, String pre) {
         File file = new File(filePath);
 
         String[] list = file.list();
 
+        int count = 0;
         for (int i = 0; i < list.length; i++) {
             System.out.println(list[i]);
 //            System.out.println(list[i].replace("01_",""));
-//            File file1 = new File(filePath, list[i]);
-//            System.out.println("==========   " + file1.renameTo(new File(filePath, list[i].replace("01_", ""))));
+            String fileName;
+            if (count < 10) {
+                fileName = pre + "00" + count + ".png";
+            } else if (count < 100) {
+                fileName = pre + "0" + count + ".png";
+            } else {
+                fileName = pre + count + ".png";
+            }
+            File file1 = new File(filePath, list[i]);
+            try {
+                System.out.println(list[i] + "  ===========  " + fileName);
+                FileUtils.copyFile(file1, new File("C:\\Users\\dingzhixin.ex\\Desktop\\空气", fileName));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+//            System.out.println("==========   " + file1.renameTo(new File("C:\\Users\\dingzhixin.ex\\Desktop\\处理后图片", fileName)));
+            count++;
         }
+
+    }
+
+    /**
+     * 输出文件名组合
+     */
+    private static void outFilenameAppend(String filePath) {
+        //R.drawable.
+        File file = new File(filePath);
+        String[] list = file.list();
+        int length = list.length;
+        for (int i = 0; i < length; i++) {
+            System.out.println("R.drawable." + list[i].replaceAll(".png","") + ",");
+        }
+
     }
 
 
