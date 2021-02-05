@@ -453,11 +453,11 @@ public class OutTxt {
      * 监控文件改变并输出最新内容
      */
     private static void monitor(String inputFile, int sleepInterval) {
-//        List<String> list = Arrays.asList("InflateException", "OutOfMemoryError", "IllegalArgumentException", "FATAL", "DemoCrashHandler","manager error","has detached");
+        List<String> list = Arrays.asList("InflateException", "OutOfMemoryError", "IllegalArgumentException", "FATAL", "AiotCrashHandler","manager error","has detached");
 //        List<String> list = Arrays.asList("InflateException", "OutOfMemoryError", "IllegalArgumentException", "FATAL", "DemoCrashHandler", "manager error", "HXJ");
 //        List<String> list = Arrays.asList("SingleCardDeviceManger", "BluetoothVoiceTipFragment","IotManagerService","RequestBean");
 //        List<String> list1 = Arrays.asList("HXJ", "homeId");
-        List<String> list = Arrays.asList("updateSceneView()", "updateByPartnerStatus","mAssistView.isFocusable()","firstRequestFocus");
+//        List<String> list = Arrays.asList("updateSceneView()", "updateByPartnerStatus","mAssistView.isFocusable()","firstRequestFocus");
         TailerListener listener = new TailerListenerAdapter() {
             @Override
             public void handle(String line) {
@@ -468,6 +468,7 @@ public class OutTxt {
                     if (line.contains(s)) {
 //                        count++;
                         needOut = true;
+                        break;
                     }
 //                    if (line.contains("com.hisense.hitv.hicloud.a.y")) {
 //                        needOut = false;
