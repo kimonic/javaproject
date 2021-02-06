@@ -11,6 +11,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 
 import java.io.File;
+import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
@@ -61,9 +62,13 @@ public class ParseMediaSourceUtil {
         //设置启动google浏览器的驱动和位置,此处需要提前做好配置
         //chromedriver.exe文件与chrome.exe文件放置到同一个文件夹下
         //注意chromedriver.exe与chrome.exe的版本对应关系
+        //C:\Users\20313\AppData\Local\Google\Chrome\Application
         System.setProperty("webdriver.chrome.driver",
                 "C:" + File.separator +
-                        "Program Files (x86)" + File.separator +
+                        "Users" + File.separator +
+                        "20313" + File.separator +
+                        "AppData" + File.separator +
+                        "Local" + File.separator +
                         "Google" + File.separator +
                         "Chrome" + File.separator +
                         "Application" + File.separator +
@@ -85,11 +90,11 @@ public class ParseMediaSourceUtil {
 
         //获取谷歌浏览器驱动,使用默认参数配置
         WebDriver driver = new ChromeDriver();
-        for (int i = 11; i < 20; i++) {
+        for (int i = 16; i < 100; i++) {
             driver.get("https://ting55.com/book/11250-" + i);
             try {
                 //不休眠可能获取不到完整的html文件,此处应该视网速情况进行设置
-                Thread.sleep(5000);
+                Thread.sleep(10000);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
@@ -131,8 +136,18 @@ public class ParseMediaSourceUtil {
                 resourceEntity.resourcePosition = num;
                 resourceEntity.resourceUrl = url;
                 resultList.add(resourceEntity);
+                saveContent(resourceEntity);
             }
             System.out.println(url + "--" + num);
+        }
+    }
+
+    private static void saveContent(ResourceEntity resourceEntity){
+        String content=new Gson().toJson(resourceEntity)+"\n";
+        try {
+            FileUtils.write(new File("C:\\Users\\20313\\Desktop\\唐砖","唐砖连接.txt"), content,true);
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 
