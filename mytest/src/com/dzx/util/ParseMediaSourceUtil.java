@@ -1,11 +1,13 @@
 package com.dzx.util;
 
+
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import org.apache.commons.io.FileUtils;
+import org.apache.hc.core5.util.TextUtils;
 import org.jsoup.Jsoup;
+import org.jsoup.nodes.Attributes;
 import org.jsoup.nodes.Document;
-import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 import org.openqa.selenium.Cookie;
 import org.openqa.selenium.WebDriver;
@@ -80,6 +82,8 @@ public class ParseMediaSourceUtil {
         //设置启动google浏览器的驱动和位置,此处需要提前做好配置
         //chromedriver.exe文件与chrome.exe文件放置到同一个文件夹下
         //注意chromedriver.exe与chrome.exe的版本对应关系
+
+        //=========================1111========================================================================
         System.setProperty("webdriver.chrome.driver",
                 "C:" + File.separator +
                         "Program Files (x86)" + File.separator +
@@ -88,6 +92,19 @@ public class ParseMediaSourceUtil {
                         "Application" + File.separator +
                         "chromedriver.exe");
         System.out.println("启动 ...");
+        //=========================22222=======================================================================
+//        System.setProperty("webdriver.chrome.driver",
+//                "C:" + File.separator +
+//                        "Users" + File.separator +
+//                        "20313" + File.separator +
+//                        "AppData" + File.separator +
+//                        "Local" + File.separator +
+//                        "Google" + File.separator +
+//                        "Chrome" + File.separator +
+//                        "Application" + File.separator +
+//                        "chromedriver.exe");
+//        System.out.println("启动 ...");
+        //=============33333===================================================================================
         //ChromeOptions chromeOptions = new ChromeOptions();
         //配置Chrome浏览器启动时最大化,实测无效
         //chromeOptions.addArguments("-–start-maximized");
@@ -102,19 +119,16 @@ public class ParseMediaSourceUtil {
         //搜索按钮点击
         //driver.findElement(By.id("su")).click();
         //获取谷歌浏览器驱动,使用默认参数配置
-//        ChromeOptions options = new ChromeOptions();
-//        disableChromeImages(options);
-        WebDriver driver = new ChromeDriver();
-
-
-
+        ChromeOptions options = new ChromeOptions();
+        disableChromeImages(options);
+        WebDriver driver = new ChromeDriver(options);
 
 
         for (int i = start; i < end; i++) {
             WebDriver.Options manage = driver.manage();
             Set<Cookie> cookies = manage.getCookies();
-            for(Cookie c : cookies){
-                manage.deleteCookie(new Cookie(c.getName(),c.getValue()));
+            for (Cookie c : cookies) {
+                manage.deleteCookie(new Cookie(c.getName(), c.getValue()));
 //                System.out.println(c.getName()+ " = " + c.getValue());
             }
 
@@ -146,20 +160,16 @@ public class ParseMediaSourceUtil {
     }
 
 
-
-
-    public static void disableChromeImages(ChromeOptions options)
-    {
+    public static void disableChromeImages(ChromeOptions options) {
         HashMap<String, Object> images = new HashMap<String, Object>();
         images.put("images", 2);
 
         HashMap<String, Object> prefs = new HashMap<String, Object>();
         //设置不加载图片
-//        prefs.put("profile.default_content_setting_values", images);
+        prefs.put("profile.default_content_setting_values", images);
         //设置访问手机网页
         prefs.put("deviceName", "Nexus 5");
         options.setExperimentalOption("prefs", prefs);
-
 
 
     }
@@ -172,41 +182,42 @@ public class ParseMediaSourceUtil {
 //        System.out.println(html);
 
         Document document = Jsoup.parse(html);
-
-        Elements elements = document.getElementsByTag("meta");
-        for (int i = 0; i < elements.size(); i++) {
-            try {
-                Element element=elements.get(i).getElementsByAttributeValue("name","_c").get(0);;
-//            element.getElementsByAttributeValue("name","_c");
-                System.out.println(element.attr("content"));
-                UrlRequestUtil.sendMyPost(num,element.attr("content"));
-            } catch (Exception e) {
-
-            }
-
-        }
+//
+//        Elements elements = document.getElementsByTag("meta");
+//        for (int i = 0; i < elements.size(); i++) {
+//            try {
+//                Element element = elements.get(i).getElementsByAttributeValue("name", "_c").get(0);
+//                ;
+////            element.getElementsByAttributeValue("name","_c");
+//                System.out.println(element.attr("content"));
+//                UrlRequestUtil.sendMyPost(num, element.attr("content"));
+//            } catch (Exception e) {
+//
+//            }
+//
+//        }
 
 //
-//        Elements elements = document.getElementsByTag("audio");
-//        int size = elements.size();
-//        System.out.println("num = " + num + " , elements.size() = " + size);
-//        if (size == 0) {
-//            failList.add(num);
-//        }
-//        for (int i = 0; i < size; i++) {
-//            Attributes attributes = elements.get(i).attributes();
-//            String url = attributes.get("src");
-//            if (TextUtils.isEmpty(url)) {
-//                failList.add(num);
-//            } else {
-//                ResourceEntity resourceEntity = new ResourceEntity();
-//                resourceEntity.resourcePosition = num;
-//                resourceEntity.resourceUrl = url;
-//                resultList.add(resourceEntity);
-//                saveContentToFile(resourceEntity, num);
-//            }
-//            System.out.println(url + "--" + num);
-//        }
+        Elements elements = document.getElementsByTag("audio");
+        int size = elements.size();
+        System.out.println("num = " + num + " , elements.size() = " + size);
+        if (size == 0) {
+            failList.add(num);
+        }
+        for (int i = 0; i < size; i++) {
+            Attributes attributes = elements.get(i).attributes();
+            String url = attributes.get("src");
+            if (TextUtils.isEmpty(url)) {
+                failList.add(num);
+            } else {
+                ResourceEntity resourceEntity = new ResourceEntity();
+                resourceEntity.resourcePosition = num;
+                resourceEntity.resourceUrl = url;
+                resultList.add(resourceEntity);
+                saveContentToFile(resourceEntity, num);
+            }
+            System.out.println(url + "--" + num);
+        }
     }
 
     private static void saveContentToFile(ResourceEntity resourceEntity, int num) {
@@ -216,6 +227,13 @@ public class ParseMediaSourceUtil {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        //==============================111111==========================================
+//        String content=new Gson().toJson(resourceEntity)+"\n";
+//        try {
+//            FileUtils.write(new File("C:\\Users\\20313\\Desktop\\唐砖","唐砖连接.txt"), content,true);
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
     }
 
 
@@ -279,10 +297,6 @@ public class ParseMediaSourceUtil {
          */
         public int resourcePosition;
     }
-
-
-
-
 
 
 }
