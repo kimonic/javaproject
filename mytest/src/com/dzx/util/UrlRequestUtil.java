@@ -15,10 +15,7 @@ import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLConnection;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class UrlRequestUtil {
 
@@ -270,7 +267,7 @@ public class UrlRequestUtil {
             System.out.println("==============================");
             OutputStreamWriter outputStreamWriter = new OutputStreamWriter(
                     httpURLConnection.getOutputStream(), "UTF-8");
-            outputStreamWriter.append("bookId=11250&isPay=0&page=" + page);
+            outputStreamWriter.append("&bookId=11250&isPay=0&page=" + page);
             outputStreamWriter.flush();
             outputStreamWriter.close();
 
@@ -292,6 +289,24 @@ public class UrlRequestUtil {
                 }
             }
             System.out.println("sendPost responseParams:" + responseParams + "    " + page);
+
+
+            System.out.println("-----------响应头开始-----------");
+            Map<String, List<String>> headerFields = httpURLConnection.getHeaderFields();
+            Set<Map.Entry<String, List<String>>> entrySet = headerFields.entrySet();
+            Iterator<Map.Entry<String, List<String>>> iterator = entrySet.iterator();
+            while(iterator.hasNext()) {
+                Map.Entry<String, List<String>> next = iterator.next();
+                String key = next.getKey();
+                List<String> value = next.getValue();
+                String string = value.toString();
+                System.out.println(key+":"+string);
+//                if("Content-Type".equals(key)) {
+//                    int indexOf = string.indexOf("charset=");
+//                    encoding = string.substring(indexOf+8,string.length()-1);
+//                }
+            }
+            System.out.println("-----------响应头结束-----------");
 
             return responseParams;
         } catch (IOException e) {
