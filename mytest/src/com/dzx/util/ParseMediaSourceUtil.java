@@ -18,10 +18,8 @@ import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.Type;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Set;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 /**
  * 相关配置
@@ -57,13 +55,100 @@ public class ParseMediaSourceUtil {
      */
     private static List<ResourceEntity> resultList = new ArrayList<>();
 
+    private static int count = 0;
+    private static int mCurrentNum = 297;
+
+
     /**
      * http://audio.xmcdn.com/group9/M0B/21/2D/wKgDZlbmxDihkQxIAJs4uQOBiKs061.m4a--403
      */
     public static void main(String[] args) {//C:\Program Files (x86)\Google\Chrome\Application
-//        getAllContentFromUrl();
-        getAllContentFromUrl(34, 930);
+
+
 //        parseSource("",0);
+        startFind();
+//        filterFile();
+    }
+
+    private static void startFind() {
+        System.out.println("已开始,等待中......." + new SimpleDateFormat("HH:mm:ss").format(new Date()));
+//        try {
+//            Thread.sleep(50 * 60 * 1000);
+//        } catch (InterruptedException e) {
+//            e.printStackTrace();
+//        }
+        System.out.println("开始,等待结束......." + new SimpleDateFormat("HH:mm:ss").format(new Date()));
+        while (true) {
+            try {
+                getAllContentFromUrl(mCurrentNum, 930);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    private static void filterFile() {
+        File file = new File("C:\\Users\\dingzhixin.ex\\Desktop\\设备配网坐标\\下载资源.txt");
+        try {
+            List<String> list = FileUtils.readLines(file);
+            List<ResourceEntity> resourceEntities = new ArrayList<>();
+            for (String s : list) {
+                if (s.contains("http")) {
+                    ResourceEntity resourceEntity = new Gson().fromJson(s, ResourceEntity.class);
+                    resourceEntities.add(resourceEntity);
+                }
+            }
+            List<Integer> list1 = new ArrayList<>();
+            for (int i = 0; i < 300; i++) {
+                list1.add(i);
+            }
+
+            for (ResourceEntity entity : resourceEntities) {
+                list1.remove((Integer) (entity.resourcePosition));
+            }
+            System.out.println(list1.toString());
+
+
+            resourceEntities.sort(new Comparator<ResourceEntity>() {
+                @Override
+                public int compare(ResourceEntity o1, ResourceEntity o2) {
+                    if (o1.resourcePosition > o2.resourcePosition) {
+                        return 1;
+                    } else if (o1.resourcePosition < o2.resourcePosition) {
+                        return -1;
+                    }
+                    return 0;
+                }
+            });
+            Set<Integer> set = new HashSet<>();
+            for (ResourceEntity entity : resourceEntities) {
+                if (!set.contains(entity.resourcePosition)) {
+                    set.add(entity.resourcePosition);
+                    if (!entity.resourceUrl.contains("https")){
+                        entity.resourceUrl = entity.resourceUrl.replaceAll("http", "https");
+                    }
+                    System.out.println(new Gson().toJson(entity));
+                }
+
+            }
+
+            int size = resourceEntities.size();
+            set.clear();
+            for (int i = size - 1; i > -1; i--) {
+                ResourceEntity resourceEntity = resourceEntities.get(i);
+                if (set.contains(resourceEntity.resourcePosition)) {
+                    resourceEntities.remove(i);
+                } else {
+                    set.add(resourceEntity.resourcePosition);
+                }
+
+            }
+
+
+            System.out.println(new Gson().toJson(resourceEntities));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     private static void newThreadRun(int start, int end) {
@@ -82,6 +167,7 @@ public class ParseMediaSourceUtil {
         //设置启动google浏览器的驱动和位置,此处需要提前做好配置
         //chromedriver.exe文件与chrome.exe文件放置到同一个文件夹下
         //注意chromedriver.exe与chrome.exe的版本对应关系
+
 
         //=========================1111========================================================================
         System.setProperty("webdriver.chrome.driver",
@@ -123,8 +209,11 @@ public class ParseMediaSourceUtil {
         disableChromeImages(options);
         WebDriver driver = new ChromeDriver(options);
 
+        //http://audio.xmcdn.com/group11/M06/90/B4/wKgDbVYeVuzRAN0CAJhSM6pJ8hs524.m4a
+//{"resourceUrl":"http://audio.xmcdn.com/group11/M06/90/B4/wKgDbVYeVuzRAN0CAJhSM6pJ8hs524.m4a","resourcePosition":40}
 
         for (int i = start; i < end; i++) {
+            mCurrentNum = i;
             WebDriver.Options manage = driver.manage();
             Set<Cookie> cookies = manage.getCookies();
             for (Cookie c : cookies) {
@@ -135,7 +224,7 @@ public class ParseMediaSourceUtil {
             driver.get("https://ting55.com/book/11250-" + i);
             try {
                 //不休眠可能获取不到完整的html文件,此处应该视网速情况进行设置
-                Thread.sleep(5000);
+                Thread.sleep(120000);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
@@ -163,14 +252,15 @@ public class ParseMediaSourceUtil {
     public static void disableChromeImages(ChromeOptions options) {
         HashMap<String, Object> images = new HashMap<String, Object>();
         images.put("images", 2);
+//        images.put("deviceName", "Apple iPhone 6");
 
         HashMap<String, Object> prefs = new HashMap<String, Object>();
         //设置不加载图片
         prefs.put("profile.default_content_setting_values", images);
         //设置访问手机网页
-        prefs.put("deviceName", "Nexus 5");
+//        prefs.put("deviceName", "Nexus 5");
+        prefs.put("deviceName", "Apple iPhone 6");
         options.setExperimentalOption("prefs", prefs);
-
 
     }
 
@@ -180,7 +270,7 @@ public class ParseMediaSourceUtil {
      */
     private static void parseSource(String html, int num) {
 //        System.out.println(html);
-
+        count++;
         Document document = Jsoup.parse(html);
 //
 //        Elements elements = document.getElementsByTag("meta");
@@ -217,6 +307,16 @@ public class ParseMediaSourceUtil {
                 saveContentToFile(resourceEntity, num);
             }
             System.out.println(url + "--" + num);
+        }
+
+        if (count % 21 == 0) {
+            System.out.println("开始休眠.........." + (new SimpleDateFormat("yyyyMMdd  HH:mm:ss").format(new Date())));
+            try {
+                Thread.sleep(20 * 60 * 1000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            System.out.println("休眠结束.........." + (new SimpleDateFormat("yyyyMMdd  HH:mm:ss").format(new Date())));
         }
     }
 
