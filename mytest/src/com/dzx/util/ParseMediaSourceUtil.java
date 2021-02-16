@@ -56,14 +56,13 @@ public class ParseMediaSourceUtil {
     private static List<ResourceEntity> resultList = new ArrayList<>();
 
     private static int count = 0;
-    private static int mCurrentNum = 297;
+    private static int mCurrentNum = 716;
 
 
     /**
      * http://audio.xmcdn.com/group9/M0B/21/2D/wKgDZlbmxDihkQxIAJs4uQOBiKs061.m4a--403
      */
     public static void main(String[] args) {//C:\Program Files (x86)\Google\Chrome\Application
-
 
 //        parseSource("",0);
         startFind();
@@ -88,18 +87,19 @@ public class ParseMediaSourceUtil {
     }
 
     private static void filterFile() {
-        File file = new File("C:\\Users\\dingzhixin.ex\\Desktop\\设备配网坐标\\下载资源.txt");
+//        File file = new File("C:\\Users\\dingzhixin.ex\\Desktop\\设备配网坐标\\下载资源.txt");
+        File file = new File("C:\\Users\\20313\\Desktop\\唐砖\\处理文本.txt");
         try {
             List<String> list = FileUtils.readLines(file);
             List<ResourceEntity> resourceEntities = new ArrayList<>();
             for (String s : list) {
-                if (s.contains("http")) {
+                if (s.contains("http") || s.contains("https")) {
                     ResourceEntity resourceEntity = new Gson().fromJson(s, ResourceEntity.class);
                     resourceEntities.add(resourceEntity);
                 }
             }
             List<Integer> list1 = new ArrayList<>();
-            for (int i = 0; i < 300; i++) {
+            for (int i = 0; i < 716; i++) {
                 list1.add(i);
             }
 
@@ -122,13 +122,13 @@ public class ParseMediaSourceUtil {
             });
             Set<Integer> set = new HashSet<>();
             for (ResourceEntity entity : resourceEntities) {
-                if (!set.contains(entity.resourcePosition)) {
-                    set.add(entity.resourcePosition);
-                    if (!entity.resourceUrl.contains("https")){
+//                if (!set.contains(entity.resourcePosition)) {
+//                    set.add(entity.resourcePosition);
+                    if (!entity.resourceUrl.contains("https")) {
                         entity.resourceUrl = entity.resourceUrl.replaceAll("http", "https");
                     }
                     System.out.println(new Gson().toJson(entity));
-                }
+//                }
 
             }
 
@@ -170,26 +170,26 @@ public class ParseMediaSourceUtil {
 
 
         //=========================1111========================================================================
-        System.setProperty("webdriver.chrome.driver",
-                "C:" + File.separator +
-                        "Program Files (x86)" + File.separator +
-                        "Google" + File.separator +
-                        "Chrome" + File.separator +
-                        "Application" + File.separator +
-                        "chromedriver.exe");
-        System.out.println("启动 ...");
-        //=========================22222=======================================================================
 //        System.setProperty("webdriver.chrome.driver",
 //                "C:" + File.separator +
-//                        "Users" + File.separator +
-//                        "20313" + File.separator +
-//                        "AppData" + File.separator +
-//                        "Local" + File.separator +
+//                        "Program Files (x86)" + File.separator +
 //                        "Google" + File.separator +
 //                        "Chrome" + File.separator +
 //                        "Application" + File.separator +
 //                        "chromedriver.exe");
 //        System.out.println("启动 ...");
+        //=========================22222=======================================================================
+        System.setProperty("webdriver.chrome.driver",
+                "C:" + File.separator +
+                        "Users" + File.separator +
+                        "20313" + File.separator +
+                        "AppData" + File.separator +
+                        "Local" + File.separator +
+                        "Google" + File.separator +
+                        "Chrome" + File.separator +
+                        "Application" + File.separator +
+                        "chromedriver.exe");
+        System.out.println("启动 ...");
         //=============33333===================================================================================
         //ChromeOptions chromeOptions = new ChromeOptions();
         //配置Chrome浏览器启动时最大化,实测无效
@@ -221,7 +221,7 @@ public class ParseMediaSourceUtil {
 //                System.out.println(c.getName()+ " = " + c.getValue());
             }
 
-            driver.get("https://ting55.com/book/11250-" + i);
+            driver.get("https://ting55.com/book/11250-" + mCurrentNum);
             try {
                 //不休眠可能获取不到完整的html文件,此处应该视网速情况进行设置
                 Thread.sleep(120000);
@@ -299,6 +299,15 @@ public class ParseMediaSourceUtil {
             String url = attributes.get("src");
             if (TextUtils.isEmpty(url)) {
                 failList.add(num);
+                try {
+                    LUtils.i("DZX 开始获取失败,休眠一小时 ",
+                            new SimpleDateFormat("HH:mm:ss").format(new Date()),
+                            " mCurrentNum = ", mCurrentNum);
+                    count = 1;
+                    Thread.sleep(3600 * 1000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
             } else {
                 ResourceEntity resourceEntity = new ResourceEntity();
                 resourceEntity.resourcePosition = num;
@@ -322,18 +331,18 @@ public class ParseMediaSourceUtil {
 
     private static void saveContentToFile(ResourceEntity resourceEntity, int num) {
         String content = new Gson().toJson(resourceEntity) + "\n";
-        try {
-            FileUtils.write(new File("C:\\Users\\dingzhixin.ex\\Desktop\\下载资源.txt"), content, true);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        //==============================111111==========================================
-//        String content=new Gson().toJson(resourceEntity)+"\n";
 //        try {
-//            FileUtils.write(new File("C:\\Users\\20313\\Desktop\\唐砖","唐砖连接.txt"), content,true);
+//            FileUtils.write(new File("C:\\Users\\dingzhixin.ex\\Desktop\\下载资源.txt"), content, true);
 //        } catch (IOException e) {
 //            e.printStackTrace();
 //        }
+        //==============================111111==========================================
+//        String content=new Gson().toJson(resourceEntity)+"\n";
+        try {
+            FileUtils.write(new File("C:\\Users\\20313\\Desktop\\唐砖", "唐砖连接.txt"), content, true);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
 
