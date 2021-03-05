@@ -299,6 +299,7 @@ public class FtpUpload {
                 os.write(b, 0, len);
             }
             os.flush();
+            System.out.println("size = " + size + " , fileSize = "+ fileSize);
             if (size == fileSize) {
                 System.out.println("上传文件到ftp成功!");
             } else {

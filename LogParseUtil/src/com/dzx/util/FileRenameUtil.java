@@ -19,7 +19,10 @@ public class FileRenameUtil {
         String positionContent = FileUtil.getFileContent(new File(apkPath, jsonName));
         Gson gson = new Gson();
         ApkFileSaveNameBean apkFileSaveNameBean = gson.fromJson(positionContent, ApkFileSaveNameBean.class);
-        int position = apkFileSaveNameBean.getPosition() + 1;
+        int position = 1;
+        if (apkFileSaveNameBean != null) {
+            position = apkFileSaveNameBean.getPosition() + 1;
+        }
         if (TextUtils.nonEmpty(apkPath)) {
             //重命名apk文件
             String[] splits = apkName.split("\\.");
@@ -33,6 +36,28 @@ public class FileRenameUtil {
                 System.out.println("改名后的文件路径" + renameFile.getAbsolutePath());
                 String content = gson.toJson(apkFileSaveNameBean);
                 FileUtil.outFileContent(new File(apkPath, jsonName), content);
+                success = true;
+            }
+        }
+        System.out.println("重命名apk是否成功   =" + success);
+        return success;
+    }
+
+
+    /**
+     * 重命名上传失败的文件
+     */
+    public static boolean renameFailApkFile(String apkPath, String apkName, String jsonName) {
+        boolean success = false;
+        //从文件中读取出上次的名称位置
+        String positionContent = FileUtil.getFileContent(new File(apkPath, jsonName));
+        Gson gson = new Gson();
+        ApkFileSaveNameBean apkFileSaveNameBean = gson.fromJson(positionContent, ApkFileSaveNameBean.class);
+        if (TextUtils.nonEmpty(apkPath)) {
+            //重命名apk文件
+            File file = new File(apkFileSaveNameBean.getUploadPath());
+            File renameFile = new File(apkPath, apkName);
+            if (file.renameTo(renameFile)) {
                 success = true;
             }
         }

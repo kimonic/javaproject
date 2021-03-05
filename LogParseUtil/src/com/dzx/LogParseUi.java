@@ -123,6 +123,7 @@ public class LogParseUi extends JFrame implements ActionListener {
     private int mLogParseButtonWidth = 180, mLogParseButtonHeight = 30, mButtonAndButtonGaps = 30;
     private int mInstallApkButtonWidth = 270, mInstallApkButtonHeight = 30;
     private int mUploadApkToFtpButtonWidth = 180, mUploadApkToFtpButtonHeight = 30;
+    private int mRenameFailButtonWidth = 100, mRenameFailButtonHeight = 30;
 
 
     /**
@@ -138,6 +139,7 @@ public class LogParseUi extends JFrame implements ActionListener {
     private static final String KILL_PROCESS = "杀死命令进程";
     private static final String CONNECT_DEVICE = "连接设备";
     private static final String CLEAR_LOG = "清除日志";
+    private static final String RENAME_FAIL = "重命名";
 
     /**
      * 杀死正在执行的cmd进程的按钮
@@ -170,6 +172,10 @@ public class LogParseUi extends JFrame implements ActionListener {
      * 上传apk到ftp按钮
      */
     private JButton mUploadApkToFtpButton = new JButton(UPLOAD_APK_TO_FTP);
+    /**
+     * 重命名上传失败的文件
+     */
+    private JButton mRenameFail = new JButton(RENAME_FAIL);
 
 
     /**
@@ -359,6 +365,14 @@ public class LogParseUi extends JFrame implements ActionListener {
         mContainerPanel.add(mUploadApkToFtpButton);
         mUploadApkToFtpButton.addActionListener(this);
 
+        //重命名失败文件
+        mRenameFail.setBounds(mMarginLeft + mButtonAndButtonGaps * 3 + mLogParseButtonWidth + mInstallApkButtonWidth
+                        + mUploadApkToFtpButtonWidth,
+                mMarginTop + (mLabelHeight + mLineGaps) * mButtonsPosition,
+                mRenameFailButtonWidth, mRenameFailButtonHeight);
+        mContainerPanel.add(mRenameFail);
+        mRenameFail.addActionListener(this);
+
 
         //最终执行结果相关设置,设置字体,内容个位置
         mResultLabel.setFont(new Font("宋体", Font.PLAIN, 20));
@@ -399,7 +413,8 @@ public class LogParseUi extends JFrame implements ActionListener {
         int positionY = mMarginTop + (mLineGaps + mTextFieldHeight) * mFtpInfoPosition;
         textFieldSet(mFtpIpTextField, mMarginLeft, positionY);
 //        mFtpIpTextField.setText("10.18.216.92");
-        mFtpIpTextField.setText("10.18.205.10");
+//        mFtpIpTextField.setText("10.18.205.10");
+        mFtpIpTextField.setText("192.168.0.12");
         textFieldSet(mFtpPortTextField, mMarginLeft + mLabelAndTextFieldGaps + mFtpTextFieldWidth, positionY);
         mFtpPortTextField.setText("21");
         textFieldSet(mFtpNameTextField, mMarginLeft + (mLabelAndTextFieldGaps + mFtpTextFieldWidth) * 2, positionY);
@@ -577,7 +592,7 @@ public class LogParseUi extends JFrame implements ActionListener {
             int current = Integer.parseInt(apkName.split("_")[1]) + 1;
             if (current < 10) {
                 mDownloadApkFromFtpTextField.setText(apkName.split("_")[0] + "_00" + current);
-            } else if (current + 1 < 100) {
+            } else if (current < 100) {
                 mDownloadApkFromFtpTextField.setText(apkName.split("_")[0] + "_0" + current);
             } else {
                 mDownloadApkFromFtpTextField.setText(apkName.split("_")[0] + "_" + current);
@@ -604,6 +619,16 @@ public class LogParseUi extends JFrame implements ActionListener {
 //            jScrollPane.setViewportView(textArea);
 //            dialog.add(jScrollPane);
 //            dialog.setVisible(true);
+        } else if (RENAME_FAIL.equals(actionCommand)) {
+            String target = mUploadApkToFtpTextField.getText();
+            String[] result = target.split("#");
+            boolean isRename = FileRenameUtil.renameFailApkFile(result[0], result[1], result[2]);
+            if (isRename) {
+                mResultLabel.setText("<html><br>重命名失败文件成功<br></html>");
+            }else {
+                mResultLabel.setText("<html><br>重命名失败文件失败<br></html>");
+            }
+
         }
     }
 

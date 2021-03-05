@@ -40,15 +40,16 @@ public class OutTxt {
 //                "getHomeId"));
 //        List<String> list = new ArrayList<>(Arrays.asList("IotHomeCardViewStrategy","main"));
 //        List<String> list = new ArrayList<>(Arrays.asList("java.lang.","java.util","android."));
-        List<String> list = new ArrayList<>(Arrays.asList("ActivityManager: START u0", "HXJ"));
+//        List<String> list = new ArrayList<>(Arrays.asList("ActivityManager: START u0", "HXJ"));
 //        List<String> list = new ArrayList<>(Arrays.asList("HisensePhoneWindowHelper", "HXJ"));
-//        List<String> list = new ArrayList<>(Arrays.asList("HXJ","START u0"));
+//        List<String> list = new ArrayList<>(Arrays.asList("FATAL","AiotCrashHandler","Exception"));
 //        根据条件过滤内容
-        filerFileAndOut("C:\\Users\\dingzhixin.ex\\Desktop\\cb67339a059e9f40b6061b933e6ec3ba\\log.txt", list);
+//        filerFileAndOut("C:\\Users\\dingzhixin.ex\\Desktop\\cb67339a059e9f40b6061b933e6ec3ba\\log.txt", list);
         //过滤异常统计信息
 //        List<String> list = new ArrayList<>(Arrays.asList("8610030000010100000007120c9c6a3b"));
 //        List<String> list = new ArrayList<>(Arrays.asList("speech_CoreService: sort:chat;title","HXJ onReceive, deviceStatusChanged, msgContent"));
-//        filerFileAndOut("C:\\Users\\dingzhixin.ex\\Desktop\\c4a89af25b9fcbdc673a0ffdfe497d05\\log.txt", list);
+        List<String> list = new ArrayList<>(Arrays.asList("18692"));
+        filerFileAndOut("C:\\Users\\dingzhixin.ex\\Desktop\\bug\\log.txt.1", list);
 
         //分析内存泄漏
 //        analysisMemInfo();
