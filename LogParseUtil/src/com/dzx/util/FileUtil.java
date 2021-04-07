@@ -114,6 +114,13 @@ public class FileUtil {
      */
     public static boolean outFileContent(File positionFile, String content) {
         boolean result = false;
+        if (!positionFile.exists()) {
+            try {
+                positionFile.createNewFile();
+            } catch (IOException e) {
+                System.out.println(LUtils.getErrorMessage(e));
+            }
+        }
 
         if (positionFile.exists()) {
             FileOutputStream fileOutputStream = null;
@@ -214,7 +221,7 @@ public class FileUtil {
                 StringBuilder stringBuilder1 = new StringBuilder();
                 int count = temp.length;
                 System.out.println(new String(temp));
-                System.out.println(new String(temp,"utf-8"));
+                System.out.println(new String(temp, "utf-8"));
                 for (int i = 0; i < size; i++) {
                     stringBuilder.append(byteToBinaryString(temp[i])).append(",");
                     stringBuilder1.append(temp[i]).append(",");
@@ -247,7 +254,6 @@ public class FileUtil {
     }
 
     /**
-
      * 判断字符串是否是乱码
      *
      * @param strName 字符串
@@ -279,7 +285,7 @@ public class FileUtil {
 
     }
 
-    public static void convertFile(){
+    public static void convertFile() {
 
     }
 }

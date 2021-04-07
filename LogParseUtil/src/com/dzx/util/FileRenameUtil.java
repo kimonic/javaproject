@@ -22,6 +22,8 @@ public class FileRenameUtil {
         int position = 1;
         if (apkFileSaveNameBean != null) {
             position = apkFileSaveNameBean.getPosition() + 1;
+        } else {
+            apkFileSaveNameBean = new ApkFileSaveNameBean();
         }
         if (TextUtils.nonEmpty(apkPath)) {
             //重命名apk文件

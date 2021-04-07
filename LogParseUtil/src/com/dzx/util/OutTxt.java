@@ -48,13 +48,13 @@ public class OutTxt {
         //过滤异常统计信息
 //        List<String> list = new ArrayList<>(Arrays.asList("8610030000010100000007120c9c6a3b"));
 //        List<String> list = new ArrayList<>(Arrays.asList("speech_CoreService: sort:chat;title","HXJ onReceive, deviceStatusChanged, msgContent"));
-        List<String> list = new ArrayList<>(Arrays.asList("18692"));
-        filerFileAndOut("C:\\Users\\dingzhixin.ex\\Desktop\\bug\\log.txt.1", list);
+//        List<String> list = new ArrayList<>(Arrays.asList("18692"));
+//        filerFileAndOut("C:\\Users\\dingzhixin.ex\\Desktop\\bug\\log.txt.1", list);
 
         //分析内存泄漏
 //        analysisMemInfo();
 
-//        monitor("C:\\Users\\dingzhixin.ex\\Desktop\\1.txt", 500);
+        monitor("C:\\Users\\dingzhixin.ex\\Desktop\\1.txt", 500);
 
 //        Utils.runtimeCommand("arp -a 192.168.137.172");
 //        Utils.runtimeCommand("nbtstat -a  192.168.137.172");
@@ -93,12 +93,12 @@ public class OutTxt {
             String result = files[i].replaceAll("air_on_", "").replaceAll(".png", "");
             System.out.println(result);
             if (result.length() == 4) {
-                result = "0"+result;
+                result = "0" + result;
             } else if (result.length() == 3) {
-                result = "00"+result;
+                result = "00" + result;
             } else if (result.length() == 2) {
-                result = "000"+result;
-            }else {
+                result = "000" + result;
+            } else {
 
             }
             File file1 = new File(filePath, files[i]);
@@ -454,7 +454,7 @@ public class OutTxt {
      * 监控文件改变并输出最新内容
      */
     private static void monitor(String inputFile, int sleepInterval) {
-        List<String> list = Arrays.asList("InflateException", "OutOfMemoryError", "IllegalArgumentException", "FATAL", "AiotCrashHandler","manager error","has detached");
+        List<String> list = Arrays.asList("InflateException", "HXJ", "OutOfMemoryError", "IllegalArgumentException", "FATAL", "AiotCrashHandler", "manager error", "has detached", "Invalid item position");
 //        List<String> list = Arrays.asList("InflateException", "OutOfMemoryError", "IllegalArgumentException", "FATAL", "DemoCrashHandler", "manager error", "HXJ");
 //        List<String> list = Arrays.asList("SingleCardDeviceManger", "BluetoothVoiceTipFragment","IotManagerService","RequestBean");
 //        List<String> list1 = Arrays.asList("HXJ", "homeId");
@@ -469,11 +469,12 @@ public class OutTxt {
                     if (line.contains(s)) {
 //                        count++;
                         needOut = true;
+                        if (line.contains("HXJ") && !line.contains("AiotCrashHandler")) {
+                            needOut = false;
+                        }
                         break;
                     }
-//                    if (line.contains("com.hisense.hitv.hicloud.a.y")) {
-//                        needOut = false;
-//                    }
+
                 }
                 if (needOut) {
                     System.out.println(line + "\n");
@@ -569,7 +570,7 @@ public class OutTxt {
         String[] list = file.list();
         int length = list.length;
         for (int i = 0; i < length; i++) {
-            System.out.println("R.drawable." + list[i].replaceAll(".png","") + ",");
+            System.out.println("R.drawable." + list[i].replaceAll(".png", "") + ",");
         }
 
     }
