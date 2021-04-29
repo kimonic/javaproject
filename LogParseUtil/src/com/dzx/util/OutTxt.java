@@ -48,13 +48,20 @@ public class OutTxt {
         //过滤异常统计信息
 //        List<String> list = new ArrayList<>(Arrays.asList("8610030000010100000007120c9c6a3b"));
 //        List<String> list = new ArrayList<>(Arrays.asList("speech_CoreService: sort:chat;title","HXJ onReceive, deviceStatusChanged, msgContent"));
-//        List<String> list = new ArrayList<>(Arrays.asList("18692"));
-//        filerFileAndOut("C:\\Users\\dingzhixin.ex\\Desktop\\bug\\log.txt.1", list);
+//        List<String> list = new ArrayList<>(Arrays.asList("VLauncherPresenter","MainPageNetworkModule","NetworkAccess","AbstractCacheHandler"));
+//        List<String> list = new ArrayList<>(Arrays.asList("getAppUpgradeInfoByPackageName", "AppLoadingActivity"));
+//        List<String> list1 = new ArrayList<>(Arrays.asList("SurfaceFlinger","LBStateManager2","com.hisense.base.activity.AppLoadingActivity"));
+//        List<String> list = new ArrayList<>(Arrays.asList("FamilyCircleTwoTwoWidget: | WLFC  doJump ", "WidgetTools: getIntentFromJumpUrl: jumpUrl"));
+//        List<String> list = new ArrayList<>(Arrays.asList("ProgramActionRouter: ProgramActionRouter",
+//                "MVPBaseActivity","ThirdJumpUtils"));
+//        List<String> list1 = new ArrayList<>(Arrays.asList("SurfaceFlinger","LBStateManager2","com.hisense.base.activity.AppLoadingActivity"));
+        List<String> list = new ArrayList<>(Arrays.asList("sIsPortrait","START u0"));
+        filerFileAndOut("C:\\Users\\dingzhixin.ex\\Desktop\\bug\\log.txt", list);
 
         //分析内存泄漏
 //        analysisMemInfo();
 
-        monitor("C:\\Users\\dingzhixin.ex\\Desktop\\1.txt", 500);
+//        monitor("C:\\Users\\dingzhixin.ex\\Desktop\\1.txt", 500);
 
 //        Utils.runtimeCommand("arp -a 192.168.137.172");
 //        Utils.runtimeCommand("nbtstat -a  192.168.137.172");
@@ -405,6 +412,15 @@ public class OutTxt {
      */
     public static void filerFileAndOut(String targetFilePath, String outFilePath, List<String> conditions) {
         ParseLogUtil.parseLog(targetFilePath, outFilePath, conditions);
+    }
+
+    public static void filerFileAndOut(String targetFilePath, String outFilePath, List<String> conditions,
+                                       List<String> excludeConditions) {
+        ParseLogUtil.parseLog(targetFilePath, outFilePath, conditions, excludeConditions);
+    }
+
+    public static void filerFileAndOut(String targetFilePath, List<String> conditions, List<String> excludeConditions) {
+        filerFileAndOut(targetFilePath, "C:\\Users\\dingzhixin.ex\\Desktop\\解析结果1.log", conditions, excludeConditions);
     }
 
     public static void filerFileAndOut(String targetFilePath, List<String> conditions) {

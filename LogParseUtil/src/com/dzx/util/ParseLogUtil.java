@@ -60,7 +60,7 @@ public class ParseLogUtil {
                 }
             }
             bufferedWriter.flush();
-            System.out.println("总行数 = "+count);
+            System.out.println("总行数 = " + count);
             result = "文件解析成功!";
         } catch (IOException e) {
             e.printStackTrace();
@@ -90,6 +90,68 @@ public class ParseLogUtil {
         return result;
     }
 
+
+    public static String parseLog(String targetFilePath, String outputFilePath, List<String> filterConditions
+            , List<String> excludeConditions) {
+        String result = "";
+        File targetFile = new File(targetFilePath);
+        if (!targetFile.exists()) {
+            result = "要解析的文件不存在!";
+            return result;
+        }
+        System.out.println("文件是否存在" + targetFile.exists());
+        FileInputStream fileInputStream = null;
+        BufferedReader bufferedReader = null;
+        FileOutputStream fileOutputStream = null;
+        BufferedWriter bufferedWriter = null;
+        try {
+            fileInputStream = new FileInputStream(targetFile);
+            bufferedReader = new BufferedReader(new InputStreamReader(fileInputStream, StandardCharsets.UTF_8));
+            fileOutputStream = new FileOutputStream(outputFilePath);
+            bufferedWriter = new BufferedWriter(new OutputStreamWriter(fileOutputStream, StandardCharsets.UTF_8));
+            String line = null;
+            int count = 0;
+            while ((line = bufferedReader.readLine()) != null) {
+                //包含过滤条件则输出到文件中
+                if (accordWithCondition(line, filterConditions) && !accordWithCondition(line, excludeConditions)) {
+                    bufferedWriter.write(line);
+                    System.out.println(line);
+                    count++;
+                    bufferedWriter.write("\n\n");
+                }
+            }
+            bufferedWriter.flush();
+            System.out.println("总行数 = " + count);
+            result = "文件解析成功!";
+        } catch (IOException e) {
+            e.printStackTrace();
+            result = "文件解析失败!";
+        } finally {
+            try {
+                if (fileInputStream != null) {
+                    fileInputStream.close();
+                }
+
+                if (bufferedReader != null) {
+                    bufferedReader.close();
+                }
+
+                if (fileOutputStream != null) {
+                    fileOutputStream.close();
+                }
+
+                if (bufferedWriter != null) {
+                    bufferedWriter.close();
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
+        return result;
+    }
+
+
     /**
      * 判断指定文本中是否包含给定条件
      */
@@ -103,4 +165,5 @@ public class ParseLogUtil {
         }
         return false;
     }
+
 }
