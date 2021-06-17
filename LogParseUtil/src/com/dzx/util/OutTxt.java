@@ -40,15 +40,23 @@ public class OutTxt {
 //                "getHomeId"));
 //        List<String> list = new ArrayList<>(Arrays.asList("IotHomeCardViewStrategy","main"));
 //        List<String> list = new ArrayList<>(Arrays.asList("java.lang.","java.util","android."));
-        List<String> list = new ArrayList<>(Arrays.asList("ActivityManager: START u0", "HXJ"));
+//        List<String> list = new ArrayList<>(Arrays.asList("ActivityManager: START u0", "HXJ"));
 //        List<String> list = new ArrayList<>(Arrays.asList("HisensePhoneWindowHelper", "HXJ"));
-//        List<String> list = new ArrayList<>(Arrays.asList("HXJ","START u0"));
+//        List<String> list = new ArrayList<>(Arrays.asList("FATAL","AiotCrashHandler","Exception"));
 //        根据条件过滤内容
-        filerFileAndOut("C:\\Users\\dingzhixin.ex\\Desktop\\cb67339a059e9f40b6061b933e6ec3ba\\log.txt", list);
+//        filerFileAndOut("C:\\Users\\dingzhixin.ex\\Desktop\\cb67339a059e9f40b6061b933e6ec3ba\\log.txt", list);
         //过滤异常统计信息
 //        List<String> list = new ArrayList<>(Arrays.asList("8610030000010100000007120c9c6a3b"));
 //        List<String> list = new ArrayList<>(Arrays.asList("speech_CoreService: sort:chat;title","HXJ onReceive, deviceStatusChanged, msgContent"));
-//        filerFileAndOut("C:\\Users\\dingzhixin.ex\\Desktop\\c4a89af25b9fcbdc673a0ffdfe497d05\\log.txt", list);
+//        List<String> list = new ArrayList<>(Arrays.asList("VLauncherPresenter","MainPageNetworkModule","NetworkAccess","AbstractCacheHandler"));
+//        List<String> list = new ArrayList<>(Arrays.asList("getAppUpgradeInfoByPackageName", "AppLoadingActivity"));
+//        List<String> list1 = new ArrayList<>(Arrays.asList("SurfaceFlinger","LBStateManager2","com.hisense.base.activity.AppLoadingActivity"));
+//        List<String> list = new ArrayList<>(Arrays.asList("FamilyCircleTwoTwoWidget: | WLFC  doJump ", "WidgetTools: getIntentFromJumpUrl: jumpUrl"));
+//        List<String> list = new ArrayList<>(Arrays.asList("ProgramActionRouter: ProgramActionRouter",
+//                "MVPBaseActivity","ThirdJumpUtils"));
+//        List<String> list1 = new ArrayList<>(Arrays.asList("SurfaceFlinger","LBStateManager2","com.hisense.base.activity.AppLoadingActivity"));
+        List<String> list = new ArrayList<>(Arrays.asList("sIsPortrait","START u0"));
+        filerFileAndOut("C:\\Users\\dingzhixin.ex\\Desktop\\bug\\log.txt", list);
 
         //分析内存泄漏
 //        analysisMemInfo();
@@ -92,12 +100,12 @@ public class OutTxt {
             String result = files[i].replaceAll("air_on_", "").replaceAll(".png", "");
             System.out.println(result);
             if (result.length() == 4) {
-                result = "0"+result;
+                result = "0" + result;
             } else if (result.length() == 3) {
-                result = "00"+result;
+                result = "00" + result;
             } else if (result.length() == 2) {
-                result = "000"+result;
-            }else {
+                result = "000" + result;
+            } else {
 
             }
             File file1 = new File(filePath, files[i]);
@@ -406,6 +414,15 @@ public class OutTxt {
         ParseLogUtil.parseLog(targetFilePath, outFilePath, conditions);
     }
 
+    public static void filerFileAndOut(String targetFilePath, String outFilePath, List<String> conditions,
+                                       List<String> excludeConditions) {
+        ParseLogUtil.parseLog(targetFilePath, outFilePath, conditions, excludeConditions);
+    }
+
+    public static void filerFileAndOut(String targetFilePath, List<String> conditions, List<String> excludeConditions) {
+        filerFileAndOut(targetFilePath, "C:\\Users\\dingzhixin.ex\\Desktop\\解析结果1.log", conditions, excludeConditions);
+    }
+
     public static void filerFileAndOut(String targetFilePath, List<String> conditions) {
         filerFileAndOut(targetFilePath, "C:\\Users\\dingzhixin.ex\\Desktop\\解析结果1.log", conditions);
     }
@@ -453,7 +470,7 @@ public class OutTxt {
      * 监控文件改变并输出最新内容
      */
     private static void monitor(String inputFile, int sleepInterval) {
-        List<String> list = Arrays.asList("InflateException", "OutOfMemoryError", "IllegalArgumentException", "FATAL", "AiotCrashHandler","manager error","has detached");
+        List<String> list = Arrays.asList("InflateException", "HXJ", "OutOfMemoryError", "IllegalArgumentException", "FATAL", "AiotCrashHandler", "manager error", "has detached", "Invalid item position");
 //        List<String> list = Arrays.asList("InflateException", "OutOfMemoryError", "IllegalArgumentException", "FATAL", "DemoCrashHandler", "manager error", "HXJ");
 //        List<String> list = Arrays.asList("SingleCardDeviceManger", "BluetoothVoiceTipFragment","IotManagerService","RequestBean");
 //        List<String> list1 = Arrays.asList("HXJ", "homeId");
@@ -468,11 +485,12 @@ public class OutTxt {
                     if (line.contains(s)) {
 //                        count++;
                         needOut = true;
+                        if (line.contains("HXJ") && !line.contains("AiotCrashHandler")) {
+                            needOut = false;
+                        }
                         break;
                     }
-//                    if (line.contains("com.hisense.hitv.hicloud.a.y")) {
-//                        needOut = false;
-//                    }
+
                 }
                 if (needOut) {
                     System.out.println(line + "\n");
@@ -568,7 +586,7 @@ public class OutTxt {
         String[] list = file.list();
         int length = list.length;
         for (int i = 0; i < length; i++) {
-            System.out.println("R.drawable." + list[i].replaceAll(".png","") + ",");
+            System.out.println("R.drawable." + list[i].replaceAll(".png", "") + ",");
         }
 
     }
