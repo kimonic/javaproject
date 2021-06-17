@@ -12,7 +12,7 @@ public class GradleCacheJarFilterUtil {
     private static List<String> targetFilePathList = new ArrayList<>();
 
     public static void main(String[] a) {
-        fileHandle("C:\\Users\\dingzhixin.ex\\.gradle\\caches\\modules-2\\files-2.1", "E:\\新建文件夹\\123456");
+        fileHandle("C:\\Users\\20313\\.gradle\\caches\\modules-2\\files-2.1", "D:\\work\\app\\aggregation\\maven");
 
     }
 
