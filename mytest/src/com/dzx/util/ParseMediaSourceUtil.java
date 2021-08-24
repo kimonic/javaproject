@@ -56,7 +56,7 @@ public class ParseMediaSourceUtil {
     private static List<ResourceEntity> resultList = new ArrayList<>();
 
     private static int count = 0;
-    private static int mCurrentNum = 716;
+    private static int mCurrentNum = 777;
 
 
     /**
@@ -65,8 +65,8 @@ public class ParseMediaSourceUtil {
     public static void main(String[] args) {//C:\Program Files (x86)\Google\Chrome\Application
 
 //        parseSource("",0);
-        startFind();
-//        filterFile();
+//        startFind();
+        filterFile();
     }
 
     private static void startFind() {
@@ -99,7 +99,7 @@ public class ParseMediaSourceUtil {
                 }
             }
             List<Integer> list1 = new ArrayList<>();
-            for (int i = 0; i < 716; i++) {
+            for (int i = 0; i < 925; i++) {
                 list1.add(i);
             }
 
@@ -224,7 +224,7 @@ public class ParseMediaSourceUtil {
             driver.get("https://ting55.com/book/11250-" + mCurrentNum);
             try {
                 //不休眠可能获取不到完整的html文件,此处应该视网速情况进行设置
-                Thread.sleep(120000);
+                Thread.sleep(10000);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
@@ -318,7 +318,7 @@ public class ParseMediaSourceUtil {
             System.out.println(url + "--" + num);
         }
 
-        if (count % 21 == 0) {
+        if (count % 31 == 0) {
             System.out.println("开始休眠.........." + (new SimpleDateFormat("yyyyMMdd  HH:mm:ss").format(new Date())));
             try {
                 Thread.sleep(20 * 60 * 1000);
