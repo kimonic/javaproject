@@ -2,7 +2,10 @@ package com.dzx;
 
 import com.dzx.util.LUtils;
 import javafx.scene.paint.Color;
+import org.apache.commons.io.FileUtils;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -10,6 +13,7 @@ import java.util.List;
 
 public class Test6 {
     public static void main(String[] args) {
+
         // 相似度从0到1
 //        System.out.println(getColorSemblance(Color.rgb(0, 0, 0), Color.rgb(255, 255, 255)));
 //        System.out.println(getColorSemblance(Color.rgb(255, 255, 255), Color.rgb(200, 200, 200)));
@@ -20,27 +24,62 @@ public class Test6 {
 //        splitUrlParam("http://home-launcher.hismarttv.com/api/mainPage?area=%25E5%25B1%25B1%25E4%25B8%259C-%25E9%259D%2592%25E5%25B2%259B&deviceType=0&appVersion=01.102.121&otaVersion=0001AL0329&languageId=0&subscriberId=216527432&deviceExt=55S7&model_id=0&accessToken=1aG2kBALssSBX_m_bGBD3Ua3M0Ym3Y5NLmPFK6n9rpFbgO_MdiPaT2c5U5qLlBpUVFh7y00kPF1puDnognw62VJ2KOVnlCGxAaLwehsq1_Kpf2ywjb7Dfs1THdkKAP3f4TF0A5APJA01W7iUir-giIwZCI9Ux1iFc1iD6hlXocOlgYtmBfzsinKUHUq7uBFTMX4kKGDo-n&appVersionName=2021.5.0.0.13.0&appVersionCode=2000000999&deviceId=8610030000010070000007124f770f98&mac=ca%3A2c%3A4f%3A77%3A0f%3A98&license=1015&vipRight=%5B%7B%22rightProduct%22%3A%22vod%22%2C%22rightValue%22%3A%222%22%7D%2C%7B%22rightProduct%22%3A%22edu%22%2C%22rightValue%22%3A%222%22%7D%2C%7B%22rightProduct%22%3A%22educ%22%2C%22rightValue%22%3A%222%22%7D%5D&commonRandomId=607a6596-1364-463b-a284-2600079b9d1f&customerId=32822477&appPackageName=com.jamdeo.tv.vod&logParams=%7B%22eventcode%22%3A%22200000%22%2C%22productcode%22%3A%228%22%2C%22ip%22%3A%22-1%22%2C%22requesttime%22%3A%221618301051833%22%2C%22subscriberid%22%3A%22216527432%22%2C%22eventPos%22%3A%22000%22%2C%22appversioncode%22%3A%222000000999%22%2C%22apiversion%22%3A%2201.102.121%22%2C%22devicemsg%22%3A%2255S7%22%2C%22sessionid%22%3A%22db9c42f56569402e92aa3ef83f98d0d5%22%2C%22eventType%22%3A%22200%22%2C%22deviceid%22%3A%228610030000010070000007124f770f98%22%2C%22version%22%3A%223.0%22%2C%22appversionname%22%3A%222021.5.0.0.13.0%22%2C%22license%22%3A%22wasu%22%2C%22customerid%22%3A%2232822477%22%2C%22logstamp%22%3A%2262%22%7D&timestamp=0");
 //        splitUrlParam("http://layout-launcher.hismarttv.com/api/v1.1.0/layoutApi/secondParams?appVersion=01.102.141&otaVersion=&timeStampMS=1618465785244&languageId=0&subscriberId=0&deviceExt=55S7&accessToken=&appVersionName=5.0.0.13.0&deviceId=8610030000010070000007124f770f98&appVersionCode=2000000000&mac=ca%3A2c%3A4f%3A77%3A0f%3A98&timeStamp=1618465785&sceneCodeFV=WIDGET_JUMP_JUUI_FV%2CWIDGET_JUMP_SCREEN_SAVER_FV%2CWIDGET_JUMP_SYS_TV_SETTING_FV%2CWIDGET_JUMP_SYS_MEDIA_CENTER_FV%2CWIDGET_JUMP_SYS_PRIVATE_CLOUD_FV%2CWIDGET_JUMP_SYS_SIGNAL_SOURCE_FV%2CWIDGET_JUMP_SYS_AIOT_FV%2CWIDGET_JUMP_SYS_VIDAA_ASSISTANT_FV%2CWIDGET_JUMP_SYS_TUSOU_FV%2CWIDGET_JUMP_SYS_NFC_FV%2CWIDGET_JUMP_SYS_CAMERA_REMINDER_FV%2CWIDGET_JUMP_VOICE_ASSISTANT_FV%2CWIDGET_JUMP_SOCIALTV_VEDIO_CALL_FV%2CVEDIO_MEETING%2CWIDGET_JUMP_SOCIALTV_PHOTO_FV%2CWIDGET_JUMP_SOCIALTV_MIRROR_FV%2CMESSAGE_BOARD%2CAI_POPRIOCEPTIVE%2CWIDGET_JUMP_APP_HI_PORJECTION_FV%2CWIDGET_JUMP_APP_HI_MUSIC_FV%2CWIDGET_JUMP_APP_INTELLIGENT_BOARD_FV%2CWIDGET_JUMP_APP_CHILD_PANEL_FV&license=1011&productCode=21&sceneCode=8003108%2Cchild_common_new%2CHOME_THEATER_SLOGAN&customerId=5989126&appPackageName=com.hisense.widget.launcher");
 //        splitUrlParam("");
-        String s="{\n" +
-                "    \"startupType\": 4,\n" +
-                "    \"startupUrl\": [\n" +
-                "        {\n" +
-                "            \"key\": \"startupType\",\n" +
-                "            \"value\": 1,\n" +
-                "            \"type\": \"int\"\n" +
-                "        },\n" +
-                "        {\n" +
-                "            \"key\": \"packageName\",\n" +
-                "            \"value\": \"com.hisense.aiot\",\n" +
-                "            \"type\": \"String\"\n" +
-                "        },\n" +
-                "        {\n" +
-                "            \"key\": \"className\",\n" +
-                "            \"value\": \"com.ju.iot.homepage.ui.HomeActivity\",\n" +
-                "            \"type\": \"String\"\n" +
-                "        }\n" +
-                "    ]\n" +
-                "}";
-        System.out.println(s.replaceAll("\n","").replaceAll(" ",""));
+//        splitUrlParam(" http://search-launcher.hismarttv.com/searchApi/mamSearch/hotword?appVersion=tusou.01.100&otaVersion=6.0&languageId=0&pageSize=10&index=0&subscriberId=216717686&deviceExt=&appVersionName=3.03.00.032.0&accessToken=1a0ZIDAMBRq5HW-TWK8BO-xTkzh17VUS_r80NxpcEw4GOBBy0bTtRppKV4WDJjVlpVn_QVfttzFRzXfQLO35NlHN_DxLjFG6Uk_72D_HRJzAK-cd7HLUm5_P2M9KdHOc1Y316mmHoTfZoV9pFK8MRyfvC5wd9AZq4iErIntFX0bYiOJV2io21YwWNB3mUzN2jntRXUo40P&deviceId=8610030000010060000007184f770f98&appVersionCode=303000320&mac=16%3Ac7%3A53%3Ad7%3Af2%3A7c&keyWord=&license=1015&sequence=1622100351244&sceneCode=TUSOURecNEW&appType=10&appPackageName=com.hisense.smartimages&customerId=32822477&inputType=1&page=1&resourceType=1\n");
+//        String s=" {        \"startupType\":4,        \"startupUrl\":[{               \"key\":\"startupType\",            \"value\":1,              \"type\":\"int\"    },{             \"key\":\"packageName\",          \"value\":\"com.jamdeo.tv.vod\",            \"type\":\"String\"         },{\"key\":\"orientation\",\"value\":2,\"type\":int},{                \"key\":\"superAppParam\",          \"value\":{                       \"albumType\":\"22\",    \"typeCode\":\"8001\",                       \"tab\":{                                 \"index\":2,                           \"id\":530,                                \"name\":\"漫画\",                          \"type\":38,                           \"tabModifiedTime\":1610434200,                            \"bgColor\":\"\",                           \"bgPic\":\"https://testjhk-cdn-mampic.hismarttv.com/epgdata/mamPic/10/109/202003300306394022.png\",                              \"sideBarVisible\":1,                           \"hasSideBar\":1,                                 \"naviHeaderColour\":\"#212121\",        \"typeName\":\"spintv\"                      }               },              \"type\":\"String\"         }] }";
+//        System.out.println(s.replaceAll("\n","").replaceAll(" ",""));
+
+
+        checkFile();
+
+//        splitUrlParam("http://search-launcher.hismarttv.com/searchApi/mamSearch/hotsearch?appVersion=01.102.139&modelId=0&otaVersion=0001JL0510&pageSize=30&isSuperApp=1&source=1&appVersionCode=2000000000&deviceId=86100300000100600000071820304050&mac=00%3A10%3A20%3A30%3A40%3A50&wechatVersionCode=308002005&appType=1&commonRandomId=17c21e18-8e5b-4e6c-be0f-d6c3fea99e40&customerId=1550000048&contentType=80042&languageId=0&index=0&subscriberId=1550073782&sessionId=48f6d46136e441a9a609ef0ab5c6ecec&deviceExt=55E3F&srcPackageName=com.jamdeo.tv.vod&accessToken=19g_YIAHnzK2lzRcpUmRfZ39LwY2tYUjXI25JTxBlTL-TveTE-7Un4SzgKPTQ3m7euGlMTnIxP-JJWCE4_y-eD_XFEmQNYQoiSanjs9le1CD4Fnrp31sGXnFAbZ-KTxiYeZFIT-8kzc8kQMJkLG0WP4npKCBARKhl8wzNGayFTWgkc2OiMMRRvOskTWXRbeJ6Z_wmROiPB&appVersionName=2021.5.0.0.13.0&keyWord=%E8%87%AA%E5%8A%A8%E5%8C%96%E6%B5%8B%E8%AF%95%E6%90%9C%E7%B4%A2&sequence=1622545128649&license=1015&vipRight=%5B%7B%22rightProduct%22%3A%22vod%22%2C%22rightValue%22%3A%221%22%7D%2C%7B%22rightProduct%22%3A%22edu%22%2C%22rightValue%22%3A%221%22%7D%2C%7B%22rightProduct%22%3A%22educ%22%2C%22rightValue%22%3A%221%22%7D%5D&appPackageName=com.jamdeo.tv.vod&page=1&searchVersion=1.4");
+//        copyApkToUsb();
+    }
+
+    private static void generateDimens() {
+        String target = "<dimen name=\"custom_10px\">5dp</dimen>";
+        for (int i = 0; i < 1921; i++) {
+            System.out.println("<dimen name=\"custom_" + i + "px\">" + i / 1.5f + "dp</dimen>");
+        }
+    }
+
+    private static void copyApkToUsb() {
+        String fileName = "dev-s3-ck-sp_010.apk";
+//
+        try {
+//            FileUtils.copyFile(new File("C:\\Users\\dingzhixin.ex\\Desktop\\widget调试04091149\\" + fileName),
+            FileUtils.copyFile(new File("C:\\Users\\dingzhixin.ex\\Desktop\\dev-s3-ck-sp_010\\" + fileName),
+                    new File("F:\\Android\\" + fileName));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+
+    /**
+     * 扫描目录中是否有文件名包含java的文件
+     */
+    private static void checkFile() {
+        File file = new File("C:\\Users\\dingzhixin.ex\\Desktop\\JUUI_dev-s3-widget_047_vidaa6\\JUUI_dev-s3-widget_047_vidaa6");
+        filterFileName(file);
+
+    }
+
+    /**
+     * 过滤文件名中是否包含某个字符串
+     */
+    private static void filterFileName(File file) {
+        if (file.isDirectory()) {
+            File[] files = file.listFiles();
+            for (File file1 : files) {
+                filterFileName(file1);
+            }
+
+        } else {
+            String fileName = file.getName();
+            if (fileName.contains("java")) {
+                System.out.println(file.getAbsolutePath());
+            }
+        }
     }
 
 

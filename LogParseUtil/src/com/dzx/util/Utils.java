@@ -7,6 +7,9 @@ import com.sun.jna.platform.win32.WinNT;
 import javax.swing.filechooser.FileSystemView;
 import java.io.*;
 import java.lang.reflect.Field;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
 
 /**
  * 工具类文件
@@ -80,7 +83,7 @@ public class Utils {
 //            System.out.println("错误流  = " + errorMessage);
 
             int status = process.waitFor();
-            System.out.println("status = " + status);
+//            System.out.println("status = " + status);
             process.destroy();
             return "命令执行完成!<br>正常输出  = <br>" + normalMessage + "<br> 错误输出 = <br>" + errorMessage;
         } catch (Exception e) {
@@ -89,6 +92,8 @@ public class Utils {
         }
 
     }
+
+    private static SimpleDateFormat simpleDateFormat=new SimpleDateFormat("HH:mm:ss", Locale.getDefault());
 
     /**
      * 获取流的结果
@@ -100,9 +105,10 @@ public class Utils {
             BufferedReader br = new BufferedReader(new InputStreamReader(inputStream, "GB2312"));
             String line = null;
             while ((line = br.readLine()) != null) {
-                System.out.println("命令行输出结果  = " + line);
-                builder.append(line).append("<br>");
+                builder.append(line).append("\n");
             }
+            System.out.println("命令行输出结果   "+simpleDateFormat.format(new Date())+"\n" +  builder.toString());
+
         } catch (IOException e) {
             e.printStackTrace();
         }

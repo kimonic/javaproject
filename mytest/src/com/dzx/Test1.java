@@ -1,5 +1,7 @@
 package com.dzx;
 
+import com.dzx.bean.EnumType;
+import com.dzx.util.LUtils;
 import org.apache.commons.io.FileUtils;
 
 import java.io.BufferedReader;
@@ -7,8 +9,12 @@ import java.io.File;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Test1 {
+
+
     public static void main(String[] args) throws Exception {
 
 //        FinalTest1 finalTest1=new FinalTest1();
@@ -70,7 +76,52 @@ public class Test1 {
 //            e.printStackTrace();
 //        }
 //        System.out.println("29741\tpool-1-thread-13\t0\tjava.lang.Character.isHighSurrogate(C)Z".length());
-        downloadFromUrl();
+//        downloadFromUrl();
+        testEnum();
+    }
+
+    private static void testEnum() {
+        List<EnumType> list = new ArrayList<>();
+        list.add(EnumType.TYPE_FIVE);
+        list.add(EnumType.TYPE_SIX);
+        list.add(EnumType.TYPE_FOUR);
+        list.add(EnumType.TYPE_SEVEN);
+        list.add(EnumType.TYPE_SEVEN);
+        list.add(EnumType.TYPE_THREE);
+        list.add(EnumType.TYPE_THREE);
+        list.add(EnumType.TYPE_EIGHT);
+        list.add(EnumType.TYPE_EIGHT);
+        list.add(EnumType.TYPE_TWO);
+        list.add(EnumType.TYPE_TWO);
+        list.add(EnumType.TYPE_NINE);
+        list.add(EnumType.TYPE_ONE);
+        list.add(EnumType.TYPE_TEN);
+
+        List<EnumType> list1 = new ArrayList<>(list);
+        list.clear();
+
+        LUtils.i(list.size()        );
+        LUtils.i(list1.size()        );
+        LUtils.i(list1.get(0)        );
+//
+//
+//
+//        LUtils.i(list);
+//        LinkedHashSet<EnumType> linkedHashSet = new LinkedHashSet<>(list);
+//        list.clear();
+//        list.addAll(linkedHashSet);
+//        LUtils.i(list);
+//
+//
+//        Collections.sort(list, new Comparator<EnumType>() {
+//            @Override
+//            public int compare(EnumType o1, EnumType o2) {
+//                return o2.ordinal() - o1.ordinal();
+//            }
+//        });
+//        LUtils.i(list);
+
+
     }
 
     public static void getContent() throws Exception {

@@ -19,10 +19,8 @@ import java.net.URL;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.WatchEvent;
-import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.*;
 import java.util.List;
-import java.util.Random;
 import java.util.concurrent.CountDownLatch;
 
 public class OutTxt {
@@ -53,15 +51,48 @@ public class OutTxt {
 //        List<String> list1 = new ArrayList<>(Arrays.asList("SurfaceFlinger","LBStateManager2","com.hisense.base.activity.AppLoadingActivity"));
 //        List<String> list = new ArrayList<>(Arrays.asList("FamilyCircleTwoTwoWidget: | WLFC  doJump ", "WidgetTools: getIntentFromJumpUrl: jumpUrl"));
 //        List<String> list = new ArrayList<>(Arrays.asList("ProgramActionRouter: ProgramActionRouter",
-//                "MVPBaseActivity","ThirdJumpUtils"));
+//                "MVPBaseActivity","ThirdJumpUtils","ThirdPartnerActivity));
 //        List<String> list1 = new ArrayList<>(Arrays.asList("SurfaceFlinger","LBStateManager2","com.hisense.base.activity.AppLoadingActivity"));
-        List<String> list = new ArrayList<>(Arrays.asList("sIsPortrait","START u0"));
-        filerFileAndOut("C:\\Users\\dingzhixin.ex\\Desktop\\bug\\log.txt", list);
+//        List<String> list = new ArrayList<>(Arrays.asList("ThirdJumpUtils","ThirdPartnerActivity","START u0","VContentDetailActivity"));
+//        List<String> list = new ArrayList<>(Arrays.asList("SmartImageApplication: mExceptionHandler"));
+//        List<String> list1=new ArrayList<>(Arrays.asList("Activity@","dispatchTouchEvent","AppSwitchRequest",
+//                "BufferQueueProducer","MVPBaseActivity","HisensePhoneWindowHelper"));
+//       List<String> list1=new ArrayList<>(Arrays.asList(
+//                "BufferQueueProducer","ViewUtils","AccountLogicModuleHelpUtil","LBStateManager2","MVPBaseActivity","I am"));
+//        filerFileAndOut("C:\\Users\\dingzhixin.ex\\Desktop\\0519bug\\log.txt.4", list);
+//        filerFileAndOut("C:\\Users\\dingzhixin.ex\\Desktop\\0519bug\\log.txt.3", list);
+//        filerFileAndOut("C:\\Users\\dingzhixin.ex\\Desktop\\0519bug\\log.txt.2", list);
+//        filerFileAndOut("C:\\Users\\dingzhixin.ex\\Desktop\\bug\\log.txt", list);
+//        filerFileAndOut("C:\\Users\\dingzhixin.ex\\Desktop\\bug\\log.txt.1", list,list1);
+//        filerFileAndOut("C:\\Users\\dingzhixin.ex\\Desktop\\bug\\log.txt", list,list1);
+
+//        List<String> list = new ArrayList<>(Arrays.asList("ActivityManager: Process com.hisense.smartimages", "lowmemorykiller: Killing 'nse" +
+//                ".smartimages'", "SmartImageApplication XJST| : application create"));
+//        List<String> list = new ArrayList<>(Arrays.asList("setContentList", "requestHotWords"));
+        List<String> list = new ArrayList<>(Arrays.asList("checkCondition()", "FetchPresentationHiCloudDataTask()","HiCloudTokenManager"
+        ,"SmartImageApplication","MSG_FETCH_PRESENTATION_DATA","isDataArrivedAndValidate","PresentationData","notifyPresentationHiCloudDataData",
+                "PresentationActivity"));
+//        List<String> list = new ArrayList<>(Arrays.asList("XJST|isVideoMedia()", "XJST|start new thread to exec","JuBao KeyEvent",
+//                "duration of video record","Failed to execute"));
+////        List<String> list = new ArrayList<>(Arrays.asList("lowmemorykiller: Kill 'com.hisense.smartimages'", "onReceive(), JuBao KeyEvent"));
+        filerFileAndOut("C:\\Users\\dingzhixin.ex\\Desktop\\bug-小聚识图打开时卡住\\log.txt", list);
+        filerFileAndOut("C:\\Users\\dingzhixin.ex\\Desktop\\bug-小聚识图打开时卡住\\log.txt.1", list);
+//        System.out.println("===========================================间隔1=================================================================");
+//        filerFileAndOut("C:\\Users\\dingzhixin.ex\\Desktop\\bug\\log.txt.1", list);
+//        System.out.println("===========================================间隔2=================================================================");
+//        filerFileAndOut("C:\\Users\\dingzhixin.ex\\Desktop\\bug\\log.txt.2", list);
+//        System.out.println("===========================================间隔3=================================================================");
+//        filerFileAndOut("C:\\Users\\dingzhixin.ex\\Desktop\\bug\\log.txt.3", list);
+//        System.out.println("===========================================间隔4=================================================================");
+//        filerFileAndOut("C:\\Users\\dingzhixin.ex\\Desktop\\bug\\log.txt.4", list);
+//        filerFileAndOut("C:\\Users\\dingzhixin.ex\\Desktop\\A65E截图，焦点到搜索上，截图右侧展示内容识别.log", list);
+//        filerFileAndOut("C:\\Users\\dingzhixin.ex\\Desktop\\A65E截图，首页cardbar页面出现闪退现象.log", list);
+
 
         //分析内存泄漏
 //        analysisMemInfo();
 
-//        monitor("C:\\Users\\dingzhixin.ex\\Desktop\\1.txt", 500);
+//        monitor("C:\\Users\\dingzhixin.ex\\Desktop\\session.log", 500);
 
 //        Utils.runtimeCommand("arp -a 192.168.137.172");
 //        Utils.runtimeCommand("nbtstat -a  192.168.137.172");
@@ -89,6 +120,65 @@ public class OutTxt {
 //                "aircleaner_anim_");
 //        outFilenameAppend("C:\\Users\\dingzhixin.ex\\Desktop\\验证温度\\风扇");
 //        renameImg("E:\\work\\resource\\aiot资料\\慧享家\\Aiot 12月份资料\\12.31风扇和空气净化器\\12.31风扇和空气净化器\\03 Res\\空气净化器\\序列帧");
+
+    }
+
+    /**
+     * 解析运行稳定率文件
+     * datecode	errorname	exceptionmessage	randomid	featurecode	deviceid	versionCode	versionName	_col8	times
+     */
+    private static void parseRunText() throws IOException {
+        List<String> list1 = FileUtils.readLines(new File("C:\\Users\\dingzhixin.ex\\Desktop\\data_2021-05-08 09_14_18 " +
+                "AM.tsv"));
+        Set<String> eorror = new HashSet<>();
+        Map<String, Integer> map = new HashMap<>();
+        Map<String, String> map1 = new HashMap<>();
+        Map<String, String> map2 = new HashMap<>();
+        for (String s : list1) {
+//            System.out.println(s);
+            StringBuilder builder = new StringBuilder();
+            String[] strings = s.split("\t");
+
+            System.out.println(strings[1] + "\t\t" + strings[4] + "\t\t" + strings[6]);
+            if (eorror.contains(strings[1])) {
+                map.put(strings[1], map.get(strings[1]) + 1);
+            } else {
+                eorror.add(strings[1]);
+                map.put(strings[1], 1);
+                map2.put(strings[1], strings[4] + "  " + strings[6]);
+                map1.put(strings[1], s);
+            }
+
+
+//            for (int i = 0; i < strings.length; i++) {
+//                if (i == 2||i==3||i==8||i==9) {
+////                    try {
+////                        System.out.println(strings[i].indexOf("at"));
+////                        builder.append(strings[i].substring(0,strings[i].indexOf("at"))).append("\t");
+////
+////                    } catch (Exception e) {
+////                        builder.append(strings[i]).append("\t");
+////
+////                    }
+//                }else {
+//                    builder.append(strings[i]).append("\t\t\t\t\t\t\t");
+//                }
+//
+//            }
+//            System.out.println(builder.toString());
+
+//            for (String s1 : strings) {
+//
+//                System.out.println(s1);
+//            }
+//            System.out.println(strings.length);
+        }
+
+        for (String s : map.keySet()) {
+            System.out.println(s + "     " + map.get(s));
+        }
+//        System.out.println(list1.size() + "行");
+//        System.out.println(eorror.size() + "行");
     }
 
 
@@ -144,21 +234,7 @@ public class OutTxt {
         }
     }
 
-    private static void splitUrlParam() {
-        //专题  contentType
-//        String url="  http://vipcloud-launcher.hismarttv.com/vipcloud/specialfavorite/download?appVersionName=2020.5.0.0.13.0&deviceId=86100300000101000000071218006808&languageId=0&appVersionCode=2000000000&mac=00%3A63%3A18%3A00%3A68%3A08&accessToken=1ayD8BAFA4vJuJOwq-7M7PLemt-KKosaGaOl2Nm10iZovxRWz_j7vahUJtqhpRWy1Q7cInevo505E7RX3pZzCjPO2jljEX73eYDFPzhY_5IB6-xfGdv30uqFerWw-CR-mQda0VGe6zZ0uRHcFc1HvTHsfxv5tOVD7vFds-vVXdIlqU0AjrWwdgD5imMQ70LbYVcDjzAs1v&serialNo=c495585c5a121d9f8e1368f29591f9f2&license=1015&sourceType=1&appPackageName=com.jamdeo.tv.vod&timeStamp=1607594333&commonRandomId=cd5a7fe0-d8be-40f1-8116-e084a869a939&appVersion=01.102.136&productCode=HIKID&customerId=32822477&vipRight=%5B%7B%22rightProduct%22%3A%22vod%22%2C%22rightValue%22%3A%222%22%7D%2C%7B%22rightProduct%22%3A%22edu%22%2C%22rightValue%22%3A%222%22%7D%2C%7B%22rightProduct%22%3A%22educ%22%2C%22rightValue%22%3A%222%22%7D%5D&version=2020.5.0.0.13.0&subscriberId=203627496&otaVersion=0001AI0930&deviceExt=MSD648\n";
-        //绘本  contentType=21002
-//        String url="http://vipcloud-launcher.hismarttv.com/vipcloud/favorite/download?appVersionName=2020.5.0.0.13.0&deviceId=86100300000101000000071218006808&languageId=0&appVersionCode=2000000000&mac=00%3A63%3A18%3A00%3A68%3A08&accessToken=1ayD8BAFA4vJuJOwq-7M7PLemt-KKosaGaOl2Nm10iZovxRWz_j7vahUJtqhpRWy1Q7cInevo505E7RX3pZzCjPO2jljEX73eYDFPzhY_5IB6-xfGdv30uqFerWw-CR-mQda0VGe6zZ0uRHcFc1HvTHsfxv5tOVD7vFds-vVXdIlqU0AjrWwdgD5imMQ70LbYVcDjzAs1v&contentType=21002&serialNo=c495585c5a121d9f8e1368f29591f9f2&license=1015&sourceType=1&appPackageName=com.jamdeo.tv.vod&timeStamp=1607594393&commonRandomId=2734f330-d55b-4f48-a3a6-0638e6fcea8b&appVersion=01.102.136&productCode=HIKID&customerId=32822477&vipRight=%5B%7B%22rightProduct%22%3A%22vod%22%2C%22rightValue%22%3A%222%22%7D%2C%7B%22rightProduct%22%3A%22edu%22%2C%22rightValue%22%3A%222%22%7D%2C%7B%22rightProduct%22%3A%22educ%22%2C%22rightValue%22%3A%222%22%7D%5D&version=2020.5.0.0.13.0&subscriberId=203627496&otaVersion=0001AI0930&deviceExt=MSD648\n";
-        //听学  contentType=19006
-//        String url="http://vipcloud-launcher.hismarttv.com/vipcloud/favorite/download?appVersionName=2020.5.0.0.13.0&deviceId=86100300000101000000071218006808&languageId=0&appVersionCode=2000000000&mac=00%3A63%3A18%3A00%3A68%3A08&accessToken=1ayD8BAFA4vJuJOwq-7M7PLemt-KKosaGaOl2Nm10iZovxRWz_j7vahUJtqhpRWy1Q7cInevo505E7RX3pZzCjPO2jljEX73eYDFPzhY_5IB6-xfGdv30uqFerWw-CR-mQda0VGe6zZ0uRHcFc1HvTHsfxv5tOVD7vFds-vVXdIlqU0AjrWwdgD5imMQ70LbYVcDjzAs1v&contentType=19006&serialNo=c495585c5a121d9f8e1368f29591f9f2&license=1015&sourceType=1&appPackageName=com.jamdeo.tv.vod&timeStamp=1607594483&commonRandomId=e33875f5-ca5f-4385-8616-fb0a40df77a3&appVersion=01.102.136&productCode=HIKID&customerId=32822477&vipRight=%5B%7B%22rightProduct%22%3A%22vod%22%2C%22rightValue%22%3A%222%22%7D%2C%7B%22rightProduct%22%3A%22edu%22%2C%22rightValue%22%3A%222%22%7D%2C%7B%22rightProduct%22%3A%22educ%22%2C%22rightValue%22%3A%222%22%7D%5D&version=2020.5.0.0.13.0&subscriberId=203627496&otaVersion=0001AI0930&deviceExt=MSD648\n";
-        //课程 contentType=2001,1001
-        String url = "http://vipcloud-launcher.hismarttv.com/vipcloud/favorite/download?appVersionName=2020.5.0.0.13.0&deviceId=86100300000101000000071218006808&languageId=0&appVersionCode=2000000000&mac=00%3A63%3A18%3A00%3A68%3A08&accessToken=1ayD8BAFA4vJuJOwq-7M7PLemt-KKosaGaOl2Nm10iZovxRWz_j7vahUJtqhpRWy1Q7cInevo505E7RX3pZzCjPO2jljEX73eYDFPzhY_5IB6-xfGdv30uqFerWw-CR-mQda0VGe6zZ0uRHcFc1HvTHsfxv5tOVD7vFds-vVXdIlqU0AjrWwdgD5imMQ70LbYVcDjzAs1v&contentType=2001%2C1001&serialNo=c495585c5a121d9f8e1368f29591f9f2&license=1015&sourceType=1&appPackageName=com.jamdeo.tv.vod&timeStamp=1607594562&commonRandomId=10a639d0-ed43-43ec-b94b-edce95397203&appVersion=01.102.136&productCode=HIKID&customerId=32822477&vipRight=%5B%7B%22rightProduct%22%3A%22vod%22%2C%22rightValue%22%3A%222%22%7D%2C%7B%22rightProduct%22%3A%22edu%22%2C%22rightValue%22%3A%222%22%7D%2C%7B%22rightProduct%22%3A%22educ%22%2C%22rightValue%22%3A%222%22%7D%5D&version=2020.5.0.0.13.0&subscriberId=203627496&otaVersion=0001AI0930&deviceExt=MSD648\n";
-        String[] result = url.split("&");
-        for (String s : result) {
-            LUtils.i(s);
-        }
 
-    }
 
     /**
      * 解析Android studio 抓取的方法运行文件
@@ -435,7 +511,9 @@ public class OutTxt {
             @Override
             public void run() {
                 while (true) {
-                    Utils.runtimeCommand("adb -s 192.168.137.172 shell \"dumpsys meminfo com.hisense.aiot |grep -E \'Views|Activities\'  |grep -v  WebViews\"");
+                    Utils.runtimeCommand("adb -s 192.168.137.172 shell \"dumpsys meminfo com.hisense.smartimages " +
+                            "|grep -E \'Views|Activities|TOTAL\' \"");
+
                     try {
                         sleep(3000);
                     } catch (InterruptedException e) {
@@ -470,10 +548,10 @@ public class OutTxt {
      * 监控文件改变并输出最新内容
      */
     private static void monitor(String inputFile, int sleepInterval) {
-        List<String> list = Arrays.asList("InflateException", "HXJ", "OutOfMemoryError", "IllegalArgumentException", "FATAL", "AiotCrashHandler", "manager error", "has detached", "Invalid item position");
+//        List<String> list = Arrays.asList("InflateException", "HXJ", "OutOfMemoryError", "IllegalArgumentException", "FATAL", "AiotCrashHandler", "manager error", "has detached", "Invalid item position");
 //        List<String> list = Arrays.asList("InflateException", "OutOfMemoryError", "IllegalArgumentException", "FATAL", "DemoCrashHandler", "manager error", "HXJ");
 //        List<String> list = Arrays.asList("SingleCardDeviceManger", "BluetoothVoiceTipFragment","IotManagerService","RequestBean");
-//        List<String> list1 = Arrays.asList("HXJ", "homeId");
+        List<String> list = Arrays.asList("TIAOSHI","FOCUSDEBUG","notifyDataSetChangedFocused");
 //        List<String> list = Arrays.asList("updateSceneView()", "updateByPartnerStatus","mAssistView.isFocusable()","firstRequestFocus");
         TailerListener listener = new TailerListenerAdapter() {
             @Override
