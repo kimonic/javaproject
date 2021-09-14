@@ -69,14 +69,16 @@ public class OutTxt {
 //        List<String> list = new ArrayList<>(Arrays.asList("ActivityManager: Process com.hisense.smartimages", "lowmemorykiller: Killing 'nse" +
 //                ".smartimages'", "SmartImageApplication XJST| : application create"));
 //        List<String> list = new ArrayList<>(Arrays.asList("setContentList", "requestHotWords"));
-        List<String> list = new ArrayList<>(Arrays.asList("checkCondition()", "FetchPresentationHiCloudDataTask()","HiCloudTokenManager"
-        ,"SmartImageApplication","MSG_FETCH_PRESENTATION_DATA","isDataArrivedAndValidate","PresentationData","notifyPresentationHiCloudDataData",
-                "PresentationActivity"));
+//        List<String> list = new ArrayList<>(Arrays.asList("checkCondition()", "FetchPresentationHiCloudDataTask()","HiCloudTokenManager"
+//        ,"SmartImageApplication","MSG_FETCH_PRESENTATION_DATA","isDataArrivedAndValidate","PresentationData","notifyPresentationHiCloudDataData",
+//                "PresentationActivity"));
+        //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
 //        List<String> list = new ArrayList<>(Arrays.asList("XJST|isVideoMedia()", "XJST|start new thread to exec","JuBao KeyEvent",
 //                "duration of video record","Failed to execute"));
 ////        List<String> list = new ArrayList<>(Arrays.asList("lowmemorykiller: Kill 'com.hisense.smartimages'", "onReceive(), JuBao KeyEvent"));
-        filerFileAndOut("C:\\Users\\dingzhixin.ex\\Desktop\\bug-小聚识图打开时卡住\\log.txt", list);
-        filerFileAndOut("C:\\Users\\dingzhixin.ex\\Desktop\\bug-小聚识图打开时卡住\\log.txt.1", list);
+        List<String> list=new ArrayList<>(Arrays.asList("requestHotSearch","requestHotWords"));
+        filerFileAndOut("C:\\Users\\dingzhixin.ex\\Desktop\\U9A截图，热搜词和推荐影片不显示时，左右移动小聚识图和搜索按钮，出现中间截图不居中显示的现象.log", list);
+//        filerFileAndOut("C:\\Users\\dingzhixin.ex\\Desktop\\bug-小聚识图打开时卡住\\log.txt.1", list);
 //        System.out.println("===========================================间隔1=================================================================");
 //        filerFileAndOut("C:\\Users\\dingzhixin.ex\\Desktop\\bug\\log.txt.1", list);
 //        System.out.println("===========================================间隔2=================================================================");

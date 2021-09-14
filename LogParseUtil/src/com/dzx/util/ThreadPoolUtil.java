@@ -20,18 +20,18 @@ public class ThreadPoolUtil {
     private ThreadPoolExecutor mPool = null;
 
     private static class SingleHolder {
-        private static final ThreadPoolUtil INSTANSE = new ThreadPoolUtil();
+        private static final ThreadPoolUtil INSTANCE = new ThreadPoolUtil();
     }
 
     private ThreadPoolUtil() {
         //核心线程设置为CPU的java虚拟机数量
         int coreSize = Runtime.getRuntime().availableProcessors();
         //最大线程数设置为核心线程的两倍
-        int maxSize = coreSize * 2;
+        int maxSize = coreSize * 5;
         //线程保持30s存活
         int aliveTime = 30;
         //队列设置为核心线程数,核心线程满载时允许核心线程数最大值数量的线程进入队列
-        BlockingQueue<Runnable> taskQueue = new LinkedBlockingQueue<>(coreSize);
+        BlockingQueue<Runnable> taskQueue = new LinkedBlockingQueue<>(maxSize);
 
         mPool = new ThreadPoolExecutor(coreSize, maxSize, aliveTime, TimeUnit.SECONDS, taskQueue
                 , new ExecutionHandler());
@@ -49,7 +49,7 @@ public class ThreadPoolUtil {
 //        }
 //        return sExecutor;
 
-        return SingleHolder.INSTANSE;
+        return SingleHolder.INSTANCE;
     }
 
     public void execute(Runnable runnable) {
@@ -81,7 +81,7 @@ public class ThreadPoolUtil {
     }
 
 
-    private class ExecutionHandler implements RejectedExecutionHandler {
+    private static class ExecutionHandler implements RejectedExecutionHandler {
 
         @Override
         public void rejectedExecution(Runnable r, ThreadPoolExecutor executor) {

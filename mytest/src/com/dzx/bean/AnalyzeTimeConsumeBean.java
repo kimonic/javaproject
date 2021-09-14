@@ -7,6 +7,7 @@ public class AnalyzeTimeConsumeBean {
     public long consumeTime;
     public String unit;
     public boolean isMainThread;
+    public String fileName;
 
 
 
