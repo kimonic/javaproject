@@ -1,38 +1,409 @@
 package com.dzx;
 
 import com.dzx.util.LUtils;
+import com.google.gson.Gson;
 import javafx.scene.paint.Color;
 import org.apache.commons.io.FileUtils;
+import org.apache.http.util.TextUtils;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
+import java.nio.charset.StandardCharsets;
+import java.util.*;
+import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.atomic.AtomicInteger;
+import java.util.concurrent.locks.ReentrantLock;
 
 public class Test6 {
-    public static void main(String[] args) {
+    private static volatile String mTest;
+    static CountDownLatch mCountDownLatch = new CountDownLatch(8);
+    static ReentrantLock mReentrantLock = new ReentrantLock();
 
-        // 相似度从0到1
-//        System.out.println(getColorSemblance(Color.rgb(0, 0, 0), Color.rgb(255, 255, 255)));
-//        System.out.println(getColorSemblance(Color.rgb(255, 255, 255), Color.rgb(200, 200, 200)));
-//        System.out.println(getColorSemblance(Color.rgb(255, 255, 255), Color.rgb(255, 255, 255)));
-//        testFilter();
-//        showStringLength("{\"header\":{\"messageId\":\"fd0f20bf-b4cb-407d-8845-c31d3856fb1a\",\"payloadVersion\":\"1\"},\"payload\":{\"status\":\"SUCCESS\",\"partner\":[{\"id\":\"3000\",\"name\":\"OPPLE\",\"introduction\":\"欧普照明: 专注光的价值，感受光的魅力\",\"smallIcon\":\"https://img-download-iot.hismarttv.com/epgdata/hiaiot/opple2.jpg\",\"manufacturer\":\"欧普照明股份有限公司，作为中国照明行业标杆的整体照明解决方案提供者，不仅致力于研究光的合理运用，提供贴心产品，还为消费者提供差异化整体照明解决方案等专业的配套服务，全面提升用户体验。针对不同场合，欧普提供的照明方案能满足人在不同时间、不同空间生理需求和心理需求的灯光。\",\"status\":\"unlinked\",\"small_icon\":\"https://img-download-iot.hismarttv.com/epgdata/hiaiot/opple2.jpg\"},{\"id\":\"3004\",\"name\":\"tuya\",\"introduction\":\"涂鸦成立于2014年6月,致力于智能产品APP开发,智能化APP开发以及产品智能化解决方案，是一个全球化智能平台，在AI与大数据驱动下，独创IOT平台服务模式，连接消费者、制造品牌、OEM厂商的智能化需求，为客户提供一站式人工智能物联网的解决方案。\",\"smallIcon\":\"https://img-download-iot.hismarttv.com/epgdata/hiaiot/tuya_small.jpg\",\"manufacturer\":\"涂鸦智能：全球化智能家居家电照明安防全屋智能升级平台\",\"status\":\"unlinked\",\"small_icon\":\"https://img-download-iot.hismarttv.com/epgdata/hiaiot/tuya_small.jpg\"},{\"id\":\"3008\",\"name\":\"小京鱼\",\"introduction\":\"小京鱼：为您提供简单,快乐的智能生活体验!\",\"smallIcon\":\"http://download.hismarttv.com/epgdata/hiaiot/jd_logo_small.png\",\"manufacturer\":\"2018年12月4日，京东推出IoT新品牌京鱼座，并发布智能助手小京鱼。 小京鱼智能平台整合了原有的京东Alpha平台，并引入了京东的人工智能与大数据能力，不仅聚焦原有的智能硬件、智能家居、智慧出行方案，更把其物联网能力拓展至更多场景。\",\"status\":\"unlinked\",\"small_icon\":\"http://download.hismarttv.com/epgdata/hiaiot/jd_logo_small.png\"},{\"id\":\"3013\",\"name\":\"Aqara\",\"introduction\":\"绿米科技（Aqara）：致力于构建以智能设备、大数据和增值服务为核心的智慧生活服务平台。\",\"smallIcon\":\"https://img-download-iot.hismarttv.com/epgdata/hiaiot/aqara_small.jpg\",\"manufacturer\":\"拥有超550项专利的行业内知名品牌，Aqara将其在超低功耗无线传感、Zigbee、AI、大数据等技术领域的深厚积累融入到领先的全屋智能解决方案，产品广泛应用于家居、酒店、地产、办公、农业、养老等垂直领域，并覆盖192个国家、超9000个城市，服务全球超200万用户。\",\"status\":\"unlinked\",\"small_icon\":\"https://img-download-iot.hismarttv.com/epgdata/hiaiot/aqara_small.jpg\"},{\"id\":\"3014\",\"name\":\"美的美居\",\"introduction\":\"美的美居是美的智慧生活统一用户入口，支持美的集团旗下所有品牌的智能家电和智能设备。\",\"smallIcon\":\"https://img-download-iot.hismarttv.com/epgdata/hiaiot/midea_small.jpg\",\"manufacturer\":\"美的IoT为消费者带来了全新的数字化的智能生活体验，关注不同用户群体需求，结合大数据、AI、云服务技术，集成手机、语音等能力，打造了安全的家、健康的家、个性的家，为用户提供安全、健康、便捷、愉悦的智慧生活服务。\",\"status\":\"unlinked\",\"small_icon\":\"https://img-download-iot.hismarttv.com/epgdata/hiaiot/midea_small.jpg\"},{\"id\":\"3015\",\"name\":\"石头智能\",\"introduction\":\"石头科技：用创新简化生活\",\"smallIcon\":\"https://img-download-iot.hismarttv.com/epgdata/hiaiot/roborock_small.png\",\"manufacturer\":\"石头科技（roborock，全称北京石头世纪科技股份有限公司）成立于2014年7月，是一家专注于家用智能清洁机器人及其他智能电器研发和生产的公司。公司旗下产品有石头扫地机器人、米家扫地机器人、米家手持吸尘器、小瓦扫地机器人。在全球激光导航类扫地机器人领域，石头科技出品的产品占据大部分市场份额。\",\"status\":\"unlinked\",\"small_icon\":\"https://img-download-iot.hismarttv.com/epgdata/hiaiot/roborock_small.png\"}]}}\n");
-//        showStringLength("AbsRequestBean: |url = https://iot-sys.hismarttv.com/1.0/iot/partners/list, content = {\"header\":{\"messageId\":\"b6017ab0-6061-458c-a8d2-f068ca21f570\",\"payloadVersion\":\"1\"},\"payload\":{\"status\":\"SUCCESS\",\"partner\":[{\"id\":\"3000\",\"name\":\"OPPLE\",\"introduction\":\"欧普照明: 专注光的价值，感受光的魅力\",\"smallIcon\":\"https://img-download-iot.hismarttv.com/epgdata/hiaiot/opple2.jpg\",\"manufacturer\":\"欧普照明股份有限公司，作为中国照明行业标杆的整体照明解决方案提供者，不仅致力于研究光的合理运用，提供贴心产品，还为消费者提供差异化整体照明解决方案等专业的配套服务，全面提升用户体验。针对不同场合，欧普提供的照明方案能满足人在不同时间、不同空间生理需求和心理需求的灯光。\",\"status\":\"unlinked\",\"small_icon\":\"https://img-download-iot.hismarttv.com/epgdata/hiaiot/opple2.jpg\"},{\"id\":\"3004\",\"name\":\"涂鸦\",\"introduction\":\"涂鸦智能：全球化智能家居家电照明安防全屋智能升级平台。\",\"smallIcon\":\"https://img-download-iot.hismarttv.com/epgdata/hiaiot/tuya_small.jpg\",\"manufacturer\":\"涂鸦成立于2014年6月,致力于智能产品APP开发,智能化APP开发以及产品智能化解决方案，是一个全球化智能平台，在AI与大数据驱动下，独创IOT平台服务模式，连接消费者、制造品牌、OEM厂商的智能化需求，为客户提供一站式人工智能物联网的解决方案。\",\"status\":\"linked\",\"small_icon\":\"https://img-download-iot.hismarttv.com/epgdata/hiaiot/tuya_small.jpg\"},{\"id\":\"3013\",\"name\":\"Aqara\",\"introduction\":\"绿米科技（Aqara）：致力于构建以智能设备、大数据和增值服务为核心的智慧生活服务平台。\",\"smallIcon\":\"https://img-download-iot.hismarttv.com/epgdata/hiaiot/aqara_small.jpg\",\"manufacturer\":\"拥有超550项专利的行业内知名品牌，Aqara将其在超低功耗无线传感、Zigbee、AI、大数据等技术领域的深厚积累融入到领先的全屋智能解决方案，产品广泛应用于家居、酒店、地产、办公、农业、养老等垂直领域，并覆盖192个国家、超9000个城市，服务全球超200万用户。\",\"status\":\"unlinked\",\"small_icon\":\"https://img-download-iot.hismarttv.com/epgdata/hiaiot/aqara_small.jpg\"},{\"id\":\"3014\",\"name\":\"美的美居\",\"introduction\":\"美的美居是美的智慧生活统一用户入口，支持美的集团旗下所有品牌的智能家电和智能设备。\",\"smallIcon\":\"https://img-download-iot.hismarttv.com/epgdata/hiaiot/midea_small.jpg\",\"manufacturer\":\"美的IoT为消费者带来了全新的数字化的智能生活体验，关注不同用户群体需求，结合大数据、AI、云服务技术，集成手机、语音等能力，打造了安全的家、健康的家、个性的家，为用户提供安全、健康、便捷、愉悦的智慧生活服务。\",\"status\":\"unlinked\",\"small_icon\":\"https://img-download-iot.hismarttv.com/epgdata/hiaiot/midea_small.jpg\"},{\"id\":\"3015\",\"name\":\"石头智能\",\"introduction\":\"石头科技：用创新简化生活\",\"smallIcon\":\"https://img-download-iot.hismarttv.com/epgdata/hiaiot/roborock_small.png\",\"manufacturer\":\"石头科技（roborock，全称北京石头世纪科技股份有限公司）成立于2014年7月，是一家专注于家用智能清洁机器人及其他智能电器研发和生产的公司。公司旗下产品有石头扫地机器人、米家扫地机器人、米家手持吸尘器、小瓦扫地机器人。在全球激光导航类扫地机器人领域，石头科技出品的产品占据大部分市场份额。\",\"status\":\"linked\",\"small_icon\":\"https://img-download-iot.hismarttv.com/epgdata/hiaiot/roborock_small.png\"}]}}\n");
-//        splitUrlParam("http://home-launcher.hismarttv.com/api/mainPage?area=%25E5%25B1%25B1%25E4%25B8%259C-%25E9%259D%2592%25E5%25B2%259B&deviceType=0&appVersion=01.102.121&otaVersion=0001AL0329&languageId=0&subscriberId=216527432&deviceExt=55S7&model_id=0&accessToken=1aG2kBALssSBX_m_bGBD3Ua3M0Ym3Y5NLmPFK6n9rpFbgO_MdiPaT2c5U5qLlBpUVFh7y00kPF1puDnognw62VJ2KOVnlCGxAaLwehsq1_Kpf2ywjb7Dfs1THdkKAP3f4TF0A5APJA01W7iUir-giIwZCI9Ux1iFc1iD6hlXocOlgYtmBfzsinKUHUq7uBFTMX4kKGDo-n&appVersionName=2021.5.0.0.13.0&appVersionCode=2000000999&deviceId=8610030000010070000007124f770f98&mac=ca%3A2c%3A4f%3A77%3A0f%3A98&license=1015&vipRight=%5B%7B%22rightProduct%22%3A%22vod%22%2C%22rightValue%22%3A%222%22%7D%2C%7B%22rightProduct%22%3A%22edu%22%2C%22rightValue%22%3A%222%22%7D%2C%7B%22rightProduct%22%3A%22educ%22%2C%22rightValue%22%3A%222%22%7D%5D&commonRandomId=607a6596-1364-463b-a284-2600079b9d1f&customerId=32822477&appPackageName=com.jamdeo.tv.vod&logParams=%7B%22eventcode%22%3A%22200000%22%2C%22productcode%22%3A%228%22%2C%22ip%22%3A%22-1%22%2C%22requesttime%22%3A%221618301051833%22%2C%22subscriberid%22%3A%22216527432%22%2C%22eventPos%22%3A%22000%22%2C%22appversioncode%22%3A%222000000999%22%2C%22apiversion%22%3A%2201.102.121%22%2C%22devicemsg%22%3A%2255S7%22%2C%22sessionid%22%3A%22db9c42f56569402e92aa3ef83f98d0d5%22%2C%22eventType%22%3A%22200%22%2C%22deviceid%22%3A%228610030000010070000007124f770f98%22%2C%22version%22%3A%223.0%22%2C%22appversionname%22%3A%222021.5.0.0.13.0%22%2C%22license%22%3A%22wasu%22%2C%22customerid%22%3A%2232822477%22%2C%22logstamp%22%3A%2262%22%7D&timestamp=0");
-//        splitUrlParam("http://layout-launcher.hismarttv.com/api/v1.1.0/layoutApi/secondParams?appVersion=01.102.141&otaVersion=&timeStampMS=1618465785244&languageId=0&subscriberId=0&deviceExt=55S7&accessToken=&appVersionName=5.0.0.13.0&deviceId=8610030000010070000007124f770f98&appVersionCode=2000000000&mac=ca%3A2c%3A4f%3A77%3A0f%3A98&timeStamp=1618465785&sceneCodeFV=WIDGET_JUMP_JUUI_FV%2CWIDGET_JUMP_SCREEN_SAVER_FV%2CWIDGET_JUMP_SYS_TV_SETTING_FV%2CWIDGET_JUMP_SYS_MEDIA_CENTER_FV%2CWIDGET_JUMP_SYS_PRIVATE_CLOUD_FV%2CWIDGET_JUMP_SYS_SIGNAL_SOURCE_FV%2CWIDGET_JUMP_SYS_AIOT_FV%2CWIDGET_JUMP_SYS_VIDAA_ASSISTANT_FV%2CWIDGET_JUMP_SYS_TUSOU_FV%2CWIDGET_JUMP_SYS_NFC_FV%2CWIDGET_JUMP_SYS_CAMERA_REMINDER_FV%2CWIDGET_JUMP_VOICE_ASSISTANT_FV%2CWIDGET_JUMP_SOCIALTV_VEDIO_CALL_FV%2CVEDIO_MEETING%2CWIDGET_JUMP_SOCIALTV_PHOTO_FV%2CWIDGET_JUMP_SOCIALTV_MIRROR_FV%2CMESSAGE_BOARD%2CAI_POPRIOCEPTIVE%2CWIDGET_JUMP_APP_HI_PORJECTION_FV%2CWIDGET_JUMP_APP_HI_MUSIC_FV%2CWIDGET_JUMP_APP_INTELLIGENT_BOARD_FV%2CWIDGET_JUMP_APP_CHILD_PANEL_FV&license=1011&productCode=21&sceneCode=8003108%2Cchild_common_new%2CHOME_THEATER_SLOGAN&customerId=5989126&appPackageName=com.hisense.widget.launcher");
-//        splitUrlParam("");
-//        splitUrlParam(" http://search-launcher.hismarttv.com/searchApi/mamSearch/hotword?appVersion=tusou.01.100&otaVersion=6.0&languageId=0&pageSize=10&index=0&subscriberId=216717686&deviceExt=&appVersionName=3.03.00.032.0&accessToken=1a0ZIDAMBRq5HW-TWK8BO-xTkzh17VUS_r80NxpcEw4GOBBy0bTtRppKV4WDJjVlpVn_QVfttzFRzXfQLO35NlHN_DxLjFG6Uk_72D_HRJzAK-cd7HLUm5_P2M9KdHOc1Y316mmHoTfZoV9pFK8MRyfvC5wd9AZq4iErIntFX0bYiOJV2io21YwWNB3mUzN2jntRXUo40P&deviceId=8610030000010060000007184f770f98&appVersionCode=303000320&mac=16%3Ac7%3A53%3Ad7%3Af2%3A7c&keyWord=&license=1015&sequence=1622100351244&sceneCode=TUSOURecNEW&appType=10&appPackageName=com.hisense.smartimages&customerId=32822477&inputType=1&page=1&resourceType=1\n");
-//        String s=" {        \"startupType\":4,        \"startupUrl\":[{               \"key\":\"startupType\",            \"value\":1,              \"type\":\"int\"    },{             \"key\":\"packageName\",          \"value\":\"com.jamdeo.tv.vod\",            \"type\":\"String\"         },{\"key\":\"orientation\",\"value\":2,\"type\":int},{                \"key\":\"superAppParam\",          \"value\":{                       \"albumType\":\"22\",    \"typeCode\":\"8001\",                       \"tab\":{                                 \"index\":2,                           \"id\":530,                                \"name\":\"漫画\",                          \"type\":38,                           \"tabModifiedTime\":1610434200,                            \"bgColor\":\"\",                           \"bgPic\":\"https://testjhk-cdn-mampic.hismarttv.com/epgdata/mamPic/10/109/202003300306394022.png\",                              \"sideBarVisible\":1,                           \"hasSideBar\":1,                                 \"naviHeaderColour\":\"#212121\",        \"typeName\":\"spintv\"                      }               },              \"type\":\"String\"         }] }";
-//        System.out.println(s.replaceAll("\n","").replaceAll(" ",""));
+    public static void main(String[] args) throws InterruptedException {
+
+        File file = new File("C:\\Users\\dingzhixin.ex\\Desktop\\汇总文件列表");
+        List<String> list = getAllFilePath(file);
+
+        List<String>  contents=new ArrayList<>();
+
+        for (String s:list){
+            try {
+                contents.addAll(FileUtils.readLines(new File(s)));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
+        try {
+            FileUtils.writeLines(new File("C:\\Users\\dingzhixin.ex\\Desktop\\汇总文件列表","aarjar所有文件目录.txt"),contents);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        LUtils.i("汇总完成");
+
+    }
+
+    private static List<String> getAllFilePath(File file) {
+        List<String> list = new ArrayList<>();
+        if (file.isDirectory()) {
+            File[] files = file.listFiles();
+            if (files != null && files.length > 0) {
+                for (File file1 : files) {
+                    list.addAll(getAllFilePath(file1));
+                }
+            }
+        } else {
+//            LUtils.i(file.getAbsolutePath());
+            list.add(file.getAbsolutePath());
+        }
+        return list;
+    }
+
+    private static void changeJson() {
+        File file = new File("C:\\Users\\dingzhixin.ex\\Desktop\\BaikeInfoData");
+        try {
+            String content = FileUtils.readFileToString(file, StandardCharsets.UTF_8);
+            BaikeBean.ContentMyBean bean = new Gson().fromJson(content, BaikeBean.ContentMyBean.class);
+
+            bean.mBaikeDefaultLemmaBean = new Gson().fromJson(bean.baikeDefaultLemma, BaikeBean.ContentMyBean.BaikeDefaultLemmaBean.class);
+            bean.mBaikeTagsBean = new Gson().fromJson(bean.baikeTags, BaikeBean.ContentMyBean.BaikeTagsBean.class);
+            bean.baikeDefaultLemma = "";
+            bean.baikeTags = "";
+            String s = new Gson().toJson(bean);
+
+            LUtils.i(s);
+
+//            LUtils.i(bean.tag_value);
+//            LUtils.i(bean.baikeTags);
+//            LUtils.i(bean.baikeDefaultLemma);
+//            LUtils.i(bean.getLemmaDesc());
+//            LUtils.i(bean.getCard());
+//            LUtils.i(bean.getCatalogContentStructured());
+//            LUtils.i(bean.getErrmsg());
+//            LUtils.i(bean.getErrno());
+//            LUtils.i(bean.getLemmaTitle());
 
 
-        checkFile();
+//            BaikeBean baikeBean = new Gson().fromJson(content, BaikeBean.class);
+//            LUtils.i(baikeBean.signatureServer);
+//            LUtils.i(new Gson().fromJson(baikeBean.vca_tag.get(0).baikeDefaultLemma, BaikeBean.ContentMyBean.BaikeDefaultLemmaBean.class).getLemmaDesc());
+//            LUtils.i(baikeBean.vca_tag.get(0).baikeTags);
+//            LUtils.i(baikeBean.vca_tag.get(0).tag_value);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
-//        splitUrlParam("http://search-launcher.hismarttv.com/searchApi/mamSearch/hotsearch?appVersion=01.102.139&modelId=0&otaVersion=0001JL0510&pageSize=30&isSuperApp=1&source=1&appVersionCode=2000000000&deviceId=86100300000100600000071820304050&mac=00%3A10%3A20%3A30%3A40%3A50&wechatVersionCode=308002005&appType=1&commonRandomId=17c21e18-8e5b-4e6c-be0f-d6c3fea99e40&customerId=1550000048&contentType=80042&languageId=0&index=0&subscriberId=1550073782&sessionId=48f6d46136e441a9a609ef0ab5c6ecec&deviceExt=55E3F&srcPackageName=com.jamdeo.tv.vod&accessToken=19g_YIAHnzK2lzRcpUmRfZ39LwY2tYUjXI25JTxBlTL-TveTE-7Un4SzgKPTQ3m7euGlMTnIxP-JJWCE4_y-eD_XFEmQNYQoiSanjs9le1CD4Fnrp31sGXnFAbZ-KTxiYeZFIT-8kzc8kQMJkLG0WP4npKCBARKhl8wzNGayFTWgkc2OiMMRRvOskTWXRbeJ6Z_wmROiPB&appVersionName=2021.5.0.0.13.0&keyWord=%E8%87%AA%E5%8A%A8%E5%8C%96%E6%B5%8B%E8%AF%95%E6%90%9C%E7%B4%A2&sequence=1622545128649&license=1015&vipRight=%5B%7B%22rightProduct%22%3A%22vod%22%2C%22rightValue%22%3A%221%22%7D%2C%7B%22rightProduct%22%3A%22edu%22%2C%22rightValue%22%3A%221%22%7D%2C%7B%22rightProduct%22%3A%22educ%22%2C%22rightValue%22%3A%221%22%7D%5D&appPackageName=com.jamdeo.tv.vod&page=1&searchVersion=1.4");
-//        copyApkToUsb();
+    public static String unicodeToUtf8(String theString) {
+        char aChar;
+        int len = theString.length();
+        StringBuffer outBuffer = new StringBuffer(len);
+        for (int x = 0; x < len; ) {
+            aChar = theString.charAt(x++);
+            if (aChar == '\\') {
+                aChar = theString.charAt(x++);
+                if (aChar == 'u') {
+                    // Read the xxxx
+                    int value = 0;
+                    for (int i = 0; i < 4; i++) {
+                        aChar = theString.charAt(x++);
+                        switch (aChar) {
+                            case '0':
+                            case '1':
+                            case '2':
+                            case '3':
+                            case '4':
+                            case '5':
+                            case '6':
+                            case '7':
+                            case '8':
+                            case '9':
+                                value = (value << 4) + aChar - '0';
+                                break;
+                            case 'a':
+                            case 'b':
+                            case 'c':
+                            case 'd':
+                            case 'e':
+                            case 'f':
+                                value = (value << 4) + 10 + aChar - 'a';
+                                break;
+                            case 'A':
+                            case 'B':
+                            case 'C':
+                            case 'D':
+                            case 'E':
+                            case 'F':
+                                value = (value << 4) + 10 + aChar - 'A';
+                                break;
+                            default:
+                                throw new IllegalArgumentException(
+                                        "Malformed   \\uxxxx   encoding.");
+                        }
+                    }
+                    outBuffer.append((char) value);
+                } else {
+                    if (aChar == 't')
+                        aChar = '\t';
+                    else if (aChar == 'r')
+                        aChar = '\r';
+                    else if (aChar == 'n')
+                        aChar = '\n';
+                    else if (aChar == 'f')
+                        aChar = '\f';
+                    outBuffer.append(aChar);
+                }
+            } else
+                outBuffer.append(aChar);
+        }
+        return outBuffer.toString();
+    }
+
+    private static boolean needReturn = false;
+
+    private static void test(String s) {
+        File file = new File("C:\\Users\\dingzhixin.ex\\Desktop\\新建文本文档.txt");
+        try {
+            List<String> list = FileUtils.readLines(file);
+//507297
+            LUtils.i((char) -128);
+            LUtils.i(Integer.toBinaryString(65279));
+            LUtils.i((int) (list.get(0).charAt(0)));
+            if (needReturn) {
+                return;
+            }
+
+            Set<String> strings = new HashSet<>();
+            Map<String, Integer> map = new HashMap<>();
+            for (String s1 : list) {
+                if (s1.length() < 32) {
+                    continue;
+                }
+
+                String result1 = s1.replaceAll("\"", "").replaceAll(" ", "");
+                String result2 = result1.substring(0, 32);
+                String result3 = result1.substring(32).replaceAll("\\(", "").replaceAll("\\)", "")
+                        .replaceAll(" ", "")
+                        .replaceAll("次", "");
+                LUtils.i(result1);
+
+                if (map.get(result2) == null) {
+                    map.put(result2, Integer.parseInt(result3));
+                } else {
+                    map.put(result2, map.get(result2) + Integer.parseInt(result3));
+                }
+
+//                LUtils.i("=",result1,"=",s1.length());
+//                LUtils.i("=",result2,"=",result2.length());
+//                for (int i=0;i<result2.length();i++) {
+//                    LUtils.i("=",result2.charAt(0),"=");
+//                }
+
+                strings.add(result2);
+            }
+
+
+            LUtils.i("\n\n\n");
+
+            for (String s1 : strings) {
+                LUtils.i(s1);
+            }
+            LUtils.i("\n\n\n");
+
+
+            for (String s1 : map.keySet()) {
+                LUtils.i(s1, "  累计异常  ", map.get(s1), "次");
+            }
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    private static AtomicInteger mAtomicInteger = new AtomicInteger(10);
+
+    private static Runnable runnable = new Runnable() {
+        @Override
+        public void run() {
+            try {
+                Thread.sleep(5000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+    };
+
+    private static void sortAndFilterLog() {
+        File file = new File("C:\\Users\\dingzhixin.ex\\Desktop\\session - 副本.log");
+        try {
+            List<String> list = FileUtils.readLines(file);
+            int size = list.size();
+            for (int i = size - 1; i > -1; i--) {
+                if (TextUtils.isEmpty(list.get(i))) {
+                    list.remove(i);
+                } else if (list.get(i).contains("JuBao KeyEvent is STOP")
+                        || list.get(i).contains("StartJuBao, with package")) {
+                    list.remove(i);
+                }
+
+            }
+
+            int size1 = list.size();
+            List<SortLogEntity> entities = new ArrayList<>();
+            for (int i = 0; i < size1; i++) {
+
+                SortLogEntity entity = new SortLogEntity();
+                entity.content = list.get(i);
+                entity.sortFlg = Long.parseLong(list.get(i).substring(0, 18).replaceAll(" ", "")
+                        .replaceAll(":", "")
+                        .replaceAll("-", "")
+                        .replaceAll("\\.", ""));
+                entities.add(entity);
+            }
+
+            entities.sort(new Comparator<SortLogEntity>() {
+                @Override
+                public int compare(SortLogEntity o1, SortLogEntity o2) {
+                    return (int) (o1.sortFlg - o2.sortFlg);
+                }
+            });
+
+            StringBuilder builder = new StringBuilder();
+            for (SortLogEntity entity : entities) {
+                LUtils.i(entity.content);
+                builder.append(entity.content).append("\n");
+            }
+
+            FileUtils.write(new File("C:\\Users\\dingzhixin.ex\\Desktop\\处理后日志.txt"), builder.toString());
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    private static class SortLogEntity {
+        public long sortFlg;
+        public String content;
+    }
+
+
+    private static void calculateConsumeTime() {
+        File file = new File("C:\\Users\\dingzhixin.ex\\Desktop\\处理后日志.txt");
+        try {
+            List<String> list = FileUtils.readLines(file);
+            int size = list.size();
+            for (int i = size - 1; i > -1; i--) {
+                if (TextUtils.isEmpty(list.get(i))) {
+                    list.remove(i);
+                }
+            }
+
+            int size1 = list.size();
+            int subFirst = 12;
+            List<ConsumeEntity> list1 = new ArrayList<>();
+            int count = 0;
+            int total = 0;
+            for (int i = 0; i < size1; i++) {
+//                LUtils.i(list.get(i).contains("KEYCODE_JU_BAO_APP"),"           ",i);
+                if (list.get(i).contains("KEYCODE_JU_BAO_APP")) {
+                    if (
+                            list.get(i + 1).contains("JuBaoKeyEventReceiver: ")
+//                            list.get(i + 1).contains("showCaptureTest")
+                                    && list.get(i + 2).contains("mCenterImageLayout")) {
+                        ConsumeEntity entity = new ConsumeEntity();
+                        List<String> list2 = getResultString(list.get(i).substring(subFirst, 18),
+                                list.get(i + 1).substring(subFirst, 18),
+                                list.get(i + 2).substring(subFirst, 18));
+                        entity.first = list2.get(0).replaceAll("\\.", "");
+                        ;
+                        entity.second = list2.get(1).replaceAll("\\.", "");
+                        ;
+                        entity.third = list2.get(2).replaceAll("\\.", "");
+                        ;
+
+//                        entity.first = list.get(i).substring(subFirst, 18).replaceAll("\\.", "");
+//                        entity.second = list.get(i + 1).substring(subFirst, 18).replaceAll("\\.", "");
+//                        entity.third = list.get(i + 2).substring(subFirst, 18).replaceAll("\\.", "");
+
+                        LUtils.i(list.get(i));
+                        LUtils.i(list.get(i + 1));
+                        LUtils.i(list.get(i + 2));
+                        count++;
+                        total += (Integer.parseInt(entity.third) - Integer.parseInt(entity.second));
+                        LUtils.i("接收广播前耗时:", (Integer.parseInt(entity.second) - Integer.parseInt(entity.first)),
+                                "ms, CardBar截图耗时:", (Integer.parseInt(entity.third) - Integer.parseInt(entity.second)), "ms\n\n");
+
+                    } else {
+                        continue;
+                    }
+                }
+
+//                if (i > 0 && i % 3 == 0) {
+//                    ConsumeEntity entity = new ConsumeEntity();
+//                    entity.first = list.get(i - 3).substring(subFirst, 18).replaceAll("\\.", "");
+//                    entity.second = list.get(i - 2).substring(subFirst, 18).replaceAll("\\.", "");
+//                    entity.third = list.get(i - 1).substring(subFirst, 18).replaceAll("\\.", "");
+//
+//                    LUtils.i(list.get(i - 3));
+//                    LUtils.i(list.get(i - 2));
+//                    LUtils.i(list.get(i - 1));
+//                    LUtils.i("接收广播前耗时:", (Integer.parseInt(entity.second) - Integer.parseInt(entity.first)),
+//                            ", CardBar截图耗时:", (Integer.parseInt(entity.third) - Integer.parseInt(entity.second)));
+//
+//                    list1.add(entity);
+////                    LUtils.i(new Gson().toJson(entity));
+//                }
+            }
+            int size2 = list1.size();
+
+//            for (int i = 0; i < size2; i++) {
+//                LUtils.i("接收广播前耗时:",(Integer.parseInt(list1.get(i).second)-Integer.parseInt(list1.get(i).first)),
+//                        ", CardBar截图耗时:",(Integer.parseInt(list1.get(i).third)-Integer.parseInt(list1.get(i).second)));
+//            }
+
+            LUtils.i("count = ", count, ", 平均耗时 = ", (total / 1.0f / count));
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+
+    }
+
+    private static List<String> getResultString(String target1, String target2, String target3) {
+        List<String> list = new ArrayList<>();
+        String[] s1 = target1.split("\\.");
+        String[] s2 = target2.split("\\.");
+        String[] s3 = target3.split("\\.");
+        if (Integer.parseInt(s1[0]) > Integer.parseInt(s2[0])
+                || Integer.parseInt(s2[0]) > Integer.parseInt(s3[0])) {
+
+            if (Integer.parseInt(s1[0]) > Integer.parseInt(s2[0])) {
+                list.add(target1);
+                list.add(String.valueOf(Integer.parseInt(s2[0]) + 60) + "." + s2[1]);
+                list.add(String.valueOf(Integer.parseInt(s3[0]) + 60) + "." + s3[1]);
+
+            } else if (Integer.parseInt(s2[0]) > Integer.parseInt(s3[0])) {
+                list.add(target1);
+                list.add(target2);
+                list.add(String.valueOf(Integer.parseInt(s3[0]) + 60) + "." + s3[1]);
+            }
+        } else {
+            list.add(target1);
+            list.add(target2);
+            list.add(target3);
+        }
+
+        return list;
+    }
+
+
+    private static class ConsumeEntity {
+        public String first;
+        public String second;
+        public String third;
     }
 
     private static void generateDimens() {
@@ -43,11 +414,11 @@ public class Test6 {
     }
 
     private static void copyApkToUsb() {
-        String fileName = "dev-s3-ck-sp_010.apk";
+        String fileName = "HiSmartImage_3.03.01.003.1.apk";
 //
         try {
 //            FileUtils.copyFile(new File("C:\\Users\\dingzhixin.ex\\Desktop\\widget调试04091149\\" + fileName),
-            FileUtils.copyFile(new File("C:\\Users\\dingzhixin.ex\\Desktop\\dev-s3-ck-sp_010\\" + fileName),
+            FileUtils.copyFile(new File("C:\\Users\\dingzhixin.ex\\Desktop\\" + fileName),
                     new File("F:\\Android\\" + fileName));
         } catch (IOException e) {
             e.printStackTrace();
@@ -91,9 +462,29 @@ public class Test6 {
         //听学  contentType=19006
 //        String url="http://vipcloud-launcher.hismarttv.com/vipcloud/favorite/download?appVersionName=2020.5.0.0.13.0&deviceId=86100300000101000000071218006808&languageId=0&appVersionCode=2000000000&mac=00%3A63%3A18%3A00%3A68%3A08&accessToken=1ayD8BAFA4vJuJOwq-7M7PLemt-KKosaGaOl2Nm10iZovxRWz_j7vahUJtqhpRWy1Q7cInevo505E7RX3pZzCjPO2jljEX73eYDFPzhY_5IB6-xfGdv30uqFerWw-CR-mQda0VGe6zZ0uRHcFc1HvTHsfxv5tOVD7vFds-vVXdIlqU0AjrWwdgD5imMQ70LbYVcDjzAs1v&contentType=19006&serialNo=c495585c5a121d9f8e1368f29591f9f2&license=1015&sourceType=1&appPackageName=com.jamdeo.tv.vod&timeStamp=1607594483&commonRandomId=e33875f5-ca5f-4385-8616-fb0a40df77a3&appVersion=01.102.136&productCode=HIKID&customerId=32822477&vipRight=%5B%7B%22rightProduct%22%3A%22vod%22%2C%22rightValue%22%3A%222%22%7D%2C%7B%22rightProduct%22%3A%22edu%22%2C%22rightValue%22%3A%222%22%7D%2C%7B%22rightProduct%22%3A%22educ%22%2C%22rightValue%22%3A%222%22%7D%5D&version=2020.5.0.0.13.0&subscriberId=203627496&otaVersion=0001AI0930&deviceExt=MSD648\n";
         //课程 contentType=2001,1001
-        String[] result = url.split("&");
+        String[] result = url.split("\\?")[1].split("&");
+        Map<String, String> map = new HashMap<>();
         for (String s : result) {
             LUtils.i(s);
+            String[] result1 = s.split("=");
+            if (result1.length > 0) {
+                if (result1.length > 1) {
+                    map.put(result1[0], result1[1]);
+                } else {
+                    map.put(result1[0], "");
+                }
+            }
+        }
+
+        StringBuilder builder = new StringBuilder();
+        for (String s : map.keySet()) {
+            builder.append(s).append(",").append(map.get(s)).append("\n");
+        }
+
+        try {
+            FileUtils.write(new File("C:\\Users\\dingzhixin.ex\\Desktop\\分离后的url.tsv"), builder.toString());
+        } catch (IOException e) {
+            e.printStackTrace();
         }
 
     }

@@ -19,8 +19,8 @@ import java.net.URL;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.WatchEvent;
-import java.util.*;
 import java.util.List;
+import java.util.*;
 import java.util.concurrent.CountDownLatch;
 
 public class OutTxt {
@@ -67,7 +67,8 @@ public class OutTxt {
 //        filerFileAndOut("C:\\Users\\dingzhixin.ex\\Desktop\\bug\\log.txt", list,list1);
 
 //        List<String> list = new ArrayList<>(Arrays.asList("ActivityManager: Process com.hisense.smartimages", "lowmemorykiller: Killing 'nse" +
-//                ".smartimages'", "SmartImageApplication XJST| : application create"));
+//                ".smartimages'", "SmartImageApplication XJST| : application create","JuBao KeyEvent is START","showCaptureTest capture set end",
+//                "Sending non-protected broadcast com.jamdeo.tv.START_JU_BAO"));
 //        List<String> list = new ArrayList<>(Arrays.asList("setContentList", "requestHotWords"));
 //        List<String> list = new ArrayList<>(Arrays.asList("checkCondition()", "FetchPresentationHiCloudDataTask()","HiCloudTokenManager"
 //        ,"SmartImageApplication","MSG_FETCH_PRESENTATION_DATA","isDataArrivedAndValidate","PresentationData","notifyPresentationHiCloudDataData",
@@ -76,9 +77,26 @@ public class OutTxt {
 //        List<String> list = new ArrayList<>(Arrays.asList("XJST|isVideoMedia()", "XJST|start new thread to exec","JuBao KeyEvent",
 //                "duration of video record","Failed to execute"));
 ////        List<String> list = new ArrayList<>(Arrays.asList("lowmemorykiller: Kill 'com.hisense.smartimages'", "onReceive(), JuBao KeyEvent"));
-        List<String> list=new ArrayList<>(Arrays.asList("requestHotSearch","requestHotWords"));
-        filerFileAndOut("C:\\Users\\dingzhixin.ex\\Desktop\\U9A截图，热搜词和推荐影片不显示时，左右移动小聚识图和搜索按钮，出现中间截图不居中显示的现象.log", list);
-//        filerFileAndOut("C:\\Users\\dingzhixin.ex\\Desktop\\bug-小聚识图打开时卡住\\log.txt.1", list);
+//        List<String> list=new ArrayList<>(Arrays.asList("showToastDialog: show success","JuBao KeyEvent is START.  showCaptureTest",
+//                "showToastDialog  reset  mDialogLayout null","showToastDialog layout init end"));
+//        filerFileAndOut("C:\\Users\\dingzhixin.ex\\Desktop\\A65E10：07bug\\log.txt", list);
+
+//        String filePath = "C:\\Users\\dingzhixin.ex\\Desktop\\TV日志，2021年09月24日14时01分26秒开始记录.log";
+//        String filePath = "C:\\Users\\dingzhixin.ex\\Desktop\\A55截图，出现弹窗图片不显示，显示黑屏画面 14：33.log";
+//        String filePath = "C:\\Users\\dingzhixin.ex\\Desktop\\TV日志，2021年09月24日14时48分35秒开始记录.log";
+//        String filePath = "C:\\Users\\dingzhixin.ex\\Desktop\\TV日志，2021年09月24日15时42分46秒开始记录.log";
+        String filePath = "C:\\Users\\dingzhixin.ex\\Desktop\\";
+        List<String> list = new ArrayList<>(Arrays.asList("v9/image/vca","VcaInfoData"));
+//        List<String> list = new ArrayList<>(Arrays.asList("lowmemorykiller: Killing 'nse.smartimages", "onReceive(), JuBao KeyEvent"));
+        filerFileAndOut(filePath + "1.txt", list);
+//        System.out.println("===========================================间隔1=================================================================");
+//        filerFileAndOut(filePath + "log.txt.1", list);
+//        System.out.println("===========================================间隔2=================================================================");
+//        filerFileAndOut(filePath + "log.txt.2", list);
+//        System.out.println("===========================================间隔3=================================================================");
+//        filerFileAndOut(filePath + "log.txt.3", list);
+//        System.out.println("===========================================间隔4=================================================================");
+//        filerFileAndOut(filePath + "log.txt.4", list);
 //        System.out.println("===========================================间隔1=================================================================");
 //        filerFileAndOut("C:\\Users\\dingzhixin.ex\\Desktop\\bug\\log.txt.1", list);
 //        System.out.println("===========================================间隔2=================================================================");
@@ -94,7 +112,7 @@ public class OutTxt {
         //分析内存泄漏
 //        analysisMemInfo();
 
-//        monitor("C:\\Users\\dingzhixin.ex\\Desktop\\session.log", 500);
+//        monitor("C:\\Users\\dingzhixin.ex\\Desktop\\1.txt", 500);
 
 //        Utils.runtimeCommand("arp -a 192.168.137.172");
 //        Utils.runtimeCommand("nbtstat -a  192.168.137.172");
@@ -235,7 +253,6 @@ public class OutTxt {
             e.printStackTrace();
         }
     }
-
 
 
     /**
@@ -553,7 +570,9 @@ public class OutTxt {
 //        List<String> list = Arrays.asList("InflateException", "HXJ", "OutOfMemoryError", "IllegalArgumentException", "FATAL", "AiotCrashHandler", "manager error", "has detached", "Invalid item position");
 //        List<String> list = Arrays.asList("InflateException", "OutOfMemoryError", "IllegalArgumentException", "FATAL", "DemoCrashHandler", "manager error", "HXJ");
 //        List<String> list = Arrays.asList("SingleCardDeviceManger", "BluetoothVoiceTipFragment","IotManagerService","RequestBean");
-        List<String> list = Arrays.asList("TIAOSHI","FOCUSDEBUG","notifyDataSetChangedFocused");
+//        List<String> list = Arrays.asList("init CardBar", "JuBao KeyEvent is START","com.jamdeo.tv.START_JU_BAO"/*,"lowmemorykiller"*/);
+        List<String> list = Arrays.asList("TaoBaoManager: XJST| OnUIStatusListener(), onDismiss(), isBackPressed",
+                "addCardBarToWindow");
 //        List<String> list = Arrays.asList("updateSceneView()", "updateByPartnerStatus","mAssistView.isFocusable()","firstRequestFocus");
         TailerListener listener = new TailerListenerAdapter() {
             @Override

@@ -11,17 +11,27 @@ import java.io.*;
 import java.util.*;
 
 public class TsvParseUtil {
+    private static String mVersionInfo = "HiSmartImage_3.04.00.025.0,HiSmartImage_3.04.00.025.1,HiSmartImage_3.04.00.023.0,HiSmartImage_3.04.00.023" +
+            ".1";
+//    private static String mVersionInfo = "HiSmartImage_3.04.00.015.0";
+//    private static String mVersionInfo = "HiSmartImage_3.04.00.020.1";
 
+    private static String mSpecialException = "com.alibaba.wireless.security.open.simulatordetect.ISimulatorDetectComponent.isSimulator()";
+//    private static boolean mNeedBreak = false;
+    private static boolean mNeedBreak = true;
+    private static String mSpecialFlag = "0103";
+
+    //java.lang.NullPointerException: Attempt to invoke interface method 'boolean com.alibaba.wireless.security.open.simulatordetect.ISimulatorDetectComponent.isSimulator()' on a null object reference  at com.tvtao.user.dclib.impl.ZPDeviceImpl$InitializeTask.run(ZPDeviceImpl.java:373)  at java.lang.Thread.run(Thread.java:818)
     public static void main(String[] args) {
-        String parseFileName = "\\data_2021-09-14 09_48_50 AM.tsv";
+        String parseFileName = "\\异常0128.tsv";
         Calendar calendar = Calendar.getInstance();
-        int month = calendar.get(Calendar.MONTH) + 1;
+        int month = calendar.get(Calendar.MONTH) + 1;///8610030000010050000000830c04a8a3
         int day = calendar.get(Calendar.DATE) - 1;
         //文件路径,必改
-        String targetFilePath = "C:\\Users\\dingzhixin.ex\\Desktop\\小聚识图异常分析\\" + "0" + month + day + parseFileName;
+        String targetFilePath = "C:\\Users\\dingzhixin.ex\\Desktop\\小聚识图异常分析\\" + getYesterday() + parseFileName;
         //异常去重后保存的文件名,必改
-        String exceptionFileName = "0" + month + day + "异常信息";
-//        firstRunThisMethodToParse(parseFileName, 15);
+        String exceptionFileName = getYesterday() + "异常信息";
+//        firstRunThisMethodToParse(parseFileName, 31);
 
 
         //logfilename  0,      linenum  1,      createddate  2,      logfiletime  3,      version  4,      logtime  5,
@@ -31,48 +41,53 @@ public class TsvParseUtil {
         // subscriberid  23,      ename  24,      devicemsg  25,      eventpos  26,      eventtype  27,      eventcode  28,
         // deviceid  29,      customerid  30,      appversioncode  31,      oip  32,      time  33,      partitiondate  34
 
-//        //----------------------------------------------------------------------------------------------------------------
-//
-//
-//        //解析获取所有的tsv 每行的信息
-//        List<String[]> list = getAllTsvRows(targetFilePath);
-//        //移除首行标签
-//        list.remove(0);
-//
-//
-//        //tsv 总行数
-//        LUtils.i("小聚识图" + month + "月" + day + "日, HiSmartImage_3.04.00.015.0版本累计上报异常 ", list.size(), "次");
-//
-//        //根据eventCode过滤出对应的tsv行,000001--崩溃异常,000002--淘宝百科等异常
-//        List<String[]> eventCodeList = filterWithEventCode(list, "000001");
-//        LUtils.i("其中运行崩溃异常EventCode  000001 累计发生" + eventCodeList.size() + "  次,分布如下");
-//        //筛选异常类型输出异常发生次数
-//        filterWithENameAll(eventCodeList);
-//
-//        //UnsatisfiedLinkError异常每个设备的输出次数
-//        filterWithENameSpecial(eventCodeList, "UnsatisfiedLinkError");
-//
-//
-//        //根据eventCode过滤出对应的tsv行,000001--崩溃异常,000002--淘宝百科等异常
-//        List<String[]> eventCodeList2 = filterWithEventCode(list, "000002");
-//        LUtils.i("EventCode  000002 异常累计发生" + eventCodeList2.size() + "  次,分布如下");
-//        //筛选异常类型输出异常发生次数
-//        filterWithENameAll(eventCodeList2);
-//
-//        //获取每种异常信息发生的次数
-//        filterWithErrorInfo(eventCodeList, 21);
-//
-//
-//        //异常去重并保存到文件
-//        filterAndSaveErrorMessage(eventCodeList, exceptionFileName);
-//
-//        //----------------------------------------------------------------------------------------------------------------
+        //----------------------------------------------------------------------------------------------------------------
+
+
+        //解析获取所有的tsv 每行的信息
+        List<String[]> list = getAllTsvRows(targetFilePath);
+        //移除首行标签
+        list.remove(0);
+
+        if (mNeedBreak) {
+            getSpecialExceptionOut(list);
+            System.out.println("\n\n\n");
+//            return;
+        }
+
+        //tsv 总行数
+        LUtils.i("小聚识图" + month + "月" + day + "日," + mVersionInfo + "版本累计上报异常 ", list.size(), "次");
+
+        //根据eventCode过滤出对应的tsv行,000001--崩溃异常,000002--淘宝百科等异常
+        List<String[]> eventCodeList = filterWithEventCode(list, "000001");
+        LUtils.i("其中运行崩溃异常EventCode  000001 累计发生" + eventCodeList.size() + "  次,分布如下");
+        //筛选异常类型输出异常发生次数
+        filterWithENameAll(eventCodeList);
+
+        //UnsatisfiedLinkError异常每个设备的输出次数
+        filterWithENameSpecial(eventCodeList, "UnsatisfiedLinkError");
+
+
+        //根据eventCode过滤出对应的tsv行,000001--崩溃异常,000002--淘宝百科等异常
+        List<String[]> eventCodeList2 = filterWithEventCode(list, "000002");
+        LUtils.i("EventCode  000002 异常累计发生" + eventCodeList2.size() + "  次,分布如下");
+        //筛选异常类型输出异常发生次数
+        filterWithENameAll(eventCodeList2);
+
+        //获取每种异常信息发生的次数
+        filterWithErrorInfo(eventCodeList, 21);
+
+
+        //异常去重并保存到文件
+        filterAndSaveErrorMessage(eventCodeList, exceptionFileName);
+
+        //---------------------------------------------------------threa-------------------------------------------------------
 
         //读取文件中的异常总数
 //        getExceptionNum("0830前全部异常");
         //筛选新增异常,保存所有异常
-        parseNewlyException("0912前全部异常", exceptionFileName, "0913前全部异常");
-         
+//        parseNewlyException("1008前全部异常", exceptionFileName, getYesterday() + "前全部异常");
+
 
         //过滤指定设备发生了多少次异常
 //        List<String[]> specialDevice = filterWithDeviceId(eventCodeList, 29, "8610030000010110000007120cd3170b");
@@ -81,7 +96,79 @@ public class TsvParseUtil {
 //        filterWithErrorInfo(specialDevice1, 21);
 //        List<String[]> specialDevice1 = filterWithDeviceId(eventCodeList, 29, "86100300000104700000071200e74126");
 //        filterWithErrorInfo(specialDevice1, 21);
+    }
 
+
+    private static void getSpecialExceptionOut(List<String[]> list) {
+        int count = 0;
+        Map<String, Integer> map = new HashMap<>();
+        Map<String, Set<String>> ipMap = new HashMap<>();
+        Map<String, Map<String, Integer>> appVersionMap = new HashMap<>();
+        for (String[] strings : list) {
+            if (strings[21].contains(mSpecialException)) {
+                map.merge(strings[29], 1, Integer::sum);
+                if (ipMap.get(strings[29]) == null) {
+                    Set<String> set = new HashSet<>();
+                    set.add(strings[13]);
+                    ipMap.put(strings[29], set);
+                } else {
+                    ipMap.get(strings[29]).add(strings[13]);
+                }
+                if (appVersionMap.get(strings[29]) == null) {
+                    Map<String, Integer> map1 = new HashMap<>();
+                    map1.put(strings[19], 1);
+                    appVersionMap.put(strings[29], map1);
+                } else {
+                    if (appVersionMap.get(strings[29]).get(strings[19]) == null) {
+                        appVersionMap.get(strings[29]).put(strings[19], 1);
+                    } else {
+                        appVersionMap.get(strings[29]).put(strings[19], appVersionMap.get(strings[29]).get(strings[19]) + 1);
+                    }
+                }
+
+
+                count++;
+
+            }
+
+
+        }
+
+        List<Map<String, String>> list1 = new ArrayList<>();
+        for (String s : map.keySet()) {
+            if (map.get(s) > 9) {
+                StringBuilder builder = new StringBuilder();
+                for (String s1 : appVersionMap.get(s).keySet()) {
+                    builder.append("版本 ").append(s1).append(" 异常 ").append(appVersionMap.get(s).get(s1)).append(" 次");
+                }
+
+                Map<String, String> rowsMap = new HashMap<>();
+                rowsMap.put("deviceId", s);
+                rowsMap.put("exceptionCount", "" + map.get(s));
+                rowsMap.put("ipAddress", ipMap.get(s).toString());
+                rowsMap.put("version", appVersionMap.get(s).toString());
+                list1.add(rowsMap);
+
+                LUtils.i("设备 ", s, " 异常次数  ", map.get(s), " ip地址 ", ipMap.get(s), " 其中 ", builder.toString());
+            }
+        }
+
+        StringBuilder builder = new StringBuilder();
+        for (Map<String, String> rowsMap : list1) {
+            builder.append(rowsMap.get("deviceId")).append(",")
+                    .append(rowsMap.get("exceptionCount")).append(",")
+                    .append(rowsMap.get("ipAddress")).append(",")
+                    .append(rowsMap.get("version")).append("\n");
+        }
+        builder.append(mSpecialFlag).append("\n\n");
+
+        try {
+            FileUtils.write(new File("C:\\Users\\dingzhixin.ex\\Desktop\\测试输出tsv.tsv"), builder.toString(), true);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        LUtils.i("特殊异常累计  = ", count, " 次");
     }
 
     private static void firstRunThisMethodToParse(String parseFileName, int sotFlag) {
@@ -89,13 +176,13 @@ public class TsvParseUtil {
         int month = calendar.get(Calendar.MONTH) + 1;
         int day = calendar.get(Calendar.DATE) - 1;
         //文件路径,必改
-        String targetFilePath = "C:\\Users\\dingzhixin.ex\\Desktop\\小聚识图异常分析\\" + "0" + month + day + parseFileName;
+        String targetFilePath = "C:\\Users\\dingzhixin.ex\\Desktop\\小聚识图异常分析\\" + getYesterday() + parseFileName;
         //异常去重后保存的文件名,必改
-        String exceptionFileName = "0" + month + day + "异常信息";
+        String exceptionFileName = getYesterday() + "异常信息";
         //排序flag,必改
 
         //设备出现异常日期,必改
-        String appearDate = "(0" + month + day + "日新增)";
+        String appearDate = "(" + getYesterday() + "日新增)";
 
         //首先单独执行该方法,然后注释掉,重新生成设备id发生UnsatisfiedLinkError异常时的对应列表
         execute(targetFilePath, appearDate, sotFlag);
@@ -213,8 +300,10 @@ public class TsvParseUtil {
         HashMap<String, List<String[]>> errorInfoMap = new HashMap<>();
         HashSet<String> set = new HashSet<>();
 
+
         for (String[] strings : list) {
             try {
+                //异常信息
                 String eMessage = strings[eTracePosition];
                 if (set.contains(eMessage)) {
                     map.put(eMessage, map.get(eMessage) + 1);
@@ -237,10 +326,35 @@ public class TsvParseUtil {
         for (String s : errorInfoMap.keySet()) {
             List<String[]> list2 = errorInfoMap.get(s);
             HashSet<String> deviceIdGroup = new HashSet<>();
+            HashMap<String, Integer> deviceCount = new HashMap<>();
             for (String[] s1 : list2) {
-                deviceIdGroup.add(s1[29]);
+                if (deviceIdGroup.contains(s1[29])) {
+                    deviceCount.put(s1[29], deviceCount.get(s1[29]) + 1);
+                } else {
+                    deviceIdGroup.add(s1[29]);
+                    deviceCount.put(s1[29], 1);
+                }
+
             }
-            LUtils.i("以下异常发生了  " + list2.size() + "  次", " 发生在设备", deviceIdGroup, "上\n", s, "\n\n\n");
+            StringBuilder builder = new StringBuilder();
+            builder.append("[ ");
+            int temp = 0;
+            int size = deviceCount.size();
+            for (String s1 : deviceCount.keySet()) {
+                temp++;
+                builder.append(s1).append("( ").append(deviceCount.get(s1)).append("次 )");
+                if (temp != size) {
+                    builder.append(",");
+                }
+                if (temp % 3 == 0) {
+                    builder.append("\n");
+                }
+            }
+            builder.append(" ]");
+
+
+            LUtils.i("以下异常发生了  " + list2.size() + "  次", " 发生在设备\n", builder.toString(), "上\n", s, "\n\n\n");
+//            LUtils.i("以下异常发生了  " + list2.size() + "  次", " 发生在设备", deviceIdGroup, "上\n", s, "\n\n\n");
 
         }
 
@@ -971,5 +1085,81 @@ public class TsvParseUtil {
         public String specialEName;
 
     }
+
+
+    public static String getCurrentDay() {
+        Calendar calendar = Calendar.getInstance();
+        int month = calendar.get(Calendar.MONTH) + 1;
+        int day = calendar.get(Calendar.DATE);
+        String monthS = "";
+        if (month < 10) {
+            monthS = "0" + month;
+        } else {
+            monthS = "" + month;
+        }
+        String dayS = "";
+        if (day < 10) {
+            dayS = "0" + day;
+        } else {
+            dayS = "" + day;
+        }
+        LUtils.i(monthS + dayS);
+
+        return monthS + dayS;
+
+    }
+
+    public static String getYesterday() {
+        Calendar calendar = Calendar.getInstance();
+        int month = calendar.get(Calendar.MONTH) + 1;
+        int day = calendar.get(Calendar.DATE);
+        String monthS = "";
+
+        if (day == 1) {
+            if (month == 1) {
+                monthS = "12";
+            } else if (month - 1 > 9) {
+                monthS = "" + (month - 1);
+            } else {
+                monthS = "0" + (month - 1);
+            }
+        } else {
+            if (month < 10) {
+                monthS = "0" + month;
+            } else {
+                monthS = "" + month;
+            }
+        }
+
+        String dayS = "";
+        Set<String> months = new HashSet<>(Arrays.asList("1", "3", "5", "7", "8", "10", "12"));
+        int lastMonth = month - 1;
+        if (lastMonth == 0) {
+            lastMonth = 12;
+        }
+
+        if (day == 1) {
+            if (months.contains("" + lastMonth)) {
+                dayS = "31";
+            } else {
+                if ("2".equals("" + lastMonth)) {
+                    dayS = "28";
+                } else {
+                    dayS = "30";
+                }
+            }
+        } else {
+            if (day < 11) {
+                dayS = "0" + (day - 1);
+            } else {
+                dayS = "" + (day - 1);
+            }
+        }
+        mSpecialFlag = monthS + dayS;
+        LUtils.i(mSpecialFlag);
+        return monthS + dayS;
+
+    }
+
 }
 

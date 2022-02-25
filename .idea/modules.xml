@@ -8,6 +8,7 @@
       <module fileurl="file://$PROJECT_DIR$/killlol/killlol.iml" filepath="$PROJECT_DIR$/killlol/killlol.iml" />
       <module fileurl="file://$PROJECT_DIR$/voicehandle/maoyan.iml" filepath="$PROJECT_DIR$/voicehandle/maoyan.iml" />
       <module fileurl="file://$PROJECT_DIR$/mytest/mytest.iml" filepath="$PROJECT_DIR$/mytest/mytest.iml" />
+      <module fileurl="file://$PROJECT_DIR$/packagetest/packagetest.iml" filepath="$PROJECT_DIR$/packagetest/packagetest.iml" />
     </modules>
   </component>
 </project>

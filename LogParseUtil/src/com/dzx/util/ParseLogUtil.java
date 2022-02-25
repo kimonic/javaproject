@@ -55,6 +55,7 @@ public class ParseLogUtil {
                 if (accordWithCondition(line, filterConditions)) {
                     bufferedWriter.write(line);
                     System.out.println(line);
+                    System.out.println("\n");
                     count++;
                     bufferedWriter.write("\n\n");
                 }
