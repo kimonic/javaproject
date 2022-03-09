@@ -21,25 +21,32 @@ public class Test6 {
 
     public static void main(String[] args) throws InterruptedException {
 
-        File file = new File("C:\\Users\\dingzhixin.ex\\Desktop\\汇总文件列表");
-        List<String> list = getAllFilePath(file);
 
-        List<String>  contents=new ArrayList<>();
+        File file=new File("D:\\Program Files\\2345Soft\\2345SafeCenter\\CommonFiles\\SdEngine");
+        file.setExecutable(true);
+        file.setWritable(true);
+        LUtils.i(file.canExecute());
+        LUtils.i(file.delete());
 
-        for (String s:list){
-            try {
-                contents.addAll(FileUtils.readLines(new File(s)));
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-
-        try {
-            FileUtils.writeLines(new File("C:\\Users\\dingzhixin.ex\\Desktop\\汇总文件列表","aarjar所有文件目录.txt"),contents);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        LUtils.i("汇总完成");
+//        File file = new File("C:\\Users\\dingzhixin.ex\\Desktop\\汇总文件列表");
+//        List<String> list = getAllFilePath(file);
+//
+//        List<String>  contents=new ArrayList<>();
+//
+//        for (String s:list){
+//            try {
+//                contents.addAll(FileUtils.readLines(new File(s)));
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//            }
+//        }
+//
+//        try {
+//            FileUtils.writeLines(new File("C:\\Users\\dingzhixin.ex\\Desktop\\汇总文件列表","aarjar所有文件目录.txt"),contents);
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//        LUtils.i("汇总完成");
 
     }
 

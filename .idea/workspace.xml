@@ -7,45 +7,81 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="13f98f43-fccf-402d-b4dd-e3034814c200" name="Default Changelist" comment="202104291837">
-      <change afterPath="$PROJECT_DIR$/LogParseUtil/src/com/dzx/util/ArBaiKeExceptionTsvParseUtil.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/LogParseUtil/src/com/dzx/util/ObjectSizeFetcher.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/LogParseUtil/src/com/dzx/util/UZipFile.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mylibs/antlr-2.7.4.jar" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mylibs/chardet-1.0.jar" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mylibs/cpdetector_1.0.10.jar" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mylibs/jargs-1.0.jar" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mylibs/jaudiotagger-3.0.1-sources.jar" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mylibs/jaudiotagger-3.0.1.jar" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mytest/src/com/dzx/OpenUrl_Proxy.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mytest/src/com/dzx/Test7.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mytest/src/com/dzx/Test8.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mytest/src/com/dzx/analyze/ParseArBaikeMonkeyLog.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mytest/src/com/dzx/objectexplorer/Chain.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mytest/src/com/dzx/objectexplorer/InstrumentationGrabber.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mytest/src/com/dzx/objectexplorer/MemoryMeasurer.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mytest/src/com/dzx/objectexplorer/ObjectExplorer.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mytest/src/com/dzx/objectexplorer/ObjectGraphMeasurer.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mytest/src/com/dzx/objectexplorer/ObjectSerializer.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mytest/src/com/dzx/objectexplorer/ObjectVisitor.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mytest/src/com/dzx/util/MThreadPoolExecutor.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mytest/src/com/dzx/util/ObjectSizeFetcher.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mytest/src/com/dzx/util/ThreadPoolUtil.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mytest/src/com/dzx/util/UZipFile.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/packagetest/packagetest.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/packagetest/src/com/kimonik/PackageTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/codeStyles/Project.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/codeStyles/Project.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mylibs/AXmlResourceParser-1.0.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mylibs/ant.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mytest/src/android/util/TypedValue.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mytest/src/com/dzx/util/FilterLogUtil.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mytest/src/com/dzx/util/StringUtil.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mytest/src/luyao/parser/Main.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mytest/src/luyao/parser/arsc/ResParser.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mytest/src/luyao/parser/arsc/bean/ResArsc.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mytest/src/luyao/parser/arsc/bean/ResChunkHeader.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mytest/src/luyao/parser/arsc/bean/ResSpanStyle.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mytest/src/luyao/parser/arsc/bean/ResStringPoolHeader.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mytest/src/luyao/parser/arsc/bean/ResTableConfig.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mytest/src/luyao/parser/arsc/bean/ResTableEntry.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mytest/src/luyao/parser/arsc/bean/ResTableHeader.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mytest/src/luyao/parser/arsc/bean/ResTableMap.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mytest/src/luyao/parser/arsc/bean/ResTableMapEntry.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mytest/src/luyao/parser/arsc/bean/ResTablePackageHeader.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mytest/src/luyao/parser/arsc/bean/ResTableRefParent.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mytest/src/luyao/parser/arsc/bean/ResTableType.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mytest/src/luyao/parser/arsc/bean/ResTableTypeSpec.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mytest/src/luyao/parser/arsc/bean/ResType.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mytest/src/luyao/parser/arsc/bean/ResValue.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mytest/src/luyao/parser/classes/ClassParser.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mytest/src/luyao/parser/classes/bean/Attribute.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mytest/src/luyao/parser/classes/bean/Clazz.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mytest/src/luyao/parser/classes/bean/Constant.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mytest/src/luyao/parser/classes/bean/ConstantClass.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mytest/src/luyao/parser/classes/bean/ConstantFieldRef.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mytest/src/luyao/parser/classes/bean/ConstantMethodref.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mytest/src/luyao/parser/classes/bean/ConstantNameAndType.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mytest/src/luyao/parser/classes/bean/ConstantString.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mytest/src/luyao/parser/classes/bean/ConstantTag.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mytest/src/luyao/parser/classes/bean/ConstantUtf8.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mytest/src/luyao/parser/classes/bean/Field.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mytest/src/luyao/parser/classes/bean/Method.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mytest/src/luyao/parser/dex/DexParser.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mytest/src/luyao/parser/dex/bean/Dex.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mytest/src/luyao/parser/dex/bean/DexFieldId.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mytest/src/luyao/parser/dex/bean/DexHeader.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mytest/src/luyao/parser/dex/bean/DexMethodId.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mytest/src/luyao/parser/dex/bean/DexProtoId.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mytest/src/luyao/parser/dex/bean/DexStringId.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mytest/src/luyao/parser/dex/bean/DexTypeId.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mytest/src/luyao/parser/dex/bean/clazz/DexClass.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mytest/src/luyao/parser/dex/bean/clazz/DexClassData.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mytest/src/luyao/parser/dex/bean/clazz/DexCode.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mytest/src/luyao/parser/dex/bean/clazz/EncodedField.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mytest/src/luyao/parser/dex/bean/clazz/EncodedMethod.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mytest/src/luyao/parser/utils/BytesReader.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mytest/src/luyao/parser/utils/Reader.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mytest/src/luyao/parser/utils/TransformUtils.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mytest/src/luyao/parser/utils/Utils.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mytest/src/luyao/parser/xml/XmlParser.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mytest/src/luyao/parser/xml/bean/Attribute.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mytest/src/luyao/parser/xml/bean/NameSpace.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mytest/src/luyao/parser/xml/bean/Xml.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mytest/src/luyao/parser/xml/bean/chunk/Chunk.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mytest/src/luyao/parser/xml/bean/chunk/EndNameSpaceChunk.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mytest/src/luyao/parser/xml/bean/chunk/EndTagChunk.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mytest/src/luyao/parser/xml/bean/chunk/StartNameSpaceChunk.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mytest/src/luyao/parser/xml/bean/chunk/StartTagChunk.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/LogParseUtil/src/META-INF/MANIFEST.MF" beforeDir="false" afterPath="$PROJECT_DIR$/LogParseUtil/src/META-INF/MANIFEST.MF" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/LogParseUtil/src/com/dzx/util/FtpUploadContinueUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/LogParseUtil/src/com/dzx/util/FtpUploadContinueUtil.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/LogParseUtil/src/com/dzx/util/GradleCacheJarFilterUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/LogParseUtil/src/com/dzx/util/GradleCacheJarFilterUtil.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/LogParseUtil/src/com/dzx/util/OutTxt.java" beforeDir="false" afterPath="$PROJECT_DIR$/LogParseUtil/src/com/dzx/util/OutTxt.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/LogParseUtil/src/com/dzx/util/ParseLogUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/LogParseUtil/src/com/dzx/util/ParseLogUtil.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/LogParseUtil/src/com/dzx/util/TsvParseUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/LogParseUtil/src/com/dzx/util/TsvParseUtil.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mylibs/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/mylibs/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mytest/src/com/dzx/JavaAssistTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/mytest/src/com/dzx/JavaAssistTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mytest/src/com/dzx/SuperTest1.java" beforeDir="false" afterPath="$PROJECT_DIR$/mytest/src/com/dzx/SuperTest1.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mytest/src/com/dzx/SuperTest2.java" beforeDir="false" afterPath="$PROJECT_DIR$/mytest/src/com/dzx/SuperTest2.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mytest/src/com/dzx/SuperTest3.java" beforeDir="false" afterPath="$PROJECT_DIR$/mytest/src/com/dzx/SuperTest3.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mytest/src/com/dzx/Test1.java" beforeDir="false" afterPath="$PROJECT_DIR$/mytest/src/com/dzx/Test1.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mytest/src/com/dzx/Test3.java" beforeDir="false" afterPath="$PROJECT_DIR$/mytest/src/com/dzx/Test3.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/mytest/src/com/dzx/Test5.java" beforeDir="false" afterPath="$PROJECT_DIR$/mytest/src/com/dzx/Test5.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/mytest/src/com/dzx/Test6.java" beforeDir="false" afterPath="$PROJECT_DIR$/mytest/src/com/dzx/Test6.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mytest/src/com/dzx/Test8.java" beforeDir="false" afterPath="$PROJECT_DIR$/mytest/src/com/dzx/Test8.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mytest/src/com/dzx/util/AudioConvertUtils.java" beforeDir="false" afterPath="$PROJECT_DIR$/mytest/src/com/dzx/util/AudioConvertUtils.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mytest/src/com/dzx/util/MThreadPoolExecutor.java" beforeDir="false" afterPath="$PROJECT_DIR$/mytest/src/com/dzx/util/MThreadPoolExecutor.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/artifacts/LogParseUtil_jar/LogParseUtil.jar" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/LogParseUtil/META-INF/MANIFEST.MF" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/LogParseUtil/com/dzx/HomePage.class" beforeDir="false" />
@@ -228,12 +264,12 @@
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../../githubgradle/gradle" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/mytest/src" />
     <property name="project.structure.last.edited" value="Artifacts" />
     <property name="project.structure.proportion" value="0.15234375" />
     <property name="project.structure.side.proportion" value="0.2" />
     <property name="run.code.analysis.last.selected.profile" value="pProject Default" />
-    <property name="settings.editor.selected.configurable" value="http.proxy" />
+    <property name="settings.editor.selected.configurable" value="editing.templates" />
   </component>
   <component name="RecentsManager">
     <key name="CopyClassDialog.RECENTS_KEY">
@@ -241,46 +277,59 @@
       <recent name="com.dzx" />
     </key>
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="E:\work\app\mytoolsjavaproject\javaproject\mytest\src" />
       <recent name="E:\work\app\mytoolsjavaproject\javaproject\mylibs" />
       <recent name="E:\work\app\mytoolsjavaproject\javaproject\mytest\src\com\dzx\objectexplorer" />
       <recent name="E:\work\app\mytoolsjavaproject\javaproject\mytest\src\com\dzx" />
       <recent name="E:\work\app\mytoolsjavaproject\javaproject\mytest\src\com\dzx\example" />
-      <recent name="E:\work\app\mytoolsjavaproject\javaproject\LogParseUtil\src\com\dzx\util" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.Test6">
-    <configuration name="ArBaiKeExceptionTsvParseUtil" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="com.dzx.util.ArBaiKeExceptionTsvParseUtil" />
-      <module name="LogParseUtil" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="com.dzx.util.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="GradleCacheJarFilterUtil" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="com.dzx.util.GradleCacheJarFilterUtil" />
-      <module name="LogParseUtil" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="com.dzx.util.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="ParseArBaikeMonkeyLog" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="com.dzx.analyze.ParseArBaikeMonkeyLog" />
+  <component name="RunManager" selected="Application.Test1 (1)">
+    <configuration name="FilterLogUtil" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="java.dzx.util.FilterLogUtil" />
       <module name="mytest" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="com.dzx.analyze.*" />
+          <option name="PATTERN" value="java.dzx.util.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="OutTxt" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="java.dzx.util.OutTxt" />
+      <module name="LogParseUtil" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="java.dzx.util.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="Test1 (1)" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="com.dzx.Test1" />
+      <module name="mytest" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.dzx.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="Test1" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="java.dzx.Test1" />
+      <module name="mytest" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="java.dzx.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
@@ -289,24 +338,11 @@
       </method>
     </configuration>
     <configuration name="Test6" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="com.dzx.Test6" />
+      <option name="MAIN_CLASS_NAME" value="java.dzx.Test6" />
       <module name="mytest" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="com.dzx.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="Test8" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="com.dzx.Test8" />
-      <module name="mytest" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="com.dzx.*" />
+          <option name="PATTERN" value="java.dzx.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
@@ -315,19 +351,19 @@
       </method>
     </configuration>
     <list>
-      <item itemvalue="Application.Test8" />
-      <item itemvalue="Application.ParseArBaikeMonkeyLog" />
-      <item itemvalue="Application.ArBaiKeExceptionTsvParseUtil" />
-      <item itemvalue="Application.GradleCacheJarFilterUtil" />
       <item itemvalue="Application.Test6" />
+      <item itemvalue="Application.OutTxt" />
+      <item itemvalue="Application.FilterLogUtil" />
+      <item itemvalue="Application.Test1" />
+      <item itemvalue="Application.Test1 (1)" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Application.Test1 (1)" />
+        <item itemvalue="Application.Test1" />
+        <item itemvalue="Application.FilterLogUtil" />
+        <item itemvalue="Application.OutTxt" />
         <item itemvalue="Application.Test6" />
-        <item itemvalue="Application.Test8" />
-        <item itemvalue="Application.GradleCacheJarFilterUtil" />
-        <item itemvalue="Application.ArBaiKeExceptionTsvParseUtil" />
-        <item itemvalue="Application.ParseArBaikeMonkeyLog" />
       </list>
     </recent_temporary>
   </component>
@@ -600,7 +636,13 @@
       <workItem from="1645493673300" duration="5926000" />
       <workItem from="1645581610298" duration="20689000" />
       <workItem from="1645665000879" duration="19019000" />
-      <workItem from="1645750928143" duration="14094000" />
+      <workItem from="1645750928143" duration="15100000" />
+      <workItem from="1646032073942" duration="2935000" />
+      <workItem from="1646275324099" duration="14162000" />
+      <workItem from="1646355541541" duration="25262000" />
+      <workItem from="1646706346016" duration="13296000" />
+      <workItem from="1646806195271" duration="3695000" />
+      <workItem from="1646814702836" duration="1084000" />
     </task>
     <task id="LOCAL-00001" summary="202004141910  调整安装apk路径">
       <created>1586862711789</created>
@@ -812,7 +854,21 @@
       <option name="project" value="LOCAL" />
       <updated>1629773764748</updated>
     </task>
-    <option name="localTasksCounter" value="31" />
+    <task id="LOCAL-00031" summary="202202251743">
+      <created>1645782271117</created>
+      <option name="number" value="00031" />
+      <option name="presentableId" value="LOCAL-00031" />
+      <option name="project" value="LOCAL" />
+      <updated>1645782271117</updated>
+    </task>
+    <task id="LOCAL-00032" summary="202104291837">
+      <created>1645782306918</created>
+      <option name="number" value="00032" />
+      <option name="presentableId" value="LOCAL-00032" />
+      <option name="project" value="LOCAL" />
+      <updated>1645782306918</updated>
+    </task>
+    <option name="localTasksCounter" value="33" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -854,23 +910,28 @@
     <MESSAGE value="20210119" />
     <MESSAGE value="202010305" />
     <MESSAGE value="202010407" />
-    <MESSAGE value="202104291837" />
     <MESSAGE value="20210824" />
-    <option name="LAST_COMMIT_MESSAGE" value="20210824" />
+    <MESSAGE value="202202251743" />
+    <MESSAGE value="202104291837" />
+    <option name="LAST_COMMIT_MESSAGE" value="202104291837" />
   </component>
   <component name="WindowStateProjectService">
     <state x="414" y="148" width="1185" height="815" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1640339683080">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="414" y="148" width="1185" height="815" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1640339683080" />
-    <state x="677" y="94" key="#com.intellij.ide.util.MemberChooser" timestamp="1645178885478">
+    <state x="677" y="94" key="#com.intellij.ide.util.MemberChooser" timestamp="1646361393177">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="677" y="94" key="#com.intellij.ide.util.MemberChooser/0.0.1920.1040@0.0.1920.1040" timestamp="1645178885478" />
+    <state x="677" y="94" key="#com.intellij.ide.util.MemberChooser/0.0.1920.1040@0.0.1920.1040" timestamp="1646361393177" />
     <state x="565" y="211" key="#com.intellij.ide.util.TreeClassChooserDialog" timestamp="1640592329105">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="565" y="211" key="#com.intellij.ide.util.TreeClassChooserDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1640592329105" />
+    <state x="682" y="415" key="#com.intellij.refactoring.move.MoveHandler.SelectRefactoringDialog" timestamp="1646807407202">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="682" y="415" key="#com.intellij.refactoring.move.MoveHandler.SelectRefactoringDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1646807407202" />
     <state x="579" y="235" key="#com.intellij.util.ui.classpath.ChooseLibrariesDialog" timestamp="1640590843415">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
@@ -879,42 +940,46 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="632" y="305" key="ANALYSIS_DLG_com.intellij.analysis.BaseAnalysisAction$1/0.0.1920.1040@0.0.1920.1040" timestamp="1643449104847" />
-    <state x="312" y="0" key="CommitChangelistDialog2" timestamp="1645782260119">
+    <state x="312" y="0" key="CommitChangelistDialog2" timestamp="1645782302271">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="312" y="0" key="CommitChangelistDialog2/0.0.1920.1040@0.0.1920.1040" timestamp="1645782260119" />
-    <state x="92" y="92" width="1736" height="856" key="DiffContextDialog" timestamp="1643425568637">
+    <state x="312" y="0" key="CommitChangelistDialog2/0.0.1920.1040@0.0.1920.1040" timestamp="1645782302271" />
+    <state x="92" y="92" width="1736" height="856" key="DiffContextDialog" timestamp="1646376118498">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="92" y="92" width="1736" height="856" key="DiffContextDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1643425568637" />
-    <state x="654" y="235" key="FileChooserDialogImpl" timestamp="1644810864633">
+    <state x="92" y="92" width="1736" height="856" key="DiffContextDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1646376118498" />
+    <state x="654" y="235" key="FileChooserDialogImpl" timestamp="1645783937656">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="654" y="235" key="FileChooserDialogImpl/0.0.1920.1040@0.0.1920.1040" timestamp="1644810864633" />
-    <state width="1855" height="377" key="GridCell.Tab.0.bottom" timestamp="1645782055005">
+    <state x="654" y="235" key="FileChooserDialogImpl/0.0.1920.1040@0.0.1920.1040" timestamp="1645783937656" />
+    <state width="1855" height="331" key="GridCell.Tab.0.bottom" timestamp="1646815875909">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1855" height="377" key="GridCell.Tab.0.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1645782055005" />
-    <state width="1855" height="377" key="GridCell.Tab.0.center" timestamp="1645782055005">
+    <state width="1855" height="331" key="GridCell.Tab.0.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1646815875909" />
+    <state width="1855" height="331" key="GridCell.Tab.0.center" timestamp="1646815875909">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1855" height="377" key="GridCell.Tab.0.center/0.0.1920.1040@0.0.1920.1040" timestamp="1645782055005" />
-    <state width="1855" height="377" key="GridCell.Tab.0.left" timestamp="1645782055005">
+    <state width="1855" height="331" key="GridCell.Tab.0.center/0.0.1920.1040@0.0.1920.1040" timestamp="1646815875909" />
+    <state width="1855" height="331" key="GridCell.Tab.0.left" timestamp="1646815875909">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1855" height="377" key="GridCell.Tab.0.left/0.0.1920.1040@0.0.1920.1040" timestamp="1645782055005" />
-    <state width="1855" height="377" key="GridCell.Tab.0.right" timestamp="1645782055005">
+    <state width="1855" height="331" key="GridCell.Tab.0.left/0.0.1920.1040@0.0.1920.1040" timestamp="1646815875909" />
+    <state width="1855" height="331" key="GridCell.Tab.0.right" timestamp="1646815875909">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1855" height="377" key="GridCell.Tab.0.right/0.0.1920.1040@0.0.1920.1040" timestamp="1645782055005" />
-    <state x="245" y="0" width="1492" height="1040" key="SettingsEditor" timestamp="1645154842438">
+    <state width="1855" height="331" key="GridCell.Tab.0.right/0.0.1920.1040@0.0.1920.1040" timestamp="1646815875909" />
+    <state x="84" y="0" width="1674" height="1040" key="SettingsEditor" timestamp="1646294048003">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="245" y="0" width="1492" height="1040" key="SettingsEditor/0.0.1920.1040@0.0.1920.1040" timestamp="1645154842438" />
-    <state width="762" height="596" key="SwitcherDM" timestamp="1645581802884">
+    <state x="84" y="0" width="1674" height="1040" key="SettingsEditor/0.0.1920.1040@0.0.1920.1040" timestamp="1646294048003" />
+    <state width="762" height="596" key="SwitcherDM" timestamp="1646807868477">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="762" height="596" key="SwitcherDM/0.0.1920.1040@0.0.1920.1040" timestamp="1645581802884" />
+    <state width="762" height="596" key="SwitcherDM/0.0.1920.1040@0.0.1920.1040" timestamp="1646807868477" />
+    <state x="352" y="122" key="Vcs.Push.Dialog.v2" timestamp="1645782309869">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="352" y="122" key="Vcs.Push.Dialog.v2/0.0.1920.1040@0.0.1920.1040" timestamp="1645782309869" />
     <state x="745" y="267" key="classpath-attribute-editor" timestamp="1640592359661">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
@@ -923,41 +988,29 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state width="1916" height="1036" key="com.intellij.byteCodeViewer.ShowByteCodeAction/0.0.1920.1040@0.0.1920.1040" timestamp="1643449790615" />
-    <state x="489" y="259" key="com.intellij.ide.util.TipDialog" timestamp="1645750934711">
+    <state x="489" y="259" key="com.intellij.ide.util.TipDialog" timestamp="1646814754713">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="489" y="259" key="com.intellij.ide.util.TipDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1645750934711" />
-    <state x="422" y="0" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser" timestamp="1645691009571">
+    <state x="489" y="259" key="com.intellij.ide.util.TipDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1646814754713" />
+    <state x="422" y="0" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser" timestamp="1646814992174">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="422" y="0" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser/0.0.1920.1040@0.0.1920.1040" timestamp="1645691009571" />
-    <state x="376" y="48" width="1167" height="944" key="find.popup" timestamp="1643425522685">
+    <state x="422" y="0" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser/0.0.1920.1040@0.0.1920.1040" timestamp="1646814992174" />
+    <state x="376" y="48" width="1167" height="944" key="find.popup" timestamp="1646375737941">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="376" y="48" width="1167" height="944" key="find.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1643425522685" />
-    <state x="0" y="198" width="1920" height="683" key="new project wizard" timestamp="1640338591830">
+    <state x="376" y="48" width="1167" height="944" key="find.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1646375737941" />
+    <state x="0" y="198" width="1920" height="683" key="new project wizard" timestamp="1646369891436">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="0" y="198" width="1920" height="683" key="new project wizard/0.0.1920.1040@0.0.1920.1040" timestamp="1640338591830" />
+    <state x="0" y="198" width="1920" height="683" key="new project wizard/0.0.1920.1040@0.0.1920.1040" timestamp="1646369891436" />
     <state x="448" y="232" key="run.anything.popup" timestamp="1641432632476">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="448" y="232" key="run.anything.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1641432632476" />
-    <state x="453" y="0" width="1009" height="1036" key="search.everywhere.popup" timestamp="1645685144073">
+    <state x="453" y="0" width="1009" height="1036" key="search.everywhere.popup" timestamp="1646360942661">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="453" y="0" width="1009" height="1036" key="search.everywhere.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1645685144073" />
-  </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="java-field">
-          <url>file://$PROJECT_DIR$/out/production/mytest/com/dzx/Test8.class</url>
-          <line>28</line>
-          <properties field="s" class="com.dzx.Test8" />
-          <option name="timeStamp" value="1" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
+    <state x="453" y="0" width="1009" height="1036" key="search.everywhere.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1646360942661" />
   </component>
 </project>

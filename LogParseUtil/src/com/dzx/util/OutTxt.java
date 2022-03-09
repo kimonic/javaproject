@@ -85,10 +85,18 @@ public class OutTxt {
 //        String filePath = "C:\\Users\\dingzhixin.ex\\Desktop\\A55截图，出现弹窗图片不显示，显示黑屏画面 14：33.log";
 //        String filePath = "C:\\Users\\dingzhixin.ex\\Desktop\\TV日志，2021年09月24日14时48分35秒开始记录.log";
 //        String filePath = "C:\\Users\\dingzhixin.ex\\Desktop\\TV日志，2021年09月24日15时42分46秒开始记录.log";
-        String filePath = "C:\\Users\\dingzhixin.ex\\Desktop\\";
-        List<String> list = new ArrayList<>(Arrays.asList("v9/image/vca","VcaInfoData"));
+
+        File file1 = new File("C:\\Users\\dingzhixin.ex\\Desktop\\monkey");
+        File[] files = file1.listFiles();
+
+//        String filePath = "C:\\Users\\dingzhixin.ex\\Desktop\\";
+        List<String> list = new ArrayList<>(Arrays.asList("ANR","XJST"));
 //        List<String> list = new ArrayList<>(Arrays.asList("lowmemorykiller: Killing 'nse.smartimages", "onReceive(), JuBao KeyEvent"));
-        filerFileAndOut(filePath + "1.txt", list);
+        for (File file11 : files) {
+            LUtils.i(file11.getAbsolutePath(),"\n\n\n");
+            filerFileAndOut(file11.getAbsolutePath(), list);
+
+        }
 //        System.out.println("===========================================间隔1=================================================================");
 //        filerFileAndOut(filePath + "log.txt.1", list);
 //        System.out.println("===========================================间隔2=================================================================");

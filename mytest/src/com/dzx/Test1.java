@@ -2,11 +2,12 @@ package com.dzx;
 
 import com.dzx.bean.EnumType;
 import com.dzx.util.LUtils;
+import luyao.parser.xml.XmlParser;
 import org.apache.commons.io.FileUtils;
+import org.apache.tools.zip.ZipEntry;
+import org.apache.tools.zip.ZipFile;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.InputStreamReader;
+import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
@@ -77,7 +78,71 @@ public class Test1 {
 //        }
 //        System.out.println("29741\tpool-1-thread-13\t0\tjava.lang.Character.isHighSurrogate(C)Z".length());
 //        downloadFromUrl();
-        testEnum();
+//        testEnum();
+        try {
+//            List<ApkInfo> list = GetApkInfo.listApkInfoByDir("C:\\Users\\dingzhixin.ex\\Desktop\\百科日志\\");
+//            LUtils.i(list);
+
+
+//            ApkInfo apkInfo = GetApkInfo.getApkInfoByFilePath("C:\\Users\\dingzhixin.ex\\Desktop\\百科日志\\tusou_032.apk");
+//            LUtils.i(apkInfo);
+
+            //java.lang.ArrayIndexOutOfBoundsException: 1707
+            //	at org.apkinfo.api.util.StringBlock.getShort(StringBlock.java:231)
+            //	at org.apkinfo.api.util.StringBlock.getString(StringBlock.java:91)
+            //	at org.apkinfo.api.util.AXmlResourceParser.getName(AXmlResourceParser.java:138)
+            //	at org.apkinfo.api.util.AXMLPrinter2.parse(AXMLPrinter2.java:64)
+            //	at com.dzx.Test1.main(Test1.java:91)
+//            LUtils.i(1835009);
+//
+//            InputStream stream = getApkInfo("C:\\Users\\dingzhixin.ex\\Desktop\\百科日志\\tusou_032.apk");
+////            String strContent = AXMLPrinter2.parse(stream);
+////            LUtils.i(strContent);
+//
+//
+//            AXmlResourceParser parser = new AXmlResourceParser();
+//            parser.open(stream);
+//            LUtils.i(parser.getAttributeCount());
+
+
+            InputStream inputStream = new FileInputStream("C:\\Users\\dingzhixin.ex\\Desktop\\百科日志\\tusou_032\\AndroidManifest.xml");
+//            InputStream inputStream = new FileInputStream("C:\\Users\\dingzhixin.ex\\Desktop\\micmanager_12100_1.1.7_test1\\AndroidManifest.xml");
+
+            XmlParser parser = new XmlParser(inputStream);
+            parser.parse();
+
+            //            IntReader intReader=new IntReader(inputStream,false);
+//            LUtils.i(Integer.toHexString(intReader.readInt()));
+//            LUtils.i(intReader.readInt());
+//
+//            LUtils.i(intReader.readInt());
+//            LUtils.i(intReader.readInt());
+//            LUtils.i(intReader.readInt());
+//            LUtils.i(intReader.readInt());
+
+
+        } catch (Throwable e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    private static InputStream getApkInfo(String apkpath) {
+        try {
+            ZipFile zFile = new ZipFile(apkpath);
+            ZipEntry entry = zFile.getEntry("AndroidManifest.xml");
+            entry.getComment();
+            entry.getCompressedSize();
+            entry.getCrc();
+            entry.isDirectory();
+            entry.getSize();
+            entry.getMethod();
+            InputStream stream = zFile.getInputStream(entry);
+            return stream;
+        } catch (IOException var4) {
+            var4.printStackTrace();
+            return null;
+        }
     }
 
     private static void testEnum() {
@@ -100,9 +165,9 @@ public class Test1 {
         List<EnumType> list1 = new ArrayList<>(list);
         list.clear();
 
-        LUtils.i(list.size()        );
-        LUtils.i(list1.size()        );
-        LUtils.i(list1.get(0)        );
+        LUtils.i(list.size());
+        LUtils.i(list1.size());
+        LUtils.i(list1.get(0));
 //
 //
 //

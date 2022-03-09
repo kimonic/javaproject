@@ -28,7 +28,7 @@ public class MThreadPoolExecutor extends ThreadPoolExecutor {
     @Override
     protected void afterExecute(Runnable r, Throwable t) {
         super.afterExecute(r, t);
-//        LUtils.i("afterExecute",this);
+        LUtils.i("afterExecute",this);
 
     }
 }

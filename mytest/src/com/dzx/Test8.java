@@ -18,7 +18,21 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 public class Test8 {
     public static volatile int s = 16 >> 4;
+// xmlns:android="http://schemas.android.com/apk/res/android"
+//    android:versionCode="1305"
+//    android:versionName="10.6.1(1305)"
+//    android:compileSdkVersion="28"
+//    android:compileSdkVersionCodename="9"
+//    package="com.hisense.kdweibo.client"
+//    platformBuildVersionCode="28"
+//    platformBuildVersionName="9"
 
+
+
+    //android:sharedUserId="android.uid.system"
+    //    android:versionCode="12100"
+    //    android:versionName="1.2.1.0.0"
+    //    package="com.audiocn.karaoke.micmanager">
     private static String exceptionSearch = "select *\n" +
             "FROM imagesearchlog.o_imagesearch_exception_json \n" +
             "where partitiondate >= '20220116' \n" +
@@ -29,7 +43,6 @@ public class Test8 {
     private static volatile AtomicInteger mCount = new AtomicInteger(0);
 
     public static void main(String args[]) throws IOException {
-
 
 //        File file = new File("D:\\work\\app\\aggregation\\jarunzip\\com");
 
