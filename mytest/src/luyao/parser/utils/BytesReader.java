@@ -11,7 +11,7 @@ import static luyao.parser.utils.TransformUtils.reverseBytes;
 public class BytesReader {
 
     private int position = 0; // 标记顺序读位置
-    private byte[] data;
+    public byte[] data;
     private boolean isLittleEndian = true;
 
     public BytesReader(byte[] data) {
@@ -64,6 +64,14 @@ public class BytesReader {
         byte[] b = copy(data, position, count);
         position += count;
         return b;
+    }
+
+    public void positionReduce() {
+        position--;
+    }
+
+    public void positionIncrease() {
+        position++;
     }
 
     public byte readByte() throws IOException {

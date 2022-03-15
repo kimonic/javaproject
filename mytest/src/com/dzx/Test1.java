@@ -96,7 +96,7 @@ public class Test1 {
 //            LUtils.i(1835009);
 //
 //            InputStream stream = getApkInfo("C:\\Users\\dingzhixin.ex\\Desktop\\百科日志\\tusou_032.apk");
-////            String strContent = AXMLPrinter2.parse(stream);
+//            String strContent = AXMLPrinter2.parse(stream);
 ////            LUtils.i(strContent);
 //
 //
@@ -104,9 +104,9 @@ public class Test1 {
 //            parser.open(stream);
 //            LUtils.i(parser.getAttributeCount());
 
-
-            InputStream inputStream = new FileInputStream("C:\\Users\\dingzhixin.ex\\Desktop\\百科日志\\tusou_032\\AndroidManifest.xml");
+//            InputStream inputStream = new FileInputStream("C:\\Users\\dingzhixin.ex\\Desktop\\百科日志\\tusou_032\\AndroidManifest.xml");
 //            InputStream inputStream = new FileInputStream("C:\\Users\\dingzhixin.ex\\Desktop\\micmanager_12100_1.1.7_test1\\AndroidManifest.xml");
+            InputStream inputStream = new FileInputStream("C:\\Users\\dingzhixin.ex\\Desktop\\com.ygkj.chelaile.standard_4.22.0_266\\AndroidManifest.xml");
 
             XmlParser parser = new XmlParser(inputStream);
             parser.parse();

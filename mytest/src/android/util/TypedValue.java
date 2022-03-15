@@ -260,7 +260,7 @@ public class TypedValue {
             case TYPE_NULL:
                 return null;
             case TYPE_REFERENCE:
-                return "@" + data;
+                return "@ref/0x" + Integer.toHexString(data);
             case TYPE_ATTRIBUTE:
                 return "?" + data;
             case TYPE_FLOAT:

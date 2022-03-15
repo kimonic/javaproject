@@ -1,6 +1,7 @@
 package luyao.parser.xml;
 
 import android.util.TypedValue;
+import com.dzx.util.LUtils;
 import luyao.parser.utils.BytesReader;
 import luyao.parser.utils.Utils;
 import luyao.parser.xml.bean.Attribute;
@@ -31,11 +32,16 @@ public class XmlParser {
     }
 
     public void parse() {
+        //累计读取8字节
         parseHeader();
         parseStringChunk();
-//        parseResourceIdChunk();
-//        parseXmlContentChunk();
-//        generateXml();
+//        stringChunkList.clear();
+//        int reult = BinaryOperationUtil.parseHeaderAndStringChunk(reader.data, stringChunkList);
+//        LUtils.i("reult = ",reult);
+//        reader.moveTo(reult); // ResourceIdChunk 之前可能存在 0000,应该是为了对齐
+        parseResourceIdChunk();
+        parseXmlContentChunk();
+        generateXml();
     }
 
     private void parseHeader() {
@@ -76,11 +82,22 @@ public class XmlParser {
             int stylePoolOffset = reader.readInt();
             log("style pool offset: %d", stylePoolOffset);
 
+            //至此累计跳过36字节
+
             // 每个 string 的偏移量
             List<Integer> stringPoolOffsets = new ArrayList<>(stringCount);
             for (int i = 0; i < stringCount; i++) {
                 stringPoolOffsets.add(reader.readInt());
             }
+            int sum = 0;
+            int tempCount = 0;
+            for (Integer integer : stringPoolOffsets) {
+                sum += integer;
+//                LUtils.i(tempCount++, "   ", integer);
+            }
+
+            LUtils.i("字符串累计偏移量1   ", stringPoolOffsets.size());
+            LUtils.i("字符串累计偏移量2  ", sum);
 
             // 每个 style 的偏移量
             List<Integer> stylePoolOffsets = new ArrayList<>(styleCount);
@@ -88,21 +105,74 @@ public class XmlParser {
                 stylePoolOffsets.add(reader.readInt());
             }
 
+//            byte[] resultN = reader.readOrigin(stringPoolOffset + stylePoolOffset);
+//            int ccount1=0;
+//            for (byte b : resultN) {
+//                log((ccount1++) + "  =========  " + Integer.toBinaryString(Byte.toUnsignedInt(b)));
+//            }
+
             log("string pool:");
             for (int i = 1; i <= stringCount; i++) { // 没有读最后一个字符串
                 String string;
                 if (i == stringCount) {
-                    int lastStringLength = reader.readShort()*2;
-                    log("lastStringLength   "+lastStringLength);
-                    string = new String(moveBlank(reader.readOrigin(lastStringLength)));
+                    int lastStringLength = reader.readShort() * 50;
+                    log("lastStringLength 1  " + lastStringLength);
+                    log("lastStringLength 1  " + reader.avaliable());
+                    if (lastStringLength > reader.avaliable()) {
+                        lastStringLength = reader.avaliable() - 10;
+                    }
+
+//                    byte[] bytes = intToByte(lastStringLength);
+//                    lastStringLength = bytes[3] * 2;
+
+//                    log("lastStringLength 2  " + lastStringLength);
+                    byte[] result = reader.readOrigin(lastStringLength);
+
+                    int ccount = 0;
+                    int zeroCount = 0;
+                    for (byte b : result) {
+                        log(ccount + "  =========  " + Integer.toBinaryString(Byte.toUnsignedInt(b)));
+                        if (zeroCount == 2) {
+                            break;
+                        }
+                        if (b == 0) {
+                            zeroCount++;
+                        } else {
+                            zeroCount = 0;
+                        }
+                        ccount++;
+                    }
+
+                    byte[] target = new byte[ccount];
+                    for (int j = 0; j < ccount - 2; j++) {
+                        target[j] = result[j];
+                    }
+
+                    string = new String(moveBlank(target));//- 6
                     reader.skip(2);
                 } else {
                     reader.skip(2);
-                    byte[] content = reader.readOrigin(stringPoolOffsets.get(i) - stringPoolOffsets.get(i - 1) - 4);
+
+//                    reader.positionReduce();
+//                    reader.positionReduce();
+//                    reader.positionReduce();
+//                    reader.positionReduce();
+//                    reader.positionReduce();
+
+                    byte[] content = reader.readOrigin(stringPoolOffsets.get(i) - stringPoolOffsets.get(i - 1) - 3);
+                    reader.positionReduce();
+//                    reader.positionReduce();
+
+//                    reader.positionIncrease();
+//                    reader.positionIncrease();
+//                    reader.positionIncrease();
+
                     reader.skip(2);
                     string = new String(moveBlank(content), StandardCharsets.UTF_8);
 
                 }
+//                if (i < 5) {
+//                }
                 log("   %s", string);
                 stringChunkList.add(string);
             }
@@ -117,12 +187,34 @@ public class XmlParser {
                 log("   %s", string);
             }
 
-            reader.moveTo(chunkSize+8); // ResourceIdChunk 之前可能存在 0000,应该是为了对齐
+            LUtils.i("chunkSize   = ",chunkSize);
+            reader.moveTo(chunkSize + 8); // ResourceIdChunk 之前可能存在 0000,应该是为了对齐
 
         } catch (IOException e) {
             e.printStackTrace();
             log("parse StringChunk error!");
         }
+    }
+
+    public static int byteArrayToInt(byte[] bytes) {
+        int value = 0;
+        for (int i = 0; i < bytes.length; i++) {
+            if (i > 3) {
+                break;
+            }
+            int shift = (3 - i) * 8;
+            value += (bytes[i] & 0xFF) << shift;
+        }
+        return value;
+    }
+
+    private static byte[] intToByte(int in) {
+        byte[] b = new byte[4];
+        b[3] = (byte) (in & 0xff);
+        b[2] = (byte) (in >> 8 & 0xff);
+        b[1] = (byte) (in >> 16 & 0xff);
+        b[0] = (byte) (in >> 24 & 0xff);
+        return b;
     }
 
     private void parseResourceIdChunk() {
