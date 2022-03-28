@@ -11,10 +11,7 @@ import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.nio.charset.CharacterCodingException;
 import java.nio.charset.StandardCharsets;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class BinaryOperationUtil {
 
@@ -591,6 +588,23 @@ public class BinaryOperationUtil {
             builder.append(byteToHexString(b)).append("  ");
         }
         builder.append("\n");
+        return builder.toString();
+    }
+
+    public static String outByteArrayToHexStringByBlock(byte[] target, int blockSize) {
+        StringBuilder builder = new StringBuilder();
+        byte[] bytes = new byte[blockSize];
+        Arrays.fill(bytes, (byte) 0);
+
+        for (int i = 0; i < target.length; i++) {
+            if (i > 0 && i % blockSize == 0) {
+                builder.append(outByteArrayToHexString(bytes)).append("\n");
+                Arrays.fill(bytes, (byte) 0);
+            }
+            bytes[i % blockSize] = target[i];
+
+        }
+        builder.append(outByteArrayToHexString(bytes));
         return builder.toString();
     }
 
