@@ -2,52 +2,31 @@
 <project version="4">
   <component name="ArtifactsWorkspaceSettings">
     <artifacts-to-build>
-      <artifact name="mytest:jar" />
+      <artifact name="LogParseUtil:jar" />
     </artifacts-to-build>
   </component>
   <component name="ChangeListManager">
     <list default="true" id="13f98f43-fccf-402d-b4dd-e3034814c200" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/mylibs/barcodes-7.1.4-javadoc.jar" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mylibs/barcodes-7.1.4-sources.jar" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mylibs/barcodes-7.1.4.jar" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mylibs/font-asian-7.1.4.jar" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mylibs/forms-7.1.4-javadoc.jar" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mylibs/forms-7.1.4-sources.jar" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mylibs/forms-7.1.4.jar" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mylibs/hutool-all-5.7.22-sources.jar" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mylibs/hutool-all-5.7.22.jar" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mylibs/hyph-7.1.4.jar" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mylibs/io-7.1.4-javadoc.jar" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mylibs/io-7.1.4-sources.jar" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mylibs/io-7.1.4.jar" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mylibs/jd-core-1.1.4.jar" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mylibs/jd-gui-1.6.6.jar" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mylibs/kernel-7.1.4-javadoc.jar" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mylibs/kernel-7.1.4-sources.jar" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mylibs/kernel-7.1.4.jar" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mylibs/layout-7.1.4-javadoc.jar" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mylibs/layout-7.1.4-sources.jar" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mylibs/layout-7.1.4.jar" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mylibs/pdfa-7.1.4-javadoc.jar" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mylibs/pdfa-7.1.4-sources.jar" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mylibs/pdfa-7.1.4.jar" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mylibs/pdftest-7.1.4-javadoc.jar" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mylibs/pdftest-7.1.4-sources.jar" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mylibs/pdftest-7.1.4.jar" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mylibs/sign-7.1.4-javadoc.jar" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mylibs/sign-7.1.4-sources.jar" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mylibs/sign-7.1.4.jar" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mylibs/styled-xml-parser-7.1.4-javadoc.jar" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mylibs/styled-xml-parser-7.1.4-sources.jar" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mylibs/styled-xml-parser-7.1.4.jar" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mylibs/svg-7.1.4-javadoc.jar" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mylibs/svg-7.1.4-sources.jar" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mylibs/svg-7.1.4.jar" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mytest/src/com/dzx/Test9.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mylibs/fastjson-1.2.4.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mytest/src/com/dzx/bean/AlwaysListTypeAdapterFactory.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mytest/src/com/dzx/bean/BaiKeEntity.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mytest/src/com/dzx/bean/BaiKeEntityJson.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mytest/src/com/dzx/bean/BaiKeMapEntity.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mytest/src/com/dzx/bean/VcaDataBean.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mytest/src/com/dzx/data/ImageRecsysEntity.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mytest/src/com/dzx/data/PersonEntity.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mytest/src/com/dzx/data/RelativeVideoEntity.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mytest/src/com/dzx/data/Temp.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mytest/src/com/dzx/data/Test10.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/LogParseUtil/src/com/dzx/LogParseUi.java" beforeDir="false" afterPath="$PROJECT_DIR$/LogParseUtil/src/com/dzx/LogParseUi.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/LogParseUtil/src/com/dzx/util/GradleCacheJarFilterUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/LogParseUtil/src/com/dzx/util/GradleCacheJarFilterUtil.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/LogParseUtil/src/com/dzx/util/OutTxt.java" beforeDir="false" afterPath="$PROJECT_DIR$/LogParseUtil/src/com/dzx/util/OutTxt.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/LogParseUtil/src/com/dzx/util/ParseLogUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/LogParseUtil/src/com/dzx/util/ParseLogUtil.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/LogParseUtil/src/com/dzx/util/TsvParseUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/LogParseUtil/src/com/dzx/util/TsvParseUtil.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mytest/src/com/dzx/Test2.java" beforeDir="false" afterPath="$PROJECT_DIR$/mytest/src/com/dzx/Test2.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mytest/src/com/dzx/util/BinaryOperationUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/mytest/src/com/dzx/util/BinaryOperationUtil.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mytest/src/com/dzx/ImageTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/mytest/src/com/dzx/ImageTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mytest/src/com/dzx/Test3.java" beforeDir="false" afterPath="$PROJECT_DIR$/mytest/src/com/dzx/Test3.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mytest/src/com/dzx/Test9.java" beforeDir="false" afterPath="$PROJECT_DIR$/mytest/src/com/dzx/Test9.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -99,30 +78,44 @@
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/mylibs" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/mytest/src/com/dzx/data" />
     <property name="project.structure.last.edited" value="Global Libraries" />
     <property name="project.structure.proportion" value="0.15234375" />
     <property name="project.structure.side.proportion" value="0.2" />
     <property name="run.code.analysis.last.selected.profile" value="pProject Default" />
-    <property name="settings.editor.selected.configurable" value="editing.templates" />
+    <property name="settings.editor.selected.configurable" value="settings.github" />
   </component>
   <component name="RecentsManager">
     <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="com.dzx.bean" />
       <recent name="com.dzx.util" />
       <recent name="com.dzx" />
     </key>
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="E:\work\app\mytoolsjavaproject\javaproject\mytest\src\com\dzx\data" />
+      <recent name="E:\work\app\mytoolsjavaproject\javaproject\mytest\src\com\dzx\bean" />
       <recent name="E:\work\app\mytoolsjavaproject\javaproject\mylibs" />
       <recent name="E:\work\app\mytoolsjavaproject\javaproject\mytest\src" />
       <recent name="E:\work\app\mytoolsjavaproject\javaproject\mytest\src\com\dzx\objectexplorer" />
-      <recent name="E:\work\app\mytoolsjavaproject\javaproject\mytest\src\com\dzx" />
-      <recent name="E:\work\app\mytoolsjavaproject\javaproject\mytest\src\com\dzx\example" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.TsvParseUtil">
-    <configuration name="BinaryOperationUtil" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="com.dzx.util.BinaryOperationUtil" />
+  <component name="RunManager" selected="Application.Test9">
+    <configuration name="ImageTest" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="com.dzx.ImageTest" />
       <module name="mytest" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.dzx.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="OutTxt" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="com.dzx.util.OutTxt" />
+      <module name="LogParseUtil" />
       <extension name="coverage">
         <pattern>
           <option name="PATTERN" value="com.dzx.util.*" />
@@ -133,25 +126,12 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="Test1 (1)" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="com.dzx.Test1" />
+    <configuration name="Test10" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="com.dzx.data.Test10" />
       <module name="mytest" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="com.dzx.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="Test2" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="com.dzx.Test2" />
-      <module name="mytest" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="com.dzx.*" />
+          <option name="PATTERN" value="com.dzx.data.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
@@ -186,19 +166,19 @@
       </method>
     </configuration>
     <list>
-      <item itemvalue="Application.Test1 (1)" />
-      <item itemvalue="Application.Test2" />
-      <item itemvalue="Application.BinaryOperationUtil" />
       <item itemvalue="Application.Test9" />
+      <item itemvalue="Application.OutTxt" />
+      <item itemvalue="Application.ImageTest" />
       <item itemvalue="Application.TsvParseUtil" />
+      <item itemvalue="Application.Test10" />
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.TsvParseUtil" />
         <item itemvalue="Application.Test9" />
-        <item itemvalue="Application.Test2" />
-        <item itemvalue="Application.BinaryOperationUtil" />
-        <item itemvalue="Application.Test1 (1)" />
+        <item itemvalue="Application.ImageTest" />
+        <item itemvalue="Application.OutTxt" />
+        <item itemvalue="Application.Test10" />
+        <item itemvalue="Application.TsvParseUtil" />
       </list>
     </recent_temporary>
   </component>
@@ -491,7 +471,52 @@
       <workItem from="1648022344920" duration="1527000" />
       <workItem from="1648103515580" duration="2152000" />
       <workItem from="1648176035086" duration="1337000" />
-      <workItem from="1648445942825" duration="604000" />
+      <workItem from="1648445942825" duration="1699000" />
+      <workItem from="1648630012424" duration="155000" />
+      <workItem from="1648693466217" duration="1234000" />
+      <workItem from="1648695206015" duration="5299000" />
+      <workItem from="1648791202629" duration="587000" />
+      <workItem from="1648863219706" duration="75000" />
+      <workItem from="1648863624772" duration="372000" />
+      <workItem from="1648881911994" duration="1532000" />
+      <workItem from="1649216221085" duration="1724000" />
+      <workItem from="1649383902187" duration="2297000" />
+      <workItem from="1649642299235" duration="3617000" />
+      <workItem from="1649919604962" duration="1393000" />
+      <workItem from="1650331129476" duration="2072000" />
+      <workItem from="1650365111549" duration="510000" />
+      <workItem from="1650418373900" duration="2520000" />
+      <workItem from="1650519608033" duration="10714000" />
+      <workItem from="1650589603694" duration="25304000" />
+      <workItem from="1650762779830" duration="13021000" />
+      <workItem from="1650865023297" duration="2777000" />
+      <workItem from="1650941929560" duration="7868000" />
+      <workItem from="1651026953368" duration="15324000" />
+      <workItem from="1651211211810" duration="4835000" />
+      <workItem from="1651742349581" duration="306000" />
+      <workItem from="1651819602721" duration="1547000" />
+      <workItem from="1652066214919" duration="1346000" />
+      <workItem from="1652247890185" duration="11856000" />
+      <workItem from="1652344833690" duration="4024000" />
+      <workItem from="1652429581039" duration="885000" />
+      <workItem from="1653527252860" duration="3083000" />
+      <workItem from="1653875668530" duration="1416000" />
+      <workItem from="1654486861972" duration="5608000" />
+      <workItem from="1654579117128" duration="1568000" />
+      <workItem from="1654737626450" duration="1474000" />
+      <workItem from="1654744102634" duration="669000" />
+      <workItem from="1654935645853" duration="1057000" />
+      <workItem from="1655192740870" duration="3900000" />
+      <workItem from="1655271808964" duration="2385000" />
+      <workItem from="1655346097939" duration="1154000" />
+      <workItem from="1655451089367" duration="1552000" />
+      <workItem from="1655887480991" duration="981000" />
+      <workItem from="1656491774349" duration="2188000" />
+      <workItem from="1656552040814" duration="1674000" />
+      <workItem from="1656659674734" duration="1905000" />
+      <workItem from="1656730665237" duration="2533000" />
+      <workItem from="1656919156654" duration="772000" />
+      <workItem from="1656998267185" duration="1771000" />
     </task>
     <task id="LOCAL-00001" summary="202004141910  调整安装apk路径">
       <created>1586862711789</created>
@@ -731,7 +756,14 @@
       <option name="project" value="LOCAL" />
       <updated>1647336768226</updated>
     </task>
-    <option name="localTasksCounter" value="35" />
+    <task id="LOCAL-00035" summary="20220328">
+      <created>1648457561012</created>
+      <option name="number" value="00035" />
+      <option name="presentableId" value="LOCAL-00035" />
+      <option name="project" value="LOCAL" />
+      <updated>1648457561012</updated>
+    </task>
+    <option name="localTasksCounter" value="36" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -751,7 +783,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="202004171937  添加清除日志灯" />
     <MESSAGE value="202004231937  添加dialog" />
     <MESSAGE value="202004241330  添加自定义button" />
     <MESSAGE value="202004261902  添加换行" />
@@ -776,124 +807,81 @@
     <MESSAGE value="202104291837" />
     <MESSAGE value="202203091700" />
     <MESSAGE value="20220315" />
-    <option name="LAST_COMMIT_MESSAGE" value="20220315" />
+    <MESSAGE value="20220328" />
+    <option name="LAST_COMMIT_MESSAGE" value="20220328" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="414" y="148" width="1185" height="815" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1646817275270">
+    <state x="677" y="94" key="#com.intellij.ide.util.MemberChooser" timestamp="1650419338580">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="414" y="148" width="1185" height="815" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1646817275270" />
-    <state x="677" y="94" key="#com.intellij.ide.util.MemberChooser" timestamp="1646361393177">
+    <state x="677" y="94" key="#com.intellij.ide.util.MemberChooser/0.0.1920.1040@0.0.1920.1040" timestamp="1650419338580" />
+    <state x="312" y="0" key="CommitChangelistDialog2" timestamp="1648457550371">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="677" y="94" key="#com.intellij.ide.util.MemberChooser/0.0.1920.1040@0.0.1920.1040" timestamp="1646361393177" />
-    <state x="565" y="211" key="#com.intellij.ide.util.TreeClassChooserDialog" timestamp="1640592329105">
-      <screen x="0" y="0" width="1920" height="1040" />
-    </state>
-    <state x="565" y="211" key="#com.intellij.ide.util.TreeClassChooserDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1640592329105" />
-    <state x="682" y="415" key="#com.intellij.refactoring.move.MoveHandler.SelectRefactoringDialog" timestamp="1646807407202">
-      <screen x="0" y="0" width="1920" height="1040" />
-    </state>
-    <state x="682" y="415" key="#com.intellij.refactoring.move.MoveHandler.SelectRefactoringDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1646807407202" />
-    <state x="640" y="108" key="#com.intellij.refactoring.move.moveMembers.MoveMembersDialog" timestamp="1647584700452">
-      <screen x="0" y="0" width="1920" height="1040" />
-    </state>
-    <state x="640" y="108" key="#com.intellij.refactoring.move.moveMembers.MoveMembersDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1647584700452" />
-    <state x="579" y="235" key="#com.intellij.util.ui.classpath.ChooseLibrariesDialog" timestamp="1640590843415">
-      <screen x="0" y="0" width="1920" height="1040" />
-    </state>
-    <state x="579" y="235" key="#com.intellij.util.ui.classpath.ChooseLibrariesDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1640590843415" />
-    <state x="632" y="305" key="ANALYSIS_DLG_com.intellij.analysis.BaseAnalysisAction$1" timestamp="1643449104847">
-      <screen x="0" y="0" width="1920" height="1040" />
-    </state>
-    <state x="632" y="305" key="ANALYSIS_DLG_com.intellij.analysis.BaseAnalysisAction$1/0.0.1920.1040@0.0.1920.1040" timestamp="1643449104847" />
-    <state x="312" y="0" key="CommitChangelistDialog2" timestamp="1647336758459">
-      <screen x="0" y="0" width="1920" height="1040" />
-    </state>
-    <state x="312" y="0" key="CommitChangelistDialog2/0.0.1920.1040@0.0.1920.1040" timestamp="1647336758459" />
+    <state x="312" y="0" key="CommitChangelistDialog2/0.0.1920.1040@0.0.1920.1040" timestamp="1648457550371" />
     <state x="-15" y="57" width="1666" height="856" key="DiffContextDialog" timestamp="1648457524232">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="-15" y="57" width="1666" height="856" key="DiffContextDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1648457524232" />
-    <state x="654" y="235" key="FileChooserDialogImpl" timestamp="1646987010445">
+    <state x="654" y="235" key="FileChooserDialogImpl" timestamp="1649923838849">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="654" y="235" key="FileChooserDialogImpl/0.0.1920.1040@0.0.1920.1040" timestamp="1646987010445" />
-    <state width="1855" height="193" key="GridCell.Tab.0.bottom" timestamp="1648119292014">
+    <state x="654" y="235" key="FileChooserDialogImpl/0.0.1920.1040@0.0.1920.1040" timestamp="1649923838849" />
+    <state width="1855" height="301" key="GridCell.Tab.0.bottom" timestamp="1656756316960">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1855" height="193" key="GridCell.Tab.0.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1648119292014" />
-    <state width="1855" height="193" key="GridCell.Tab.0.center" timestamp="1648119292014">
+    <state width="1855" height="301" key="GridCell.Tab.0.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1656756316960" />
+    <state width="1855" height="301" key="GridCell.Tab.0.center" timestamp="1656756316959">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1855" height="193" key="GridCell.Tab.0.center/0.0.1920.1040@0.0.1920.1040" timestamp="1648119292014" />
-    <state width="1855" height="193" key="GridCell.Tab.0.left" timestamp="1648119292013">
+    <state width="1855" height="301" key="GridCell.Tab.0.center/0.0.1920.1040@0.0.1920.1040" timestamp="1656756316959" />
+    <state width="1855" height="301" key="GridCell.Tab.0.left" timestamp="1656756316955">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1855" height="193" key="GridCell.Tab.0.left/0.0.1920.1040@0.0.1920.1040" timestamp="1648119292013" />
-    <state width="1855" height="193" key="GridCell.Tab.0.right" timestamp="1648119292014">
+    <state width="1855" height="301" key="GridCell.Tab.0.left/0.0.1920.1040@0.0.1920.1040" timestamp="1656756316955" />
+    <state width="1855" height="301" key="GridCell.Tab.0.right" timestamp="1656756316959">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1855" height="193" key="GridCell.Tab.0.right/0.0.1920.1040@0.0.1920.1040" timestamp="1648119292014" />
-    <state width="1855" height="286" key="GridCell.Tab.1.bottom" timestamp="1647504440141">
+    <state width="1855" height="301" key="GridCell.Tab.0.right/0.0.1920.1040@0.0.1920.1040" timestamp="1656756316959" />
+    <state width="1855" height="286" key="GridCell.Tab.1.bottom" timestamp="1651045027996">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1855" height="286" key="GridCell.Tab.1.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1647504440141" />
-    <state width="1855" height="286" key="GridCell.Tab.1.center" timestamp="1647504440141">
+    <state width="1855" height="286" key="GridCell.Tab.1.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1651045027996" />
+    <state width="1855" height="286" key="GridCell.Tab.1.center" timestamp="1651045027996">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1855" height="286" key="GridCell.Tab.1.center/0.0.1920.1040@0.0.1920.1040" timestamp="1647504440141" />
-    <state width="1855" height="286" key="GridCell.Tab.1.left" timestamp="1647504440141">
+    <state width="1855" height="286" key="GridCell.Tab.1.center/0.0.1920.1040@0.0.1920.1040" timestamp="1651045027996" />
+    <state width="1855" height="286" key="GridCell.Tab.1.left" timestamp="1651045027996">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1855" height="286" key="GridCell.Tab.1.left/0.0.1920.1040@0.0.1920.1040" timestamp="1647504440141" />
-    <state width="1855" height="286" key="GridCell.Tab.1.right" timestamp="1647504440141">
+    <state width="1855" height="286" key="GridCell.Tab.1.left/0.0.1920.1040@0.0.1920.1040" timestamp="1651045027996" />
+    <state width="1855" height="286" key="GridCell.Tab.1.right" timestamp="1651045027996">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1855" height="286" key="GridCell.Tab.1.right/0.0.1920.1040@0.0.1920.1040" timestamp="1647504440141" />
-    <state x="84" y="0" width="1674" height="1040" key="SettingsEditor" timestamp="1646986572161">
+    <state width="1855" height="286" key="GridCell.Tab.1.right/0.0.1920.1040@0.0.1920.1040" timestamp="1651045027996" />
+    <state x="214" y="0" key="SettingsEditor" timestamp="1657008730517">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="84" y="0" width="1674" height="1040" key="SettingsEditor/0.0.1920.1040@0.0.1920.1040" timestamp="1646986572161" />
-    <state width="762" height="596" key="SwitcherDM" timestamp="1648103527613">
+    <state x="214" y="0" key="SettingsEditor/0.0.1920.1040@0.0.1920.1040" timestamp="1657008730517" />
+    <state width="762" height="596" key="SwitcherDM" timestamp="1653875740146">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="762" height="596" key="SwitcherDM/0.0.1920.1040@0.0.1920.1040" timestamp="1648103527613" />
-    <state x="352" y="122" key="Vcs.Push.Dialog.v2" timestamp="1645782309869">
+    <state width="762" height="596" key="SwitcherDM/0.0.1920.1040@0.0.1920.1040" timestamp="1653875740146" />
+    <state x="489" y="259" key="com.intellij.ide.util.TipDialog" timestamp="1656998266087">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="352" y="122" key="Vcs.Push.Dialog.v2/0.0.1920.1040@0.0.1920.1040" timestamp="1645782309869" />
-    <state x="745" y="267" key="classpath-attribute-editor" timestamp="1640592359661">
+    <state x="489" y="259" key="com.intellij.ide.util.TipDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1656998266087" />
+    <state x="376" y="48" width="1167" height="944" key="find.popup" timestamp="1656730896004">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="745" y="267" key="classpath-attribute-editor/0.0.1920.1040@0.0.1920.1040" timestamp="1640592359661" />
-    <state width="1916" height="1036" key="com.intellij.byteCodeViewer.ShowByteCodeAction" timestamp="1643449790615">
+    <state x="376" y="48" width="1167" height="944" key="find.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1656730896004" />
+    <state x="448" y="232" key="run.anything.popup" timestamp="1650611129883">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1916" height="1036" key="com.intellij.byteCodeViewer.ShowByteCodeAction/0.0.1920.1040@0.0.1920.1040" timestamp="1643449790615" />
-    <state x="489" y="259" key="com.intellij.ide.util.TipDialog" timestamp="1648176030884">
+    <state x="448" y="232" key="run.anything.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1650611129883" />
+    <state x="453" y="0" width="1009" height="1036" key="search.everywhere.popup" timestamp="1656730827917">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="489" y="259" key="com.intellij.ide.util.TipDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1648176030884" />
-    <state x="422" y="0" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser" timestamp="1646814992174">
-      <screen x="0" y="0" width="1920" height="1040" />
-    </state>
-    <state x="422" y="0" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser/0.0.1920.1040@0.0.1920.1040" timestamp="1646814992174" />
-    <state x="376" y="48" width="1167" height="944" key="find.popup" timestamp="1648022495985">
-      <screen x="0" y="0" width="1920" height="1040" />
-    </state>
-    <state x="376" y="48" width="1167" height="944" key="find.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1648022495985" />
-    <state x="0" y="198" width="1920" height="683" key="new project wizard" timestamp="1648015634617">
-      <screen x="0" y="0" width="1920" height="1040" />
-    </state>
-    <state x="0" y="198" width="1920" height="683" key="new project wizard/0.0.1920.1040@0.0.1920.1040" timestamp="1648015634617" />
-    <state x="448" y="232" key="run.anything.popup" timestamp="1646898358157">
-      <screen x="0" y="0" width="1920" height="1040" />
-    </state>
-    <state x="448" y="232" key="run.anything.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1646898358157" />
-    <state x="453" y="0" width="1009" height="1036" key="search.everywhere.popup" timestamp="1648103541186">
-      <screen x="0" y="0" width="1920" height="1040" />
-    </state>
-    <state x="453" y="0" width="1009" height="1036" key="search.everywhere.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1648103541186" />
+    <state x="453" y="0" width="1009" height="1036" key="search.everywhere.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1656730827917" />
   </component>
 </project>

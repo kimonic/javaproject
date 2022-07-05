@@ -12,8 +12,9 @@ public class GradleCacheJarFilterUtil {
     private static List<String> targetFilePathList = new ArrayList<>();
 
     public static void main(String[] a) {
+        long start = System.currentTimeMillis();
         fileHandle("C:\\Users\\dingzhixin.ex\\.gradle\\caches\\modules-2\\files-2.1", "E:\\新建文件夹\\123456");
-
+        LUtils.i("处理耗时 = ", (System.currentTimeMillis() - start));
     }
 
     private static void copyFile(String inDir, String outDir) {

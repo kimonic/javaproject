@@ -23,7 +23,7 @@ public class TsvParseUtil {
 
     //java.lang.NullPointerException: Attempt to invoke interface method 'boolean com.alibaba.wireless.security.open.simulatordetect.ISimulatorDetectComponent.isSimulator()' on a null object reference  at com.tvtao.user.dclib.impl.ZPDeviceImpl$InitializeTask.run(ZPDeviceImpl.java:373)  at java.lang.Thread.run(Thread.java:818)
     public static void main(String[] args) {
-        String parseFileName = "\\异常0323.tsv";
+        String parseFileName = "\\异常0529.tsv";
         Calendar calendar = Calendar.getInstance();
         int month = calendar.get(Calendar.MONTH) + 1;///8610030000010050000000830c04a8a3
         int day = calendar.get(Calendar.DATE) - 1;
@@ -32,6 +32,8 @@ public class TsvParseUtil {
         //异常去重后保存的文件名,必改
         String exceptionFileName = getYesterday() + "异常信息";
 //        firstRunThisMethodToParse(parseFileName, 31);
+        //86100300900000700000060c
+        //86100300000100700000060c
 
 
         //logfilename  0,      linenum  1,      createddate  2,      logfiletime  3,      version  4,      logtime  5,

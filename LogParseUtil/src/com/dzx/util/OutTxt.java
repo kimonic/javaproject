@@ -86,25 +86,29 @@ public class OutTxt {
 //        String filePath = "C:\\Users\\dingzhixin.ex\\Desktop\\TV日志，2021年09月24日14时48分35秒开始记录.log";
 //        String filePath = "C:\\Users\\dingzhixin.ex\\Desktop\\TV日志，2021年09月24日15时42分46秒开始记录.log";
 
-        File file1 = new File("C:\\Users\\dingzhixin.ex\\Desktop\\monkey");
-        File[] files = file1.listFiles();
+//        File file1 = new File("C:\\Users\\dingzhixin.ex\\Desktop\\logcat_20220521013624\\logcat_20220521013624.txt");
+////        File[] files = file1.listFiles();
+//
+//        String filePath = "C:\\Users\\dingzhixin.ex\\Desktop\\bug\\";
+        String filePath = "C:\\Users\\dingzhixin.ex\\Desktop\\S7F截图，识别到小猪佩奇，局部识别截图小猪佩奇识别成猪妈妈.log";
+        List<String> list = new ArrayList<>(Arrays.asList("uploadData","addPersonArg()","recognize  part"));
+//        List<String> list = new ArrayList<>(Arrays.asList("Monkey  :","ANR in com.hisense.smartimages"));
+////        List<String> list = new ArrayList<>(Arrays.asList("lowmemorykiller: Killing 'nse.smartimages", "onReceive(), JuBao KeyEvent"));
+////        for (File file11 : files) {
+////            LUtils.i(file11.getAbsolutePath(),"\n\n\n");
+//            filerFileAndOut(file1.getAbsolutePath(), list);
 
-//        String filePath = "C:\\Users\\dingzhixin.ex\\Desktop\\";
-        List<String> list = new ArrayList<>(Arrays.asList("ANR","XJST"));
-//        List<String> list = new ArrayList<>(Arrays.asList("lowmemorykiller: Killing 'nse.smartimages", "onReceive(), JuBao KeyEvent"));
-        for (File file11 : files) {
-            LUtils.i(file11.getAbsolutePath(),"\n\n\n");
-            filerFileAndOut(file11.getAbsolutePath(), list);
-
-        }
+//        }
+        filerFileAndOut(filePath, list);
+//        filerFileAndOut(filePath + "log.txt.4", list);
 //        System.out.println("===========================================间隔1=================================================================");
-//        filerFileAndOut(filePath + "log.txt.1", list);
+//        filerFileAndOut(filePath + "log.txt.3", list);
 //        System.out.println("===========================================间隔2=================================================================");
 //        filerFileAndOut(filePath + "log.txt.2", list);
 //        System.out.println("===========================================间隔3=================================================================");
-//        filerFileAndOut(filePath + "log.txt.3", list);
+//        filerFileAndOut(filePath + "log.txt.1", list);
 //        System.out.println("===========================================间隔4=================================================================");
-//        filerFileAndOut(filePath + "log.txt.4", list);
+//        filerFileAndOut(filePath + "log.txt", list);
 //        System.out.println("===========================================间隔1=================================================================");
 //        filerFileAndOut("C:\\Users\\dingzhixin.ex\\Desktop\\bug\\log.txt.1", list);
 //        System.out.println("===========================================间隔2=================================================================");
@@ -579,8 +583,11 @@ public class OutTxt {
 //        List<String> list = Arrays.asList("InflateException", "OutOfMemoryError", "IllegalArgumentException", "FATAL", "DemoCrashHandler", "manager error", "HXJ");
 //        List<String> list = Arrays.asList("SingleCardDeviceManger", "BluetoothVoiceTipFragment","IotManagerService","RequestBean");
 //        List<String> list = Arrays.asList("init CardBar", "JuBao KeyEvent is START","com.jamdeo.tv.START_JU_BAO"/*,"lowmemorykiller"*/);
-        List<String> list = Arrays.asList("TaoBaoManager: XJST| OnUIStatusListener(), onDismiss(), isBackPressed",
-                "addCardBarToWindow");
+        List<String> list = Arrays.asList("ReportManager: XJST| reportCardEvent","ReportManager: XJST|  reportImmediately",
+                "ReportManager: XJST| reportEventNew","ReportExecutor");//1435,1571,1576,1388,
+        // 1908,1625,1522,1577,1889,
+        // 1458
+        //130,94,155,161,129,102,122,199,152,111
 //        List<String> list = Arrays.asList("updateSceneView()", "updateByPartnerStatus","mAssistView.isFocusable()","firstRequestFocus");
         TailerListener listener = new TailerListenerAdapter() {
             @Override

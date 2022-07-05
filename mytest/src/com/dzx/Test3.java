@@ -2,7 +2,8 @@ package com.dzx;
 
 import com.dzx.util.LUtils;
 
-import java.util.concurrent.ConcurrentLinkedQueue;
+import java.util.concurrent.BlockingDeque;
+import java.util.concurrent.LinkedBlockingDeque;
 
 public class Test3 {
     public static void main(String[] args) {
@@ -16,7 +17,8 @@ public class Test3 {
     }
 
     private static void testQueue() {
-        ConcurrentLinkedQueue<Integer> concurrentLinkedQueue = new ConcurrentLinkedQueue<>();
+//        ConcurrentLinkedQueue<Integer> concurrentLinkedQueue = new ConcurrentLinkedQueue<>();
+        BlockingDeque<Integer> concurrentLinkedQueue= new LinkedBlockingDeque(5);
         for (int i = 0; i < 20; i++) {
             concurrentLinkedQueue.offer(i);
         }

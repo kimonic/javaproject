@@ -235,16 +235,16 @@ public class LogParseUi extends JFrame implements ActionListener {
     /**
      * CMD命令相关按钮
      */
-    private MyButton mAdbCommand1 = new MyButton(Constants.BUTTON_CLICK_ADB_COMMAND_1, "启动AIOT首页");
+    private MyButton mAdbCommand1 = new MyButton(Constants.BUTTON_CLICK_ADB_COMMAND_1, "启动小聚识图应用首页");
     private MyButton mAdbCommand2 = new MyButton(Constants.BUTTON_CLICK_ADB_COMMAND_2, "开启debug日志开开关");
-    private MyButton mAdbCommand3 = new MyButton(Constants.BUTTON_CLICK_ADB_COMMAND_3, "启动虚拟体验中心");
+    private MyButton mAdbCommand3 = new MyButton(Constants.BUTTON_CLICK_ADB_COMMAND_3, "启动截图");
     private MyButton mAdbCommand4 = new MyButton(Constants.BUTTON_CLICK_ADB_COMMAND_4, "启动蓝牙提示页面");
     private MyButton mAdbCommand5 = new MyButton(Constants.BUTTON_CLICK_ADB_COMMAND_5, "启动红外配码提示页面");
     private MyButton mAdbCommand6 = new MyButton(Constants.BUTTON_CLICK_ADB_COMMAND_6, "启动红外配码页面");
     private MyButton mAdbCommand7 = new MyButton(Constants.BUTTON_CLICK_ADB_COMMAND_7, "启动添加红外设备页面");
     private MyButton mAdbCommand8 = new MyButton(Constants.BUTTON_CLICK_ADB_COMMAND_8, "启动亲友圈页面");
     private MyButton mAdbCommand9 = new MyButton(Constants.BUTTON_CLICK_ADB_COMMAND_9, "清理聚好看");
-    private MyButton mAdbCommand10 = new MyButton(Constants.BUTTON_CLICK_ADB_COMMAND_10, "清理AIOT");
+    private MyButton mAdbCommand10 = new MyButton(Constants.BUTTON_CLICK_ADB_COMMAND_10, "清理小聚识图");
     private MyButton mAdbCommand11 = new MyButton(Constants.BUTTON_CLICK_ADB_COMMAND_11, "清理账号");
     private MyButton mAdbCommand12 = new MyButton(Constants.BUTTON_CLICK_ADB_COMMAND_12, "清理消息服务");
     private MyButton mAdbCommand13 = new MyButton(Constants.BUTTON_CLICK_ADB_COMMAND_13, "设置httpdns为UT");
@@ -501,7 +501,7 @@ public class LogParseUi extends JFrame implements ActionListener {
             });
         } else if (clickId == Constants.BUTTON_CLICK_ADB_COMMAND_1) {
             //注意执行adb命令时需要加""包裹命令,否则无法执行,|grep 不识别
-            executeInSub(" shell am  start -n com.hisense.aiot/com.ju.iot.homepage.ui.HomeActivity ");
+            executeInSub("  shell am start -n com.hisense.smartimages/com.hisense.smartimages.aievents.PresentationActivity ");
 //            mResultInfo = mResultInfo + Utils.runtimeCommand("adb -s " + mTargetIp + " shell am  start -n com.hisense.aiot/com.ju.iot.homepage.ui.HomeActivity ");
 //            mResultLabel.setText(mResultInfo + "</html>");
         } else if (clickId == Constants.BUTTON_CLICK_ADB_COMMAND_2) {
@@ -509,7 +509,8 @@ public class LogParseUi extends JFrame implements ActionListener {
 //            mResultInfo = mResultInfo + Utils.runtimeCommand("adb -s " + mTargetIp + " shell  setprop log.tag.JHK DEBUG ");
 //            mResultLabel.setText(mResultInfo + "</html>");
         } else if (clickId == Constants.BUTTON_CLICK_ADB_COMMAND_3) {
-            executeInSub(" shell  am  start -n com.hisense.aiot/com.hisense.iot.ui.VirtualHomeActivity ");
+            executeInSub(" shell am broadcast -a com.hisense.tv.START_JU_BAO ");
+            executeInSub("  shell am broadcast -a com.jamdeo.tv.END_JU_BAO ");
 //            mResultInfo = mResultInfo + Utils.runtimeCommand("adb -s " + mTargetIp + " shell  am  start -n com.hisense.aiot/com.hisense.iot.ui.VirtualHomeActivity ");
 //            mResultLabel.setText(mResultInfo + "</html>");
         } else if (clickId == Constants.BUTTON_CLICK_ADB_COMMAND_4) {
@@ -532,7 +533,7 @@ public class LogParseUi extends JFrame implements ActionListener {
             executeInSub(" shell pm clear com.jamdeo.tv.vod ");
         } else if (clickId == Constants.BUTTON_CLICK_ADB_COMMAND_10) {
             //清理AIOT
-            executeInSub(" shell pm clear com.hisense.aiot ");
+            executeInSub(" shell pm clear com.hisense.smartimages ");
         } else if (clickId == Constants.BUTTON_CLICK_ADB_COMMAND_11) {
             //清理账号
             executeInSub(" shell pm clear  com.hisense.hitv.hicloud.account ");

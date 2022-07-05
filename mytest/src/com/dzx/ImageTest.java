@@ -1,6 +1,8 @@
 package com.dzx;
 
 import com.dzx.bean.PositionBean;
+import com.dzx.util.BinaryOperationUtil;
+import com.dzx.util.LUtils;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
@@ -17,15 +19,196 @@ import java.util.*;
 public class ImageTest {
 
     public static void main(String[] args) {
-//        editImage("C:\\Users\\dingzhixin.ex\\Desktop\\999.png");
-        createImage();
-//        try {
-//            String result = calculateGreen("C:\\Users\\dingzhixin.ex\\Desktop\\Image_20201112154347.png");
-//            System.out.println(result);
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-//        byteReadFile();
+        cropPicture();
+        //c47267
+//        getRectColor(74, 75, 0, 120, new File("C:\\Users\\dingzhixin.ex\\Desktop\\d.png"));
+//        resetColor(0xff112233);
+    }
+
+
+    /**
+     * 裁剪图片
+     */
+    private static void cropPicture() {
+        File file = new File("C:\\Users\\dingzhixin.ex\\Desktop\\验证温度\\3.5\\遮罩\\secondary_page_bak.png");
+        BufferedImage bi = null;
+        BufferedImage bufferedImage = new BufferedImage(642, 84, BufferedImage.TYPE_4BYTE_ABGR);
+        try {
+            bi = ImageIO.read(file);
+            int width = bi.getWidth();
+            int height = bi.getHeight();
+            LUtils.i(width, "  ,  ", height);
+            for (int i = 0; i < width; i++) {
+                for (int j = 0; j < height; j++) {
+                    if (j < 84) {
+                        LUtils.i(i, " , ", j, "  ===  ", i, " , ", j);
+                        bufferedImage.setRGB(i, j, bi.getRGB(i, j));
+                    }
+                }
+            }
+        } catch (Throwable e) {
+            e.printStackTrace();
+        }
+
+        try {
+            ImageIO.write(bufferedImage, "PNG", new FileOutputStream("C:\\Users\\dingzhixin.ex\\Desktop\\f.png"));//保存图片 JPEG表示保存格式
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private static void getRectColor(int startX, int endX, int startY, int endY, File file) {
+        Set<Integer> result = new HashSet<>();
+        BufferedImage bi = null;
+        try {
+            bi = ImageIO.read(file);
+            int width = bi.getWidth();
+            int height = bi.getHeight();
+            if (startX < 0) {
+                startX = 0;
+            }
+            if (endX > width) {
+                endX = width;
+            }
+            if (startY < 0) {
+                startY = 0;
+            }
+            if (endY > height) {
+                endY = height;
+            }
+
+            for (int i = startX; i < endX; i++) {
+                for (int j = startY; j < endY; j++) {
+                    int color = bi.getRGB(i, j);
+                    if (!result.contains(color)) {
+                        result.add(color);
+                    }
+                }
+            }
+        } catch (Throwable e) {
+            e.printStackTrace();
+        }
+
+        LUtils.i("累计颜色种数 =  ", result.size());
+        for (Integer color : result) {
+            LUtils.i(color, "  =  ", BinaryOperationUtil.outByteArrayToHexString(BinaryOperationUtil.intToByteHighLow(color)).replaceAll(" "
+                    , "").replaceAll("\n", ""), "     ", color);
+        }
+    }
+
+    private static int resetColor(int color) {
+        byte[] bytes = BinaryOperationUtil.intToByteHighLow(color);
+        LUtils.i((Byte.toUnsignedInt(bytes[1]) > 0xc7));
+        if (Byte.toUnsignedInt(bytes[1]) < 0xa0) {
+            LUtils.i("0   ", Integer.toHexString(color));
+//            bytes[1] = (byte) 0xc7;
+//            bytes[2] = (byte) (bytes[2] -20);
+//            bytes[3] = (byte) (bytes[3] -20);
+//            bytes[2] = 0;
+//            bytes[3] = 90;
+//            LUtils.i("1  ",Integer.toHexString(BinaryOperationUtil.byteArrayToIntHighLow(bytes)));
+            return 0;
+        }
+        return BinaryOperationUtil.byteArrayToIntHighLow(bytes);
+    }
+
+
+    private static void changeImage() {
+//        File file = new File("C:\\Users\\dingzhixin.ex\\Desktop\\baidubaike.png");
+        File file = new File("C:\\Users\\dingzhixin.ex\\Desktop\\d.png");
+        BufferedImage bi = null;
+        try {
+            bi = ImageIO.read(file);
+            int width = bi.getWidth();
+            int height = bi.getHeight();
+            LUtils.i(bi.getWidth());
+            LUtils.i(bi.getHeight());
+            LUtils.i(bi.getType());
+            //807f84
+            //dd6c5a
+            Set<Integer> result = new HashSet<>();
+//            for (int i = 77; i < 191; i++) {
+//                for (int j = 0; j < height; j++) {
+////                for (int j = 40; j < 75; j++) {
+//                    int color = bi.getRGB(i, j);
+//                    if (!result.contains(color)) {
+//                        result.add(color);
+//                    }
+//                }
+//            }
+
+//
+//            for (int i = 0; i < 360; i++) {
+//                for (int j = 0; j < height; j++) {
+//                    int color = bi.getRGB(i, j);
+//                    if (!result.contains(color)) {
+//                        result.add(color);
+//                    }
+//                }
+//            }
+//
+//            for (int i = 0; i < width; i++) {
+//                for (int j = 0; j < height; j++) {
+//                    int color = bi.getRGB(i, j);
+//                    if (result.contains(color)) {
+//                        bi.setRGB(i, j, 0);
+//                    }
+//                }
+//            }
+            BufferedImage bufferedImage = new BufferedImage(width, height, BufferedImage.TYPE_4BYTE_ABGR);
+            int taget = 28;
+            int result1 = 29;
+////            result.clear();c87271
+            for (int i = 0; i < width; i++) {
+                for (int j = 0; j < height; j++) {
+                    int color = bi.getRGB(i, j);
+                    if (i > 39 && i < 80) {
+//                        if (j < 12) {
+//                            bufferedImage.setRGB(i, j, 0);
+//                        } else if (j < 17) {
+//                            LUtils.i(j, "  ", bi.getRGB(width - 28, j));
+//                            bufferedImage.setRGB(i, j, bi.getRGB(width - 28, j));
+//                        } else if (j < 25) {
+//                            LUtils.i(j, "  ", bi.getRGB(width - 26, j));
+//                            bufferedImage.setRGB(i, j, bi.getRGB(width - 26, j));
+//                        } else {
+//                            bufferedImage.setRGB(i, j, 0);
+//                        }
+                        bufferedImage.setRGB(i, j, resetColor(color));
+
+                    } else {
+                        bufferedImage.setRGB(i, j, color);
+                    }
+
+                }
+            }
+//            for (int i = 0; i < width; i++) {
+//                for (int j = 0; j < height; j++) {
+//                    int color=bi.getRGB(i,j);
+//                    if (!result.contains(color)){
+//                        result.add(color);
+//                    }
+//                }
+//            }
+            LUtils.i("累计颜色种数 =  ", result.size());
+            for (Integer color : result) {
+                LUtils.i(color, "  =  ", BinaryOperationUtil.outByteArrayToHexString(BinaryOperationUtil.intToByteHighLow(color)).replaceAll(" "
+                        , "").replaceAll("\n", ""), "     ", color);
+            }
+
+//            LUtils.i(bi.getColorModel().hasAlpha());
+//            bufferedImage.setRGB(0, 0, 0xff000000);
+//            LUtils.i(bufferedImage.getRGB(0,0));
+            try {
+                ImageIO.write(bufferedImage, "PNG", new FileOutputStream("C:\\Users\\dingzhixin.ex\\Desktop\\f.png"));//保存图片 JPEG表示保存格式
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
 
     }
 
@@ -336,7 +519,7 @@ public class ImageTest {
                 if (j > 115 && j < 130 && i > 60 && i < 75 && j - i == 55) {
                     int m = i - 10;
                     for (int k = m; k < i; k++) {
-                        System.out.println(k + " == "+ j);
+                        System.out.println(k + " == " + j);
                         bi.setRGB(k, j, Color.CYAN.getRGB());
                     }
                 }

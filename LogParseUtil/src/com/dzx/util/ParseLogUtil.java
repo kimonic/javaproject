@@ -47,6 +47,8 @@ public class ParseLogUtil {
             fileInputStream = new FileInputStream(targetFile);
             bufferedReader = new BufferedReader(new InputStreamReader(fileInputStream, StandardCharsets.UTF_8));
             fileOutputStream = new FileOutputStream(outputFilePath);
+            //多文件解析结果拼接
+//            fileOutputStream = new FileOutputStream(outputFilePath,true);
             bufferedWriter = new BufferedWriter(new OutputStreamWriter(fileOutputStream, StandardCharsets.UTF_8));
             String line = null;
             int count = 0;
