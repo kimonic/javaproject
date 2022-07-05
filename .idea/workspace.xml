@@ -7,26 +7,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="13f98f43-fccf-402d-b4dd-e3034814c200" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/mylibs/fastjson-1.2.4.jar" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mytest/src/com/dzx/bean/AlwaysListTypeAdapterFactory.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mytest/src/com/dzx/bean/BaiKeEntity.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mytest/src/com/dzx/bean/BaiKeEntityJson.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mytest/src/com/dzx/bean/BaiKeMapEntity.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mytest/src/com/dzx/bean/VcaDataBean.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mytest/src/com/dzx/data/ImageRecsysEntity.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mytest/src/com/dzx/data/PersonEntity.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mytest/src/com/dzx/data/RelativeVideoEntity.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mytest/src/com/dzx/data/Temp.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mytest/src/com/dzx/data/Test10.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/LogParseUtil/src/com/dzx/LogParseUi.java" beforeDir="false" afterPath="$PROJECT_DIR$/LogParseUtil/src/com/dzx/LogParseUi.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/LogParseUtil/src/com/dzx/util/GradleCacheJarFilterUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/LogParseUtil/src/com/dzx/util/GradleCacheJarFilterUtil.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/LogParseUtil/src/com/dzx/util/OutTxt.java" beforeDir="false" afterPath="$PROJECT_DIR$/LogParseUtil/src/com/dzx/util/OutTxt.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/LogParseUtil/src/com/dzx/util/ParseLogUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/LogParseUtil/src/com/dzx/util/ParseLogUtil.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/LogParseUtil/src/com/dzx/util/TsvParseUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/LogParseUtil/src/com/dzx/util/TsvParseUtil.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mytest/src/com/dzx/ImageTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/mytest/src/com/dzx/ImageTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mytest/src/com/dzx/Test3.java" beforeDir="false" afterPath="$PROJECT_DIR$/mytest/src/com/dzx/Test3.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mytest/src/com/dzx/Test9.java" beforeDir="false" afterPath="$PROJECT_DIR$/mytest/src/com/dzx/Test9.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -516,7 +498,7 @@
       <workItem from="1656659674734" duration="1905000" />
       <workItem from="1656730665237" duration="2533000" />
       <workItem from="1656919156654" duration="772000" />
-      <workItem from="1656998267185" duration="1771000" />
+      <workItem from="1656998267185" duration="4568000" />
     </task>
     <task id="LOCAL-00001" summary="202004141910  调整安装apk路径">
       <created>1586862711789</created>
@@ -763,7 +745,14 @@
       <option name="project" value="LOCAL" />
       <updated>1648457561012</updated>
     </task>
-    <option name="localTasksCounter" value="36" />
+    <task id="LOCAL-00036" summary="20220705">
+      <created>1657008823690</created>
+      <option name="number" value="00036" />
+      <option name="presentableId" value="LOCAL-00036" />
+      <option name="project" value="LOCAL" />
+      <updated>1657008823690</updated>
+    </task>
+    <option name="localTasksCounter" value="37" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -783,7 +772,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="202004231937  添加dialog" />
     <MESSAGE value="202004241330  添加自定义button" />
     <MESSAGE value="202004261902  添加换行" />
     <MESSAGE value="202004281900  添加脚本" />
@@ -808,21 +796,22 @@
     <MESSAGE value="202203091700" />
     <MESSAGE value="20220315" />
     <MESSAGE value="20220328" />
-    <option name="LAST_COMMIT_MESSAGE" value="20220328" />
+    <MESSAGE value="20220705" />
+    <option name="LAST_COMMIT_MESSAGE" value="20220705" />
   </component>
   <component name="WindowStateProjectService">
     <state x="677" y="94" key="#com.intellij.ide.util.MemberChooser" timestamp="1650419338580">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="677" y="94" key="#com.intellij.ide.util.MemberChooser/0.0.1920.1040@0.0.1920.1040" timestamp="1650419338580" />
-    <state x="312" y="0" key="CommitChangelistDialog2" timestamp="1648457550371">
+    <state x="312" y="0" key="CommitChangelistDialog2" timestamp="1657008806461">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="312" y="0" key="CommitChangelistDialog2/0.0.1920.1040@0.0.1920.1040" timestamp="1648457550371" />
-    <state x="-15" y="57" width="1666" height="856" key="DiffContextDialog" timestamp="1648457524232">
+    <state x="312" y="0" key="CommitChangelistDialog2/0.0.1920.1040@0.0.1920.1040" timestamp="1657008806461" />
+    <state x="-15" y="57" width="1666" height="856" key="DiffContextDialog" timestamp="1657012776063">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="-15" y="57" width="1666" height="856" key="DiffContextDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1648457524232" />
+    <state x="-15" y="57" width="1666" height="856" key="DiffContextDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1657012776063" />
     <state x="654" y="235" key="FileChooserDialogImpl" timestamp="1649923838849">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
@@ -863,10 +852,10 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="214" y="0" key="SettingsEditor/0.0.1920.1040@0.0.1920.1040" timestamp="1657008730517" />
-    <state width="762" height="596" key="SwitcherDM" timestamp="1653875740146">
+    <state width="762" height="596" key="SwitcherDM" timestamp="1657015752579">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="762" height="596" key="SwitcherDM/0.0.1920.1040@0.0.1920.1040" timestamp="1653875740146" />
+    <state width="762" height="596" key="SwitcherDM/0.0.1920.1040@0.0.1920.1040" timestamp="1657015752579" />
     <state x="489" y="259" key="com.intellij.ide.util.TipDialog" timestamp="1656998266087">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
@@ -879,9 +868,9 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="448" y="232" key="run.anything.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1650611129883" />
-    <state x="453" y="0" width="1009" height="1036" key="search.everywhere.popup" timestamp="1656730827917">
+    <state x="453" y="0" width="1009" height="1036" key="search.everywhere.popup" timestamp="1657012319736">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="453" y="0" width="1009" height="1036" key="search.everywhere.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1656730827917" />
+    <state x="453" y="0" width="1009" height="1036" key="search.everywhere.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1657012319736" />
   </component>
 </project>

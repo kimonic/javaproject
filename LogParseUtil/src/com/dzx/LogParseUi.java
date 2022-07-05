@@ -413,8 +413,8 @@ public class LogParseUi extends JFrame implements ActionListener {
         int positionY = mMarginTop + (mLineGaps + mTextFieldHeight) * mFtpInfoPosition;
         textFieldSet(mFtpIpTextField, mMarginLeft, positionY);
 //        mFtpIpTextField.setText("10.18.216.92");
-//        mFtpIpTextField.setText("10.18.205.10");
-        mFtpIpTextField.setText("192.168.0.12");
+        mFtpIpTextField.setText("10.18.205.10");
+//        mFtpIpTextField.setText("192.168.0.12");
         textFieldSet(mFtpPortTextField, mMarginLeft + mLabelAndTextFieldGaps + mFtpTextFieldWidth, positionY);
         mFtpPortTextField.setText("21");
         textFieldSet(mFtpNameTextField, mMarginLeft + (mLabelAndTextFieldGaps + mFtpTextFieldWidth) * 2, positionY);
