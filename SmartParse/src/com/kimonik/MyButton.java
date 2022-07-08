@@ -1,4 +1,4 @@
-package com.dzx.ui;
+package com.kimonik;
 
 import javax.swing.*;
 import java.awt.*;
@@ -70,5 +70,10 @@ public class MyButton extends JButton {
     @Override
     public void updateUI() {
         super.updateUI();
+    }
+
+    @Override
+    public String toString() {
+        return getText() + "  " + mClickId;
     }
 }

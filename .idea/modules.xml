@@ -4,6 +4,7 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/CopyApkFileToUsb/CopyApkFileToUsb.iml" filepath="$PROJECT_DIR$/CopyApkFileToUsb/CopyApkFileToUsb.iml" />
       <module fileurl="file://$PROJECT_DIR$/LogParseUtil/LogParseUtil.iml" filepath="$PROJECT_DIR$/LogParseUtil/LogParseUtil.iml" />
+      <module fileurl="file://$PROJECT_DIR$/SmartParse/SmartParse.iml" filepath="$PROJECT_DIR$/SmartParse/SmartParse.iml" />
       <module fileurl="file://$PROJECT_DIR$/javaproject.iml" filepath="$PROJECT_DIR$/javaproject.iml" />
       <module fileurl="file://$PROJECT_DIR$/killlol/killlol.iml" filepath="$PROJECT_DIR$/killlol/killlol.iml" />
       <module fileurl="file://$PROJECT_DIR$/voicehandle/maoyan.iml" filepath="$PROJECT_DIR$/voicehandle/maoyan.iml" />

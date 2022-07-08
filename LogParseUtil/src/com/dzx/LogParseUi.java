@@ -239,7 +239,7 @@ public class LogParseUi extends JFrame implements ActionListener {
     private MyButton mAdbCommand2 = new MyButton(Constants.BUTTON_CLICK_ADB_COMMAND_2, "开启debug日志开开关");
     private MyButton mAdbCommand3 = new MyButton(Constants.BUTTON_CLICK_ADB_COMMAND_3, "启动截图");
     private MyButton mAdbCommand4 = new MyButton(Constants.BUTTON_CLICK_ADB_COMMAND_4, "启动蓝牙提示页面");
-    private MyButton mAdbCommand5 = new MyButton(Constants.BUTTON_CLICK_ADB_COMMAND_5, "启动红外配码提示页面");
+    private MyButton mAdbCommand5 = new MyButton(Constants.BUTTON_CLICK_ADB_COMMAND_5, "启动魔镜");
     private MyButton mAdbCommand6 = new MyButton(Constants.BUTTON_CLICK_ADB_COMMAND_6, "启动红外配码页面");
     private MyButton mAdbCommand7 = new MyButton(Constants.BUTTON_CLICK_ADB_COMMAND_7, "启动添加红外设备页面");
     private MyButton mAdbCommand8 = new MyButton(Constants.BUTTON_CLICK_ADB_COMMAND_8, "启动亲友圈页面");
@@ -441,7 +441,6 @@ public class LogParseUi extends JFrame implements ActionListener {
         button.setBounds(left, top, width, height);
         mContainerPanel.add(button);
         button.addActionListener(this);
-
     }
 
 
@@ -516,7 +515,7 @@ public class LogParseUi extends JFrame implements ActionListener {
         } else if (clickId == Constants.BUTTON_CLICK_ADB_COMMAND_4) {
             executeInSub(" shell am  start -n com.hisense.aiot/com.hisense.iot.tips.ui.BluetoothPairActivity ");
         } else if (clickId == Constants.BUTTON_CLICK_ADB_COMMAND_5) {
-            executeInSub(" shell am  start -n com.hisense.aiot/com.hisense.iot.tips.ui.PairHintActivity ");
+            executeInSub(" shell am  start -n com.hisense.tv.mirror/.PreviewActivity ");
         } else if (clickId == Constants.BUTTON_CLICK_ADB_COMMAND_6) {
 
             //启动红外配码页面

@@ -28,7 +28,7 @@ public class Test9 {
 
 
     public static void main(String[] args) {
-LUtils.i(48|80);
+LUtils.i(7>>1);
 //        testBaiKeData();
     }
 
