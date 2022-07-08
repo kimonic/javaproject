@@ -58,9 +58,9 @@ public class MemoryCpuTestAndParseUi extends JFrame implements ActionListener {
     private JLabel mMemoryInfoFileFullPathLabel = new JLabel(MEMORY_FILE_FULL_PATH);
     private JTextField mMemoryInfoFileFullPathTextField = new JTextField(10);
 
-    private static int mLabelWidth = 200;
+    private static int mLabelWidth = 220;
     private static int mLabelHeight = 50;
-    private static int mTextFieldWidth = 600;
+    private static int mTextFieldWidth = 760;
     private static int mTextFieldHeight = 50;
 
     private int mLeftOffset = 50;
@@ -127,13 +127,14 @@ public class MemoryCpuTestAndParseUi extends JFrame implements ActionListener {
             switch (((MyButton) e.getSource()).getClickId()) {
                 case START_MEM_ID:
                     initSettings();
-                    CpuMemoryTest.mRunningToggle = true;
+                    CpuMemoryTest.mMemRunningToggle = true;
                     CpuMemoryTest.analysisMemInfo(this);
                     break;
                 case STOP_MEM_ID:
-                    CpuMemoryTest.mRunningToggle = false;
+                    CpuMemoryTest.mMemRunningToggle = false;
                     break;
                 case START_CPU_ID:
+                    initSettings();
                     break;
                 case STOP_CPU_ID:
                     break;

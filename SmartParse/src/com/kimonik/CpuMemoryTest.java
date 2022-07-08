@@ -20,16 +20,29 @@ public class CpuMemoryTest {
     private static String mTvIpAddress = "192.168.137.172";
     private static boolean mDebugToggle = false;
     private static boolean mSaveToggle = true;
-    public static boolean mRunningToggle = true;
+    public static boolean mMemRunningToggle = true;
     private static long mSleepTime = 500;
 
     public static void main(String[] args) {
+        getCpuInfo();
+    }
 
-
-//        LUtils.i(new Gson().toJson(new SettingsEntity()));
-//        analysisMemInfo();
-        parseMemory(mFileDirectoryPath + "\\meminfodata.txt_20220708_1534.txt");
-//        parseCpuInfo();
+    public static void getCpuInfo() {
+        String result = runtimeCommand("adb -s " + mTvIpAddress + " shell \"ps -A |grep  com.hisense.smartimages\" ");
+        String[] temp = result.split("\n");
+        String processId = null;
+        for (String s : temp) {
+            if (!s.contains(":")) {
+                processId = s.split("\\s+")[1];
+            }
+        }
+        if (TextUtils.isEmpty(processId)) {
+            LUtils.i("未获取到小聚识图进程号");
+            return;
+        }
+        String command = "adb -s " + mTvIpAddress + " shell \"busybox top  -d 1 |grep " + processId + "\"";
+        LUtils.i("获取cpu信息指令: ", command);
+        runtimeCommand(command);
     }
 
     public static void init(SettingsEntity entity, MemoryCpuTestAndParseUi ui) {
@@ -178,9 +191,10 @@ public class CpuMemoryTest {
         new Thread() {
             @Override
             public void run() {
-                while (mRunningToggle) {
-                    String result = runtimeCommand("adb -s " + mTvIpAddress + " shell \"dumpsys meminfo com.hisense.smartimages " +
+                while (mMemRunningToggle) {
+                    String cmdResult = runtimeCommand("adb -s " + mTvIpAddress + " shell \"dumpsys meminfo com.hisense.smartimages " +
                             "|grep -iE \'TOTAL:\' \"");
+                    String result = simpleDateFormat.format(new Date()) + "   " + cmdResult;
                     LUtils.i(result);
                     if (mResultList.size() > 100) {
                         mResultList.remove(0);
@@ -236,7 +250,7 @@ public class CpuMemoryTest {
                     LUtils.i("异常输出 = ", errorMessage);
                 }
             }
-            return simpleDateFormat.format(new Date()) + "   " + normalMessage;
+            return normalMessage;
         } catch (Exception e) {
             System.out.println("执行cmd命令出错!");
             return "<br><br>执行cmd命令出错<br>" + getExceptionInfo(e);
