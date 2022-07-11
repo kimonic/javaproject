@@ -9,11 +9,11 @@ public class SettingsEntity {
     /**
      * 获取内存信息输出文件全路径
      */
-    public String memoryOutDataFileName = "meminfodata.txt";
+    public String memoryOutDataFileName = "meminfodata";
     /**
      * 要解析的cpu数据文件地址
      */
-    public String cpuParseDataFileName = "cpudata.txt";
+    public String cpuParseDataFileName = "cpudata";
     /**
      * 调试日志开关
      */

@@ -2,14 +2,18 @@
 <project version="4">
   <component name="ArtifactsWorkspaceSettings">
     <artifacts-to-build>
-      <artifact name="LogParseUtil:jar" />
+      <artifact name="SmartParse:jar" />
     </artifacts-to-build>
   </component>
   <component name="ChangeListManager">
     <list default="true" id="13f98f43-fccf-402d-b4dd-e3034814c200" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/SmartParse/src/META-INF/MANIFEST.MF" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/artifacts/CopyApkFileToUsb_jar.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/artifacts/CopyApkFileToUsb_jar.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SmartParse/SmartParse.iml" beforeDir="false" afterPath="$PROJECT_DIR$/SmartParse/SmartParse.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/SmartParse/src/com/kimonik/CpuMemoryTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/SmartParse/src/com/kimonik/CpuMemoryTest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/SmartParse/src/com/kimonik/MemoryCpuTestAndParseUi.java" beforeDir="false" afterPath="$PROJECT_DIR$/SmartParse/src/com/kimonik/MemoryCpuTestAndParseUi.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SmartParse/src/com/kimonik/SettingsEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/SmartParse/src/com/kimonik/SettingsEntity.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -62,8 +66,8 @@
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/mytest/src/com/dzx/data" />
-    <property name="project.structure.last.edited" value="Global Libraries" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/mylibs/gson-2.8.5.jar!/" />
+    <property name="project.structure.last.edited" value="Artifacts" />
     <property name="project.structure.proportion" value="0.15234375" />
     <property name="project.structure.side.proportion" value="0.2" />
     <property name="run.code.analysis.last.selected.profile" value="pProject Default" />
@@ -84,7 +88,7 @@
       <recent name="E:\work\app\mytoolsjavaproject\javaproject\mytest\src\com\dzx\objectexplorer" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.CpuMemoryTest">
+  <component name="RunManager" selected="Application.UiHome">
     <configuration name="CpuMemoryTest" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="com.kimonik.CpuMemoryTest" />
       <module name="SmartParse" />
@@ -159,8 +163,8 @@
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.CpuMemoryTest" />
         <item itemvalue="Application.UiHome" />
+        <item itemvalue="Application.CpuMemoryTest" />
         <item itemvalue="Application.OutTxt" />
         <item itemvalue="Application.Test9" />
         <item itemvalue="Application.ImageTest" />
@@ -504,7 +508,9 @@
       <workItem from="1656998267185" duration="4568000" />
       <workItem from="1657087498293" duration="1505000" />
       <workItem from="1657163143274" duration="13962000" />
-      <workItem from="1657242396468" duration="13951000" />
+      <workItem from="1657242396468" duration="14845000" />
+      <workItem from="1657505743349" duration="4806000" />
+      <workItem from="1657510679462" duration="15943000" />
     </task>
     <task id="LOCAL-00001" summary="202004141910  调整安装apk路径">
       <created>1586862711789</created>
@@ -765,7 +771,14 @@
       <option name="project" value="LOCAL" />
       <updated>1657275345050</updated>
     </task>
-    <option name="localTasksCounter" value="38" />
+    <task id="LOCAL-00038" summary="20220708">
+      <created>1657276807007</created>
+      <option name="number" value="00038" />
+      <option name="presentableId" value="LOCAL-00038" />
+      <option name="project" value="LOCAL" />
+      <updated>1657276807007</updated>
+    </task>
+    <option name="localTasksCounter" value="39" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -813,38 +826,46 @@
     <option name="LAST_COMMIT_MESSAGE" value="20220708" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="677" y="94" key="#com.intellij.ide.util.MemberChooser" timestamp="1657270844725">
+    <state x="677" y="94" key="#com.intellij.ide.util.MemberChooser" timestamp="1657523930005">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="677" y="94" key="#com.intellij.ide.util.MemberChooser/0.0.1920.1040@0.0.1920.1040" timestamp="1657270844725" />
-    <state x="312" y="0" key="CommitChangelistDialog2" timestamp="1657275336739">
+    <state x="677" y="94" key="#com.intellij.ide.util.MemberChooser/0.0.1920.1040@0.0.1920.1040" timestamp="1657523930005" />
+    <state x="595" y="211" key="#com.intellij.ide.util.TreeClassChooserDialog" timestamp="1657528833746">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="312" y="0" key="CommitChangelistDialog2/0.0.1920.1040@0.0.1920.1040" timestamp="1657275336739" />
-    <state x="-15" y="57" width="1666" height="856" key="DiffContextDialog" timestamp="1657276686190">
+    <state x="595" y="211" key="#com.intellij.ide.util.TreeClassChooserDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1657528833746" />
+    <state x="671" y="159" key="#com.intellij.util.ui.classpath.ChooseLibrariesDialog" timestamp="1657529051104">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="-15" y="57" width="1666" height="856" key="DiffContextDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1657276686190" />
-    <state x="654" y="235" key="FileChooserDialogImpl" timestamp="1649923838849">
+    <state x="671" y="159" key="#com.intellij.util.ui.classpath.ChooseLibrariesDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1657529051104" />
+    <state x="312" y="0" key="CommitChangelistDialog2" timestamp="1657276801205">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="654" y="235" key="FileChooserDialogImpl/0.0.1920.1040@0.0.1920.1040" timestamp="1649923838849" />
-    <state width="1855" height="221" key="GridCell.Tab.0.bottom" timestamp="1657276653673">
+    <state x="312" y="0" key="CommitChangelistDialog2/0.0.1920.1040@0.0.1920.1040" timestamp="1657276801205" />
+    <state x="-15" y="57" width="1666" height="856" key="DiffContextDialog" timestamp="1657506021228">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1855" height="221" key="GridCell.Tab.0.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1657276653673" />
-    <state width="1855" height="221" key="GridCell.Tab.0.center" timestamp="1657276653672">
+    <state x="-15" y="57" width="1666" height="856" key="DiffContextDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1657506021228" />
+    <state x="654" y="235" key="FileChooserDialogImpl" timestamp="1657529089844">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1855" height="221" key="GridCell.Tab.0.center/0.0.1920.1040@0.0.1920.1040" timestamp="1657276653672" />
-    <state width="1855" height="221" key="GridCell.Tab.0.left" timestamp="1657276653672">
+    <state x="654" y="235" key="FileChooserDialogImpl/0.0.1920.1040@0.0.1920.1040" timestamp="1657529089844" />
+    <state width="1855" height="322" key="GridCell.Tab.0.bottom" timestamp="1657536169761">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1855" height="221" key="GridCell.Tab.0.left/0.0.1920.1040@0.0.1920.1040" timestamp="1657276653672" />
-    <state width="1855" height="221" key="GridCell.Tab.0.right" timestamp="1657276653673">
+    <state width="1855" height="322" key="GridCell.Tab.0.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1657536169761" />
+    <state width="1855" height="322" key="GridCell.Tab.0.center" timestamp="1657536169752">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1855" height="221" key="GridCell.Tab.0.right/0.0.1920.1040@0.0.1920.1040" timestamp="1657276653673" />
+    <state width="1855" height="322" key="GridCell.Tab.0.center/0.0.1920.1040@0.0.1920.1040" timestamp="1657536169752" />
+    <state width="1855" height="322" key="GridCell.Tab.0.left" timestamp="1657536169715">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1855" height="322" key="GridCell.Tab.0.left/0.0.1920.1040@0.0.1920.1040" timestamp="1657536169715" />
+    <state width="1855" height="322" key="GridCell.Tab.0.right" timestamp="1657536169752">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1855" height="322" key="GridCell.Tab.0.right/0.0.1920.1040@0.0.1920.1040" timestamp="1657536169752" />
     <state width="1855" height="286" key="GridCell.Tab.1.bottom" timestamp="1651045027996">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
@@ -861,26 +882,30 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state width="1855" height="286" key="GridCell.Tab.1.right/0.0.1920.1040@0.0.1920.1040" timestamp="1651045027996" />
-    <state x="214" y="0" key="SettingsEditor" timestamp="1657015951313">
+    <state x="213" y="0" width="1707" height="1040" key="SettingsEditor" timestamp="1657529304999">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="214" y="0" key="SettingsEditor/0.0.1920.1040@0.0.1920.1040" timestamp="1657015951313" />
+    <state x="213" y="0" width="1707" height="1040" key="SettingsEditor/0.0.1920.1040@0.0.1920.1040" timestamp="1657529304999" />
     <state width="762" height="596" key="SwitcherDM" timestamp="1657275436560">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state width="762" height="596" key="SwitcherDM/0.0.1920.1040@0.0.1920.1040" timestamp="1657275436560" />
-    <state x="352" y="122" key="Vcs.Push.Dialog.v2" timestamp="1657275347936">
+    <state x="352" y="122" key="Vcs.Push.Dialog.v2" timestamp="1657277553808">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="352" y="122" key="Vcs.Push.Dialog.v2/0.0.1920.1040@0.0.1920.1040" timestamp="1657275347936" />
-    <state x="489" y="259" key="com.intellij.ide.util.TipDialog" timestamp="1657261572630">
+    <state x="352" y="122" key="Vcs.Push.Dialog.v2/0.0.1920.1040@0.0.1920.1040" timestamp="1657277553808" />
+    <state x="821" y="323" key="classpath-attribute-editor" timestamp="1657527959999">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="489" y="259" key="com.intellij.ide.util.TipDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1657261572630" />
-    <state x="376" y="48" width="1167" height="944" key="find.popup" timestamp="1657172794649">
+    <state x="821" y="323" key="classpath-attribute-editor/0.0.1920.1040@0.0.1920.1040" timestamp="1657527959999" />
+    <state x="489" y="259" key="com.intellij.ide.util.TipDialog" timestamp="1657510677017">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="376" y="48" width="1167" height="944" key="find.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1657172794649" />
+    <state x="489" y="259" key="com.intellij.ide.util.TipDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1657510677017" />
+    <state x="376" y="48" width="1167" height="944" key="find.popup" timestamp="1657525047531">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="376" y="48" width="1167" height="944" key="find.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1657525047531" />
     <state x="458" y="0" key="new project wizard" timestamp="1657188283802">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
@@ -889,9 +914,9 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="448" y="232" key="run.anything.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1650611129883" />
-    <state x="453" y="0" width="1009" height="1036" key="search.everywhere.popup" timestamp="1657272880994">
+    <state x="453" y="0" width="1009" height="1036" key="search.everywhere.popup" timestamp="1657506698537">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="453" y="0" width="1009" height="1036" key="search.everywhere.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1657272880994" />
+    <state x="453" y="0" width="1009" height="1036" key="search.everywhere.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1657506698537" />
   </component>
 </project>

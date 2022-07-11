@@ -1,8 +1,11 @@
 <component name="ArtifactManager">
-  <artifact type="jar" name="CopyApkFileToUsb:jar">
+  <artifact type="jar" build-on-make="true" name="CopyApkFileToUsb:jar">
     <output-path>$PROJECT_DIR$/out/artifacts/CopyApkFileToUsb_jar</output-path>
     <root id="archive" name="CopyApkFileToUsb.jar">
       <element id="module-output" name="CopyApkFileToUsb" />
+      <element id="module-output" name="SmartParse" />
+      <element id="library" level="project" name="mylibs" />
+      <element id="library" level="project" name="KotlinJavaRuntime" />
     </root>
   </artifact>
 </component>

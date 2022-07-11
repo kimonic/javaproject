@@ -12,6 +12,8 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.File;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
 import java.util.List;
 
 public class MemoryCpuTestAndParseUi extends JFrame implements ActionListener {
@@ -135,8 +137,13 @@ public class MemoryCpuTestAndParseUi extends JFrame implements ActionListener {
                     break;
                 case START_CPU_ID:
                     initSettings();
+                    CpuMemoryTest.getCpuInfo(this);
                     break;
                 case STOP_CPU_ID:
+                    CpuMemoryTest.stopCpuInfoThread();
+                    List<String> list = new ArrayList<>();
+                    list.add("cpu信息进程已终止");
+                    updateResult(list);
                     break;
                 case PARSE_MEM_ID:
                     String memStart = "正在解析CPU信息";
@@ -210,15 +217,16 @@ public class MemoryCpuTestAndParseUi extends JFrame implements ActionListener {
             LUtils.i("配置文件不存在,生成默认配置文件");
             SettingsEntity entity = new SettingsEntity();
             try {
-                FileUtils.write(file, new Gson().toJson(entity));
+                FileUtils.write(file, new Gson().toJson(entity), StandardCharsets.UTF_8);
             } catch (IOException e) {
+
                 e.printStackTrace();
             }
             mSettingsFileFullPathTextField.setText(entity.settingsFilePath);
             CpuMemoryTest.init(entity, this);
         } else {
             try {
-                String settings = FileUtils.readFileToString(file);
+                String settings = FileUtils.readFileToString(file, StandardCharsets.UTF_8);
                 SettingsEntity entity = new Gson().fromJson(settings, SettingsEntity.class);
                 if (entity != null && !TextUtils.isEmpty(entity.settingsFilePath)) {
                     mSettingsFileFullPathTextField.setText(entity.settingsFilePath);
@@ -234,6 +242,11 @@ public class MemoryCpuTestAndParseUi extends JFrame implements ActionListener {
         mMemoryInfoFileFullPathTextField.setText(memFilePath);
     }
 
+    public void setCpuFileFullPath(String memFilePath) {
+        mCpuInfoFileFullPathTextField.setText(memFilePath);
+    }
+
+
     public void updateResult(List<String> list) {
         StringBuilder builder = new StringBuilder();
         builder.append("<html>");
@@ -244,7 +257,7 @@ public class MemoryCpuTestAndParseUi extends JFrame implements ActionListener {
         mResultLabel.setText(builder.toString());
         mResultInfoScrollPan.doLayout();
         JScrollBar jscrollBar = mResultInfoScrollPan.getVerticalScrollBar();
-        if (jscrollBar != null){
+        if (jscrollBar != null) {
             jscrollBar.setValue(jscrollBar.getMaximum());
         }
     }
