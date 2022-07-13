@@ -7,14 +7,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="13f98f43-fccf-402d-b4dd-e3034814c200" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/mytest/src/com/dzx/FuLiYeTest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mytest/src/com/dzx/adb/AdbConnection.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mytest/src/com/dzx/adb/AdbMessage.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mytest/src/com/dzx/adb/SimpleAdbClient.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mytest/src/com/dzx/adb/TestSimpleAdbClient.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/LogParseUtil/src/com/dzx/LogParseUi.java" beforeDir="false" afterPath="$PROJECT_DIR$/LogParseUtil/src/com/dzx/LogParseUi.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mytest/src/com/dzx/Test9.java" beforeDir="false" afterPath="$PROJECT_DIR$/mytest/src/com/dzx/Test9.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mytest/src/com/dzx/adb/AdbConnection.java" beforeDir="false" afterPath="$PROJECT_DIR$/mytest/src/com/dzx/adb/AdbConnection.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mytest/src/com/dzx/adb/AdbMessage.java" beforeDir="false" afterPath="$PROJECT_DIR$/mytest/src/com/dzx/adb/AdbMessage.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mytest/src/com/dzx/adb/SimpleAdbClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/mytest/src/com/dzx/adb/SimpleAdbClient.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mytest/src/com/dzx/adb/TestSimpleAdbClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/mytest/src/com/dzx/adb/TestSimpleAdbClient.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -513,7 +510,7 @@
       <workItem from="1657505743349" duration="4806000" />
       <workItem from="1657510679462" duration="16146000" />
       <workItem from="1657610281083" duration="3399000" />
-      <workItem from="1657689568469" duration="6252000" />
+      <workItem from="1657689568469" duration="11221000" />
     </task>
     <task id="LOCAL-00001" summary="202004141910  调整安装apk路径">
       <created>1586862711789</created>
@@ -788,7 +785,14 @@
       <option name="project" value="LOCAL" />
       <updated>1657536423293</updated>
     </task>
-    <option name="localTasksCounter" value="40" />
+    <task id="LOCAL-00040" summary="20220713">
+      <created>1657704976002</created>
+      <option name="number" value="00040" />
+      <option name="presentableId" value="LOCAL-00040" />
+      <option name="project" value="LOCAL" />
+      <updated>1657704976002</updated>
+    </task>
+    <option name="localTasksCounter" value="41" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -808,7 +812,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="202004281900  添加脚本" />
     <MESSAGE value="202005061928   添加显示栈顶activity命令按钮,输出流改变编码显示中文" />
     <MESSAGE value="202005191921  添加多条adb命令" />
     <MESSAGE value="202006022001  合并代码" />
@@ -833,7 +836,8 @@
     <MESSAGE value="20220705" />
     <MESSAGE value="20220708" />
     <MESSAGE value="20220711" />
-    <option name="LAST_COMMIT_MESSAGE" value="20220711" />
+    <MESSAGE value="20220713" />
+    <option name="LAST_COMMIT_MESSAGE" value="20220713" />
   </component>
   <component name="WindowStateProjectService">
     <state x="677" y="94" key="#com.intellij.ide.util.MemberChooser" timestamp="1657616482609">
@@ -848,34 +852,34 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="671" y="159" key="#com.intellij.util.ui.classpath.ChooseLibrariesDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1657529051104" />
-    <state x="312" y="0" key="CommitChangelistDialog2" timestamp="1657536409642">
+    <state x="312" y="0" key="CommitChangelistDialog2" timestamp="1657709939593">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="312" y="0" key="CommitChangelistDialog2/0.0.1920.1040@0.0.1920.1040" timestamp="1657536409642" />
-    <state x="-15" y="57" width="1666" height="856" key="DiffContextDialog" timestamp="1657506021228">
+    <state x="312" y="0" key="CommitChangelistDialog2/0.0.1920.1040@0.0.1920.1040" timestamp="1657709939593" />
+    <state x="-15" y="57" width="1666" height="856" key="DiffContextDialog" timestamp="1657707927867">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="-15" y="57" width="1666" height="856" key="DiffContextDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1657506021228" />
+    <state x="-15" y="57" width="1666" height="856" key="DiffContextDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1657707927867" />
     <state x="654" y="235" key="FileChooserDialogImpl" timestamp="1657529089844">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="654" y="235" key="FileChooserDialogImpl/0.0.1920.1040@0.0.1920.1040" timestamp="1657529089844" />
-    <state width="1855" height="322" key="GridCell.Tab.0.bottom" timestamp="1657704429935">
+    <state width="1855" height="393" key="GridCell.Tab.0.bottom" timestamp="1657709825367">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1855" height="322" key="GridCell.Tab.0.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1657704429935" />
-    <state width="1855" height="322" key="GridCell.Tab.0.center" timestamp="1657704429935">
+    <state width="1855" height="393" key="GridCell.Tab.0.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1657709825367" />
+    <state width="1855" height="393" key="GridCell.Tab.0.center" timestamp="1657709825367">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1855" height="322" key="GridCell.Tab.0.center/0.0.1920.1040@0.0.1920.1040" timestamp="1657704429935" />
-    <state width="1855" height="322" key="GridCell.Tab.0.left" timestamp="1657704429934">
+    <state width="1855" height="393" key="GridCell.Tab.0.center/0.0.1920.1040@0.0.1920.1040" timestamp="1657709825367" />
+    <state width="1855" height="393" key="GridCell.Tab.0.left" timestamp="1657709825367">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1855" height="322" key="GridCell.Tab.0.left/0.0.1920.1040@0.0.1920.1040" timestamp="1657704429934" />
-    <state width="1855" height="322" key="GridCell.Tab.0.right" timestamp="1657704429935">
+    <state width="1855" height="393" key="GridCell.Tab.0.left/0.0.1920.1040@0.0.1920.1040" timestamp="1657709825367" />
+    <state width="1855" height="393" key="GridCell.Tab.0.right" timestamp="1657709825367">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1855" height="322" key="GridCell.Tab.0.right/0.0.1920.1040@0.0.1920.1040" timestamp="1657704429935" />
+    <state width="1855" height="393" key="GridCell.Tab.0.right/0.0.1920.1040@0.0.1920.1040" timestamp="1657709825367" />
     <state width="1855" height="286" key="GridCell.Tab.1.bottom" timestamp="1651045027996">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
@@ -912,10 +916,10 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="489" y="259" key="com.intellij.ide.util.TipDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1657689567041" />
-    <state x="376" y="48" width="1167" height="944" key="find.popup" timestamp="1657691487327">
+    <state x="376" y="48" width="1167" height="944" key="find.popup" timestamp="1657705679303">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="376" y="48" width="1167" height="944" key="find.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1657691487327" />
+    <state x="376" y="48" width="1167" height="944" key="find.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1657705679303" />
     <state x="458" y="0" key="new project wizard" timestamp="1657188283802">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>

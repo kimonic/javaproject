@@ -13,6 +13,8 @@
 
 package com.dzx.adb;
 
+import com.dzx.util.LUtils;
+
 import java.net.ProtocolException;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
@@ -43,7 +45,17 @@ public class AdbMessage {
         open(0x4e45504f),
         ready(0x59414b4f),                                   // = Okay
         write(0x45545257),
+        auth(0x48545541),
         close(0x45534c43);
+
+        //#define A_SYNC 0x434e5953
+        //#define A_CNXN 0x4e584e43
+        //#define A_OPEN 0x4e45504f
+        //#define A_OKAY 0x59414b4f
+        //#define A_CLSE 0x45534c43
+        //#define A_WRTE 0x45545257
+        //#define A_AUTH 0x48545541
+
         private int code;
         private static HashMap<Integer, Command> codeMap;
 
@@ -117,14 +129,17 @@ public class AdbMessage {
         msg.command = hdr.command;
         msg.arg0 = hdr.arg0;
         msg.arg1 = hdr.arg1;
+        LUtils.i(hdr.payloadLen);
         if (hdr.payloadLen > 0) {
             msg.payload = ByteBuffer.allocate(hdr.payloadLen);
             msg.payload.put(buf.array(), buf.position() + headerLen, hdr.payloadLen);
             msg.payload.flip();
+            LUtils.i(charset.decode(msg.payload));
+            //这里能够输出所有的接收信息
             int checksum = computeChecksum(msg.payload);
-            if (checksum != hdr.payloadChecksum) {
-                throw new MalformedMessageException("Checksum error for payload data.");
-            }
+//            if (checksum != hdr.payloadChecksum) {
+//                throw new MalformedMessageException("Checksum error for payload data.");
+//            }
         }
         return msg;
     }

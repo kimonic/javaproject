@@ -15,6 +15,7 @@ package com.dzx.adb;
 
 
 import com.dzx.adb.AdbMessage.Command;
+import com.dzx.util.LUtils;
 
 import java.io.IOException;
 
@@ -34,9 +35,20 @@ public class SimpleAdbClient {
             AdbMessage msg;
             conn = new AdbConnection();
             conn.open(hostName, port, maxMessageSize);
-            conn.sendMessage(Command.connect, abdProtocolVersion, maxPayloadSize, "host::\u0000");
+            LUtils.i("开始请求授权");
+            LUtils.i("请求授权结束");
+            LUtils.i("接收消息结束");
+
+            //3的时候需要每次都授权,1,2会阻塞无响应,目前不清楚如何处理
+            conn.sendMessage(Command.auth, 3, maxPayloadSize, "host::\u0000");
             msg = conn.receiveMessage();
             verifyCommand(msg, Command.connect);
+
+
+            conn.sendMessage(Command.connect, abdProtocolVersion, maxPayloadSize, "host::\u0000");
+            msg = conn.receiveMessage();
+            verifyCommand(msg, Command.auth);
+
             conn.sendMessage(Command.open, localId, 0, "shell:" + shellCommand + "\u0000");
             msg = conn.receiveMessage();
             verifyCommand(msg, Command.ready);
@@ -49,6 +61,7 @@ public class SimpleAdbClient {
                 }
                 verifyCommand(msg, Command.write);
                 out.append(msg.getPayloadAsCharSequence());
+                LUtils.i(msg.getPayloadAsCharSequence());
                 conn.sendMessage(Command.ready, localId, remoteId);
             }
             conn.sendMessage(Command.close, localId, remoteId);
@@ -63,6 +76,7 @@ public class SimpleAdbClient {
 
     private static void verifyCommand(AdbMessage msg, Command expectedCommand) throws IOException {
         if (msg.command != expectedCommand) {
+            LUtils.i(msg.arg0);
             throw new IOException("Command \"" + msg.command + "\" received when \"" + expectedCommand + "\" was exptected.");
         }
     }

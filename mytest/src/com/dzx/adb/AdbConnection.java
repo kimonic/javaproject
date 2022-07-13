@@ -64,7 +64,8 @@ public class AdbConnection {
             rxBuf.flip();
             int msgLen = AdbMessage.estimateMessageLength(rxBuf);
             if (msgLen > rxBuf.capacity()) {
-                throw new IOException("RX buffer overflow.");
+//                throw new IOException("RX buffer overflow.");
+                break;
             }
             rxBuf.position(rxBuf.limit());
             rxBuf.limit(msgLen);
@@ -73,9 +74,11 @@ public class AdbConnection {
             }
             int trLen = socketChannel.read(rxBuf);
             if (trLen <= 0) {
-                throw new IOException("End of Stream.");
+//                throw new IOException("End of Stream.");
+                break;
             }
         }
+//        LUtils.i("结束");
         rxBuf.flip();
         AdbMessage msg = AdbMessage.unpack(rxBuf);
         return msg;
