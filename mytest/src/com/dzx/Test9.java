@@ -28,9 +28,63 @@ public class Test9 {
 
 
     public static void main(String[] args) {
-LUtils.i(7>>1);
-//        testBaiKeData();
+        new Thread() {
+            @Override
+            public void run() {
+                test1();
+            }
+        }.start();
+        new Thread() {
+            @Override
+            public void run() {
+                test2();
+
+            }
+        }.start();
+        new Thread() {
+            @Override
+            public void run() {
+                test3();
+            }
+        }.start();
+
+        test4();
     }
+
+    private synchronized static void test1() {
+        LUtils.i("开始执行  1");
+        try {
+            Thread.sleep(5000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        LUtils.i("结束执行  1 ");
+    }
+
+    private synchronized static void test2() {
+        LUtils.i("开始执行  2");
+        try {
+            Thread.sleep(5000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        LUtils.i("结束执行   2");
+    }
+
+    private synchronized static void test3() {
+        LUtils.i("开始执行 3 ");
+        try {
+            Thread.sleep(5000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        LUtils.i("结束执行   3");
+    }
+
+    private static void test4(){
+        LUtils.i("未加锁");
+    }
+
 
     private static void renameFile() {
         File file = new File("C:\\Users\\dingzhixin.ex\\Desktop\\截图");
