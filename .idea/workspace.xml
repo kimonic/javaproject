@@ -7,11 +7,17 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="13f98f43-fccf-402d-b4dd-e3034814c200" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/mytest/src/com/dzx/ColorMerge.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mytest/src/com/dzx/blurred/ArgbColorEntity.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mytest/src/com/dzx/blurred/AwtDrawSample.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mytest/src/com/dzx/blurred/ColorAssistEntity.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mytest/src/com/dzx/blurred/ColorTestEntity.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mytest/src/com/dzx/blurred/GaussianBlur.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mytest/src/com/dzx/ImageTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/mytest/src/com/dzx/ImageTest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/mytest/src/com/dzx/adb/AdbConnection.java" beforeDir="false" afterPath="$PROJECT_DIR$/mytest/src/com/dzx/adb/AdbConnection.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/mytest/src/com/dzx/adb/AdbMessage.java" beforeDir="false" afterPath="$PROJECT_DIR$/mytest/src/com/dzx/adb/AdbMessage.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/mytest/src/com/dzx/adb/SimpleAdbClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/mytest/src/com/dzx/adb/SimpleAdbClient.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mytest/src/com/dzx/adb/TestSimpleAdbClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/mytest/src/com/dzx/adb/TestSimpleAdbClient.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -64,7 +70,7 @@
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/mytest/src/com/dzx/adb" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/mytest/src/com/dzx/blurred" />
     <property name="project.structure.last.edited" value="Artifacts" />
     <property name="project.structure.proportion" value="0.15234375" />
     <property name="project.structure.side.proportion" value="0.2" />
@@ -79,46 +85,59 @@
       <recent name="com.dzx" />
     </key>
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="E:\work\app\mytoolsjavaproject\javaproject\mytest\src\com\dzx\blurred" />
       <recent name="E:\work\app\mytoolsjavaproject\javaproject\mytest\src\com\dzx\adb" />
       <recent name="E:\work\app\mytoolsjavaproject\javaproject\mytest\src\com\dzx\data" />
       <recent name="E:\work\app\mytoolsjavaproject\javaproject\mytest\src\com\dzx\bean" />
       <recent name="E:\work\app\mytoolsjavaproject\javaproject\mylibs" />
-      <recent name="E:\work\app\mytoolsjavaproject\javaproject\mytest\src" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.TestSimpleAdbClient">
-    <configuration name="CpuMemoryTest" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="com.kimonik.CpuMemoryTest" />
-      <module name="SmartParse" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="com.kimonik.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="OutTxt" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="com.dzx.util.OutTxt" />
-      <module name="LogParseUtil" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="com.kimonik.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="Test9" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="com.dzx.Test9" />
+  <component name="RunManager" selected="Application.GaussianBlur">
+    <configuration name="AwtDrawSample" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="com.dzx.blurred.AwtDrawSample" />
       <module name="mytest" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="com.dzx.*" />
+          <option name="PATTERN" value="com.dzx.blurred.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="ColorMerge" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="com.dzx.ColorMerge" />
+      <module name="mytest" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.dzx.blurred.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="GaussianBlur" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="com.dzx.blurred.GaussianBlur" />
+      <module name="mytest" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.dzx.blurred.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="ImageTest" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="com.dzx.ImageTest" />
+      <module name="mytest" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.dzx.blurred.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
@@ -139,33 +158,20 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="UiHome" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="com.kimonik.UiHome" />
-      <module name="SmartParse" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="com.kimonik.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
     <list>
-      <item itemvalue="Application.Test9" />
-      <item itemvalue="Application.OutTxt" />
-      <item itemvalue="Application.CpuMemoryTest" />
-      <item itemvalue="Application.UiHome" />
       <item itemvalue="Application.TestSimpleAdbClient" />
+      <item itemvalue="Application.ImageTest" />
+      <item itemvalue="Application.ColorMerge" />
+      <item itemvalue="Application.AwtDrawSample" />
+      <item itemvalue="Application.GaussianBlur" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Application.GaussianBlur" />
+        <item itemvalue="Application.AwtDrawSample" />
+        <item itemvalue="Application.ImageTest" />
+        <item itemvalue="Application.ColorMerge" />
         <item itemvalue="Application.TestSimpleAdbClient" />
-        <item itemvalue="Application.Test9" />
-        <item itemvalue="Application.UiHome" />
-        <item itemvalue="Application.CpuMemoryTest" />
-        <item itemvalue="Application.OutTxt" />
       </list>
     </recent_temporary>
   </component>
@@ -511,6 +517,12 @@
       <workItem from="1657510679462" duration="16146000" />
       <workItem from="1657610281083" duration="3399000" />
       <workItem from="1657689568469" duration="11221000" />
+      <workItem from="1657760458864" duration="17754000" />
+      <workItem from="1658111676644" duration="21642000" />
+      <workItem from="1658193169958" duration="3254000" />
+      <workItem from="1658286265085" duration="19645000" />
+      <workItem from="1658380060451" duration="9428000" />
+      <workItem from="1658467601621" duration="11257000" />
     </task>
     <task id="LOCAL-00001" summary="202004141910  调整安装apk路径">
       <created>1586862711789</created>
@@ -840,10 +852,10 @@
     <option name="LAST_COMMIT_MESSAGE" value="20220713" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="677" y="94" key="#com.intellij.ide.util.MemberChooser" timestamp="1657616482609">
+    <state x="677" y="94" key="#com.intellij.ide.util.MemberChooser" timestamp="1658480462288">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="677" y="94" key="#com.intellij.ide.util.MemberChooser/0.0.1920.1040@0.0.1920.1040" timestamp="1657616482609" />
+    <state x="677" y="94" key="#com.intellij.ide.util.MemberChooser/0.0.1920.1040@0.0.1920.1040" timestamp="1658480462288" />
     <state x="595" y="211" key="#com.intellij.ide.util.TreeClassChooserDialog" timestamp="1657528833746">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
@@ -852,34 +864,34 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="671" y="159" key="#com.intellij.util.ui.classpath.ChooseLibrariesDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1657529051104" />
-    <state x="312" y="0" key="CommitChangelistDialog2" timestamp="1657709939593">
+    <state x="312" y="0" key="CommitChangelistDialog2" timestamp="1658486017796">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="312" y="0" key="CommitChangelistDialog2/0.0.1920.1040@0.0.1920.1040" timestamp="1657709939593" />
+    <state x="312" y="0" key="CommitChangelistDialog2/0.0.1920.1040@0.0.1920.1040" timestamp="1658486017796" />
     <state x="-15" y="57" width="1666" height="856" key="DiffContextDialog" timestamp="1657707927867">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="-15" y="57" width="1666" height="856" key="DiffContextDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1657707927867" />
-    <state x="654" y="235" key="FileChooserDialogImpl" timestamp="1657529089844">
+    <state x="654" y="235" key="FileChooserDialogImpl" timestamp="1657765914367">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="654" y="235" key="FileChooserDialogImpl/0.0.1920.1040@0.0.1920.1040" timestamp="1657529089844" />
-    <state width="1855" height="393" key="GridCell.Tab.0.bottom" timestamp="1657709825367">
+    <state x="654" y="235" key="FileChooserDialogImpl/0.0.1920.1040@0.0.1920.1040" timestamp="1657765914367" />
+    <state width="1855" height="300" key="GridCell.Tab.0.bottom" timestamp="1658485957046">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1855" height="393" key="GridCell.Tab.0.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1657709825367" />
-    <state width="1855" height="393" key="GridCell.Tab.0.center" timestamp="1657709825367">
+    <state width="1855" height="300" key="GridCell.Tab.0.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1658485957046" />
+    <state width="1855" height="300" key="GridCell.Tab.0.center" timestamp="1658485957046">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1855" height="393" key="GridCell.Tab.0.center/0.0.1920.1040@0.0.1920.1040" timestamp="1657709825367" />
-    <state width="1855" height="393" key="GridCell.Tab.0.left" timestamp="1657709825367">
+    <state width="1855" height="300" key="GridCell.Tab.0.center/0.0.1920.1040@0.0.1920.1040" timestamp="1658485957046" />
+    <state width="1855" height="300" key="GridCell.Tab.0.left" timestamp="1658485957046">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1855" height="393" key="GridCell.Tab.0.left/0.0.1920.1040@0.0.1920.1040" timestamp="1657709825367" />
-    <state width="1855" height="393" key="GridCell.Tab.0.right" timestamp="1657709825367">
+    <state width="1855" height="300" key="GridCell.Tab.0.left/0.0.1920.1040@0.0.1920.1040" timestamp="1658485957046" />
+    <state width="1855" height="300" key="GridCell.Tab.0.right" timestamp="1658485957046">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1855" height="393" key="GridCell.Tab.0.right/0.0.1920.1040@0.0.1920.1040" timestamp="1657709825367" />
+    <state width="1855" height="300" key="GridCell.Tab.0.right/0.0.1920.1040@0.0.1920.1040" timestamp="1658485957046" />
     <state width="1855" height="286" key="GridCell.Tab.1.bottom" timestamp="1651045027996">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
@@ -900,37 +912,37 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="213" y="0" width="1707" height="1040" key="SettingsEditor/0.0.1920.1040@0.0.1920.1040" timestamp="1657529304999" />
-    <state width="762" height="596" key="SwitcherDM" timestamp="1657275436560">
+    <state width="762" height="596" key="SwitcherDM" timestamp="1658300807843">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="762" height="596" key="SwitcherDM/0.0.1920.1040@0.0.1920.1040" timestamp="1657275436560" />
-    <state x="352" y="122" key="Vcs.Push.Dialog.v2" timestamp="1657536431338">
+    <state width="762" height="596" key="SwitcherDM/0.0.1920.1040@0.0.1920.1040" timestamp="1658300807843" />
+    <state x="352" y="122" key="Vcs.Push.Dialog.v2" timestamp="1657710101463">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="352" y="122" key="Vcs.Push.Dialog.v2/0.0.1920.1040@0.0.1920.1040" timestamp="1657536431338" />
+    <state x="352" y="122" key="Vcs.Push.Dialog.v2/0.0.1920.1040@0.0.1920.1040" timestamp="1657710101463" />
     <state x="821" y="323" key="classpath-attribute-editor" timestamp="1657527959999">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="821" y="323" key="classpath-attribute-editor/0.0.1920.1040@0.0.1920.1040" timestamp="1657527959999" />
-    <state x="489" y="259" key="com.intellij.ide.util.TipDialog" timestamp="1657689567042">
+    <state x="489" y="259" key="com.intellij.ide.util.TipDialog" timestamp="1658467762494">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="489" y="259" key="com.intellij.ide.util.TipDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1657689567041" />
-    <state x="376" y="48" width="1167" height="944" key="find.popup" timestamp="1657705679303">
+    <state x="489" y="259" key="com.intellij.ide.util.TipDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1658467762494" />
+    <state x="376" y="48" width="1167" height="944" key="find.popup" timestamp="1658396593639">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="376" y="48" width="1167" height="944" key="find.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1657705679303" />
+    <state x="376" y="48" width="1167" height="944" key="find.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1658396593639" />
     <state x="458" y="0" key="new project wizard" timestamp="1657188283802">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="458" y="0" key="new project wizard/0.0.1920.1040@0.0.1920.1040" timestamp="1657188283802" />
-    <state x="448" y="232" key="run.anything.popup" timestamp="1650611129883">
+    <state x="448" y="232" key="run.anything.popup" timestamp="1658217230183">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="448" y="232" key="run.anything.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1650611129883" />
-    <state x="453" y="0" width="1009" height="1036" key="search.everywhere.popup" timestamp="1657610378868">
+    <state x="448" y="232" key="run.anything.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1658217230183" />
+    <state x="453" y="0" width="1009" height="1036" key="search.everywhere.popup" timestamp="1658309629294">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="453" y="0" width="1009" height="1036" key="search.everywhere.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1657610378868" />
+    <state x="453" y="0" width="1009" height="1036" key="search.everywhere.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1658309629294" />
   </component>
 </project>

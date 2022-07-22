@@ -15,6 +15,7 @@ package com.dzx.adb;
 
 
 import com.dzx.adb.AdbMessage.Command;
+import com.dzx.util.LUtils;
 
 import java.io.IOException;
 import java.net.InetSocketAddress;
@@ -60,23 +61,30 @@ public class AdbConnection {
     // Blocks until a message is received.
     public AdbMessage receiveMessage() throws IOException {
         rxBuf.clear();
+        LUtils.i("准备接受消息");
         while (true) {
             rxBuf.flip();
             int msgLen = AdbMessage.estimateMessageLength(rxBuf);
             if (msgLen > rxBuf.capacity()) {
+                LUtils.i("终止1");
 //                throw new IOException("RX buffer overflow.");
                 break;
             }
             rxBuf.position(rxBuf.limit());
             rxBuf.limit(msgLen);
             if (rxBuf.remaining() == 0) {
+                LUtils.i("终止2");
                 break;
             }
+            LUtils.i("===");
             int trLen = socketChannel.read(rxBuf);
+            LUtils.i("==2=");
             if (trLen <= 0) {
 //                throw new IOException("End of Stream.");
+                LUtils.i("终止3");
                 break;
             }
+            LUtils.i("循环中");
         }
 //        LUtils.i("结束");
         rxBuf.flip();

@@ -1,0 +1,5301 @@
+package com.example.myapplication.buttonlib;
+
+import android.content.Context;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.util.AttributeSet;
+import android.util.Log;
+import android.view.KeyEvent;
+import android.view.View;
+import android.view.ViewParent;
+
+import com.example.myapplication.utils.AnimationUtil;
+import com.example.myapplication.utils.LUtils;
+
+/**
+ * @author dingzhixin
+ * create  2020/8/22  14:40
+ * <p>
+ * 2020-11-17  当前仅适用于横向遗留焦点button列表
+ * 如果该RecyclerView在丢失焦点后需要在子child获取焦点前优先处置焦点,则需要重写能够获取焦点的
+ * child的requestFocus方法,在该方法中拦截焦点处理,返回false
+ * @Override public boolean requestFocus(int direction, Rect previouslyFocusedRect) {
+ * <p>
+ * ButtonRecyclerView buttonRecyclerView = ButtonRecyclerView.getParentButtonRecyclerView(this);
+ * LUtils.i(TAG, "DZX   requestFocus      = ", ((ViewGroup) getParent()).hasFocus());
+ * if (buttonRecyclerView != null && !buttonRecyclerView.hasFocus() && buttonRecyclerView.isLossFocus()) {
+ * buttonRecyclerView.handleFocusEnter();
+ * return false;
+ * }
+ * return super.requestFocus(direction, previouslyFocusedRect);
+ * }
+ */
+@SuppressWarnings("AlibabaRemoveCommentedCode")
+public class ButtonRecyclerView extends RecyclerView {
+    private static final String TAG = "ButtonRecyclerView";
+
+    //public final static String NEED_REMAIN_FOCUS = "need_remain_focus";
+
+    /**
+     * 焦点跳出RV前的最后焦点视图在数据源中的位置
+     */
+    private int mCurrentFocusPosition;
+
+    /**
+     * 是否已丢失焦点
+     */
+    private boolean isLossFocus = true;
+
+    public int getCurrentFocusPosition() {
+        return mCurrentFocusPosition;
+    }
+
+    public boolean isLossFocus() {
+        return isLossFocus;
+    }
+
+    public ButtonRecyclerView(@NonNull Context context) {
+        this(context, null, 0);
+    }
+
+    public ButtonRecyclerView(@NonNull Context context, @Nullable AttributeSet attrs) {
+        this(context, attrs, 0);
+    }
+
+    public ButtonRecyclerView(@NonNull Context context, @Nullable AttributeSet attrs, int defStyle) {
+        super(context, attrs, defStyle);
+        init(context);
+    }
+
+    private void init(Context context) {
+        //默认设置水平线性布局
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false);
+        setLayoutManager(linearLayoutManager);
+    }
+
+
+    /**
+     * 处理遗留焦点状态,ButtonRecyclerView的获取焦点的child如果需要遗留焦点状态
+     * 则必须实现接口ITableRvCallback
+     */
+    public void handleRemainFocus(View view) {
+        //处理遗留焦点状态
+        if (view == null) {
+            LUtils.i(TAG, "   DZX   handleRemainFocus view == null ");
+        } else {
+            //设置遗留焦点状态
+            if (view instanceof ITableRvCallback) {
+                ((ITableRvCallback) view).remainFocus();
+            } else {
+                LUtils.i(TAG, "   DZX   handleRemainFocus error ");
+            }
+        }
+    }
+
+    /**
+     * ButtonRecyclerView的第一个item获取遗留焦点状态,区分是否获取焦点
+     *
+     * @param needFocus true--焦点状态,false--残留焦点状态
+     */
+    public void handleFirstChildFocus(boolean needFocus) {
+        View view = getChildAt(0);
+        LUtils.i(TAG, "DZX   handleFirstChildFocus needFocus = ", needFocus,
+                ", view = ", view, " , childCount = ", getChildCount());
+        if (view != null) {
+            if (needFocus) {
+                if (view.isInTouchMode()) {
+                    //触摸模式设置触摸可获取焦点,该实现最好是重写响应child的onTouch方法
+                    view.setFocusableInTouchMode(true);
+                }
+                boolean result = view.requestFocus();
+                LUtils.i(TAG, "DZX   handleFirstChildFocus    requestFocus result = ", result,
+                        " ,view.isInTouchMode() = ", view.isInTouchMode());
+            } else {
+                //设置遗留焦点状态
+                handleRemainFocus(view);
+            }
+        } else {
+            Log.i(TAG, "   DZX   handleFirstChildFocus  view is null");
+        }
+    }
+
+    /**
+     * 处理焦点丢失
+     *
+     * @param view 焦点丢失时的焦点child view
+     */
+    public void handleFocusOut(View view) {
+        //当焦点要跳出该RecyclerView时调用,此时需要记录当前焦点位置以及改变当前view为遗留焦点状态
+        LUtils.i(TAG, "DZX   handleFocusOut = ");
+        if (getLayoutManager() != null) {
+            if (view != null) {
+                mCurrentFocusPosition = getChildLayoutPosition(view);
+                LUtils.i(TAG, "DZX   handleFocusOut    mCurrentFocusPosition  = ", mCurrentFocusPosition);
+                handleRemainFocus(view);
+            } else {
+                LUtils.i(TAG, "DZX   handleFocusOut focus is null  ");
+            }
+        }
+    }
+
+    /**
+     * 处理焦点首次进入,此时最易发生焦点错乱
+     */
+    public void handleFocusEnter() {
+        //如果子child重写了requestFocus方法,防止该方法在要获取焦点的view与遗留焦点view是同一个时导致死循环
+        isLossFocus = false;
+        //当前不包含焦点,焦点即将进入view时
+        //该方法可以在activity中的dispatchKeyEvent中action_down时或者在可以将焦点移动到该ButtonRecyclerView中的所有
+        // 可能view的父view或者每一个可能的子view中调用
+        LUtils.i(TAG, "DZX   handleFocusEnter mCurrentFocusPosition = ", mCurrentFocusPosition);
+        if (getLayoutManager() != null) {
+            //此处的view必须每次重新获取,防止view复用导致的位置错乱
+            View view = getLayoutManager().findViewByPosition(mCurrentFocusPosition);
+            if (view != null) {
+                view.requestFocus();
+            } else {
+                handleFocusDefault(mCurrentFocusPosition, true, false);
+                LUtils.i(TAG, "DZX   handleFocusEnter view = null ");
+            }
+        } else {
+            LUtils.i(TAG, "DZX   handleFocusEnter   error ");
+        }
+    }
+
+    /**
+     * 设置指定位置残留焦点状态
+     * @param position  需要焦点状态的位置
+     * @param needFocus 残留焦点状态,焦点状态
+     * @param again     外部调用时默认传false
+     */
+    public void handleFocusDefault(final int position, final boolean needFocus, boolean again) {
+        LUtils.i(TAG, "DZX   handleFocusDefault position = ", position,
+                ", needFocus = ", needFocus, " again = ", again);
+        //处理默认焦点获取
+        if (getLayoutManager() != null) {
+            mCurrentFocusPosition = position;
+            View view = getLayoutManager().findViewByPosition(position);
+            LUtils.i(TAG, "DZX   handleFocusDefault    view  = ", view);
+            if (view != null) {
+                if (needFocus) {
+                    view.requestFocus();
+                } else {
+                    handleRemainFocus(view);
+                }
+            } else {
+                //第一次获取不到对应位置的view时,可能时,销毁重建导致的未显示,将ButtonRecyclerView
+                //滑动到指定位置后重新获取一次
+                if (!again) {
+                    scrollToPosition(position);
+                    post(new Runnable() {
+                        @Override
+                        public void run() {
+                            handleFocusDefault(position, needFocus, true);
+                        }
+                    });
+                    return;
+                }
+                //再次获取仍然为null时,默认第一个view获取焦点
+                handleFirstChildFocus(needFocus);
+            }
+        } else {
+            Log.i(TAG, "   DZX   handleFocusDefault layoutManager is null ");
+        }
+    }
+    //
+    @Override
+    public boolean dispatchKeyEvent(KeyEvent event) {
+        int action = event.getAction();
+        int keyCode = event.getKeyCode();
+        //该日志正式使用时需要注释掉
+        LUtils.i(TAG, "DZX   dispatchKeyEvent action = ", action, ",getDownTime = ", event.getDownTime());
+
+        //        private long keyDownTime = 0;
+        //        private long keyUpTime = 0;
+        //        if (action == KeyEvent.ACTION_DOWN) {
+        //            keyDownTime = event.getDownTime();
+        //        } else {
+        //            keyUpTime = event.getDownTime();
+        //            if (keyDownTime != keyUpTime) {
+        //                //这里虽然能判断出焦点时初次进入ButtonRecyclerView,但是dispatchKeyEvent方法的执行是在
+        //                //子child的焦点变化之后,在这里处理初次焦点进入可能会导致焦点view闪烁变化
+        //                LUtils.i(TAG, "DZX   按键事件 按键从其他view进入 = ", this);
+        //            }
+        //        }
+        //焦点跳出,残留焦点状态在这里处理,正常处理上下按键即可
+        if (action == KeyEvent.ACTION_DOWN) {
+            View focusView = findFocus();
+            LUtils.i(TAG, "DZX   dispatchKeyEvent   focusView   = ", focusView);
+            if (keyCode == KeyEvent.KEYCODE_DPAD_LEFT) {
+                //左键
+                handleNextFocus(focusView, View.FOCUS_LEFT, true);
+                return true;
+            } else if (keyCode == KeyEvent.KEYCODE_DPAD_RIGHT) {
+                //右键
+                handleNextFocus(focusView, View.FOCUS_RIGHT, true);
+                return true;
+            } else if (keyCode == KeyEvent.KEYCODE_DPAD_UP) {
+                //上键
+                handleNextFocus(focusView, View.FOCUS_UP, false);
+                return true;
+            } else if (keyCode == KeyEvent.KEYCODE_DPAD_DOWN) {
+                //下键
+                handleNextFocus(focusView, View.FOCUS_DOWN, false);
+                return true;
+            } else {
+                LUtils.i(TAG, "DZX   dispatchKeyEvent   other key code   = ", keyCode);
+            }
+        }
+
+        return super.dispatchKeyEvent(event);
+    }
+
+    /**
+     * 处理RV中按键的下一个焦点状态
+     */
+    private void handleNextFocus(View focusView, int direction, boolean isLr) {
+        if (focusView == null || focusView.getParent() != this) {
+            LUtils.i(TAG, "DZX   handleNextFocus     focusView == null or not direct child focusView  = ", focusView);
+            return;
+        }
+        //查找下一个获取焦点的view
+        View nextFocus = focusSearch(focusView, direction);
+        LUtils.i(TAG, "DZX   handleNextFocus   nextFocus   = ", nextFocus);
+        if (nextFocus != null) {
+            if (!isLr) {
+                //上下按键,非左右按键,会导致ButtonRecyclerView丢失焦点,需要处理遗留焦点状态
+                isLossFocus = true;
+                handleFocusOut(focusView);
+                ButtonRecyclerView buttonRecyclerView = getParentButtonRecyclerView(nextFocus);
+                LUtils.i(TAG, "DZX   handleNextFocus    buttonRecyclerView  = ", buttonRecyclerView);
+                if (buttonRecyclerView != null) {
+                    //下一个获取到焦点的view是ButtonRecyclerView的child
+                    buttonRecyclerView.handleFocusEnter();
+                } else if (nextFocus instanceof ButtonRecyclerView) {
+                    //下一个获取焦点的view即为ButtonRecyclerView
+                    ((ButtonRecyclerView) nextFocus).handleFocusEnter();
+                } else {
+                    //下一个获取焦点的view不在ButtonRecyclerView中
+                    nextFocus.requestFocus();
+                }
+            } else {
+                //左右按键,如果获取焦点的view不在同一个ButtonRecyclerView中,则不处理焦点
+                //此处要处理下一个view获取焦点时,不在同一个ButtonRecyclerView中,同样需要处理
+                //遗留焦点状态
+                if (nextFocus.getParent() == focusView.getParent()) {
+                    nextFocus.requestFocus();
+                } else {
+                    //此处如果要跳出当前ButtonRecyclerView,则需要处理遗留焦点状态
+                    AnimationUtil.shakeViewLR(focusView);
+                    LUtils.i(TAG, "DZX   handleNextFocus   not in one line   = ");
+                }
+            }
+
+        } else {
+            //没有能够获取焦点的下一个view,则抖动当前焦点view
+            if (isLr) {
+                AnimationUtil.shakeViewLR(focusView);
+            } else {
+                AnimationUtil.shakeViewTB(focusView);
+            }
+        }
+    }
+
+    /**
+     * @param view 要查找的view
+     * @return ButtonRecyclerView or null
+     */
+    public static ButtonRecyclerView getParentButtonRecyclerView(View view) {
+        if (view == null) {
+            LUtils.i(TAG, "DZX   getParentButtonRecyclerView    view = null ");
+            return null;
+        }
+        ViewParent parent = view.getParent();
+        while (parent != null) {
+            if (parent instanceof ButtonRecyclerView) {
+                return (ButtonRecyclerView) parent;
+            }
+            parent = parent.getParent();
+        }
+        return null;
+    }
+
+
+    public interface ITableRvCallback {
+        /**
+         * 设置残留焦点状态,如果设置遗留焦点时不会触发焦点变化,则需要在该方法中实现遗留焦点的设置
+         */
+        void remainFocus();
+    }
+
+//
+//    @Override
+//    public RecyclerViewAccessibilityDelegate getCompatAccessibilityDelegate() {
+//        LUtils.e(TAG, " = " );
+//
+//        return super.getCompatAccessibilityDelegate();
+//    }
+//
+//    @Override
+//    public void setAccessibilityDelegateCompat(RecyclerViewAccessibilityDelegate accessibilityDelegate) {
+//        LUtils.e(TAG, " = " );
+//
+//        super.setAccessibilityDelegateCompat(accessibilityDelegate);
+//    }
+//
+//    @Override
+//    public void setHasFixedSize(boolean hasFixedSize) {
+//        LUtils.e(TAG, " = " );
+//
+//        super.setHasFixedSize(hasFixedSize);
+//    }
+//
+//    @Override
+//    public boolean hasFixedSize() {
+//        LUtils.e(TAG, " = " );
+//
+//        return super.hasFixedSize();
+//    }
+//
+//    @Override
+//    public void setClipToPadding(boolean clipToPadding) {
+//        LUtils.e(TAG, " = " );
+//
+//        super.setClipToPadding(clipToPadding);
+//    }
+//
+//    @Override
+//    public boolean getClipToPadding() {
+//        LUtils.e(TAG, " = " );
+//
+//        return super.getClipToPadding();
+//    }
+//
+//    @Override
+//    public void setScrollingTouchSlop(int slopConstant) {
+//        LUtils.e(TAG, " = " );
+//
+//        super.setScrollingTouchSlop(slopConstant);
+//    }
+//
+//    @Override
+//    public void swapAdapter(Adapter adapter, boolean removeAndRecycleExistingViews) {
+//        LUtils.e(TAG, " = " );
+//
+//        super.swapAdapter(adapter, removeAndRecycleExistingViews);
+//    }
+//
+//    @Override
+//    public void setAdapter(Adapter adapter) {
+//        LUtils.e(TAG, " = " );
+//
+//        super.setAdapter(adapter);
+//    }
+//
+//    @Override
+//    public Adapter getAdapter() {
+//        LUtils.e(TAG, " = " );
+//
+//        return super.getAdapter();
+//    }
+//
+//    @Override
+//    public void setRecyclerListener(RecyclerListener listener) {
+//        LUtils.e(TAG, " = " );
+//
+//        super.setRecyclerListener(listener);
+//    }
+//
+//    @Override
+//    public int getBaseline() {
+//        LUtils.e(TAG, " = " );
+//
+//        return super.getBaseline();
+//    }
+//
+//    @Override
+//    public void addOnChildAttachStateChangeListener(OnChildAttachStateChangeListener listener) {
+//        LUtils.e(TAG, " = " );
+//
+//        super.addOnChildAttachStateChangeListener(listener);
+//    }
+//
+//    @Override
+//    public void removeOnChildAttachStateChangeListener(OnChildAttachStateChangeListener listener) {
+//        LUtils.e(TAG, " = " );
+//
+//        super.removeOnChildAttachStateChangeListener(listener);
+//    }
+//
+//    @Override
+//    public void clearOnChildAttachStateChangeListeners() {
+//        LUtils.e(TAG, " = " );
+//
+//        super.clearOnChildAttachStateChangeListeners();
+//    }
+//
+//    @Override
+//    public void setLayoutManager(LayoutManager layout) {
+//        LUtils.e(TAG, " = " );
+//
+//        super.setLayoutManager(layout);
+//    }
+//
+//    @Override
+//    public void setOnFlingListener(@Nullable OnFlingListener onFlingListener) {
+//        LUtils.e(TAG, " = " );
+//
+//        super.setOnFlingListener(onFlingListener);
+//    }
+//
+//    @Nullable
+//    @Override
+//    public OnFlingListener getOnFlingListener() {
+//        LUtils.e(TAG, " = " );
+//
+//        return super.getOnFlingListener();
+//    }
+//
+//    @Override
+//    protected Parcelable onSaveInstanceState() {
+//        LUtils.e(TAG, " = " );
+//
+//        return super.onSaveInstanceState();
+//    }
+//
+//    @Override
+//    protected void onRestoreInstanceState(Parcelable state) {
+//        LUtils.e(TAG, " = " );
+//
+//        super.onRestoreInstanceState(state);
+//    }
+//
+//    @Override
+//    protected void dispatchSaveInstanceState(SparseArray<Parcelable> container) {
+//        LUtils.e(TAG, " = " );
+//
+//        super.dispatchSaveInstanceState(container);
+//    }
+//
+//    @Override
+//    protected void dispatchRestoreInstanceState(SparseArray<Parcelable> container) {
+//        LUtils.e(TAG, " = " );
+//
+//        super.dispatchRestoreInstanceState(container);
+//    }
+//
+//    @Override
+//    public LayoutManager getLayoutManager() {
+//        LUtils.e(TAG, " = " );
+//
+//        return super.getLayoutManager();
+//    }
+//
+//    @Override
+//    public RecycledViewPool getRecycledViewPool() {
+//        LUtils.e(TAG, " = " );
+//
+//        return super.getRecycledViewPool();
+//    }
+//
+//    @Override
+//    public void setRecycledViewPool(RecycledViewPool pool) {
+//        LUtils.e(TAG, " = " );
+//
+//        super.setRecycledViewPool(pool);
+//    }
+//
+//    @Override
+//    public void setViewCacheExtension(ViewCacheExtension extension) {
+//        LUtils.e(TAG, " = " );
+//
+//        super.setViewCacheExtension(extension);
+//    }
+//
+//    @Override
+//    public void setItemViewCacheSize(int size) {
+//        LUtils.e(TAG, " = " );
+//
+//        super.setItemViewCacheSize(size);
+//    }
+//
+//    @Override
+//    public int getScrollState() {
+//        LUtils.e(TAG, " = " );
+//
+//        return super.getScrollState();
+//    }
+//
+//    @Override
+//    public void addItemDecoration(ItemDecoration decor, int index) {
+//        LUtils.e(TAG, " = " );
+//
+//        super.addItemDecoration(decor, index);
+//    }
+//
+//    @Override
+//    public void addItemDecoration(ItemDecoration decor) {
+//        LUtils.e(TAG, " = " );
+//
+//        super.addItemDecoration(decor);
+//    }
+//
+//    @Override
+//    public void removeItemDecoration(ItemDecoration decor) {
+//        LUtils.e(TAG, " = " );
+//
+//        super.removeItemDecoration(decor);
+//    }
+//
+//    @Override
+//    public void setChildDrawingOrderCallback(ChildDrawingOrderCallback childDrawingOrderCallback) {
+//        LUtils.e(TAG, " = " );
+//
+//        super.setChildDrawingOrderCallback(childDrawingOrderCallback);
+//    }
+//
+//    @Override
+//    public void setOnScrollListener(OnScrollListener listener) {
+//        LUtils.e(TAG, " = " );
+//
+//        super.setOnScrollListener(listener);
+//    }
+//
+//    @Override
+//    public void addOnScrollListener(OnScrollListener listener) {
+//        LUtils.e(TAG, " = " );
+//
+//        super.addOnScrollListener(listener);
+//    }
+//
+//    @Override
+//    public void removeOnScrollListener(OnScrollListener listener) {
+//        LUtils.e(TAG, " = " );
+//
+//        super.removeOnScrollListener(listener);
+//    }
+//
+//    @Override
+//    public void clearOnScrollListeners() {
+//        LUtils.e(TAG, " = " );
+//
+//        super.clearOnScrollListeners();
+//    }
+//
+//    @Override
+//    public void scrollToPosition(int position) {
+//        LUtils.e(TAG, " = " );
+//
+//        super.scrollToPosition(position);
+//    }
+//
+//    @Override
+//    public void smoothScrollToPosition(int position) {
+//        LUtils.e(TAG, " = " );
+//
+//        super.smoothScrollToPosition(position);
+//    }
+//
+//    @Override
+//    public void scrollTo(int x, int y) {
+//        LUtils.e(TAG, " = " );
+//
+//        super.scrollTo(x, y);
+//    }
+//
+//    @Override
+//    public void scrollBy(int x, int y) {
+//        LUtils.e(TAG, " = " );
+//
+//        super.scrollBy(x, y);
+//    }
+//
+//    @Override
+//    public int computeHorizontalScrollOffset() {
+//        LUtils.e(TAG, " = " );
+//
+//        return super.computeHorizontalScrollOffset();
+//    }
+//
+//    @Override
+//    public int computeHorizontalScrollExtent() {
+//        LUtils.e(TAG, " = " );
+//
+//        return super.computeHorizontalScrollExtent();
+//    }
+//
+//    @Override
+//    public int computeHorizontalScrollRange() {
+//        LUtils.e(TAG, " = " );
+//
+//        return super.computeHorizontalScrollRange();
+//    }
+//
+//    @Override
+//    public int computeVerticalScrollOffset() {
+//        LUtils.e(TAG, " = " );
+//
+//        return super.computeVerticalScrollOffset();
+//    }
+//
+//    @Override
+//    public int computeVerticalScrollExtent() {
+//        LUtils.e(TAG, " = " );
+//
+//        return super.computeVerticalScrollExtent();
+//    }
+//
+//    @Override
+//    public int computeVerticalScrollRange() {
+//        LUtils.e(TAG, " = " );
+//
+//        return super.computeVerticalScrollRange();
+//    }
+//
+//    @Override
+//    public void setLayoutFrozen(boolean frozen) {
+//        LUtils.e(TAG, " = " );
+//
+//        super.setLayoutFrozen(frozen);
+//    }
+//
+//    @Override
+//    public boolean isLayoutFrozen() {
+//        LUtils.e(TAG, " = " );
+//
+//        return super.isLayoutFrozen();
+//    }
+//
+//    @Override
+//    public void smoothScrollBy(int dx, int dy) {
+//        LUtils.e(TAG, " = " );
+//
+//        super.smoothScrollBy(dx, dy);
+//    }
+//
+//    @Override
+//    public void smoothScrollBy(int dx, int dy, Interpolator interpolator) {
+//        LUtils.e(TAG, " = " );
+//
+//        super.smoothScrollBy(dx, dy, interpolator);
+//    }
+//
+//    @Override
+//    public boolean fling(int velocityX, int velocityY) {
+//        LUtils.e(TAG, " = " );
+//
+//        return super.fling(velocityX, velocityY);
+//    }
+//
+//    @Override
+//    public void stopScroll() {
+//        LUtils.e(TAG, " = " );
+//
+//        super.stopScroll();
+//    }
+//
+//    @Override
+//    public int getMinFlingVelocity() {
+//        LUtils.e(TAG, " = " );
+//
+//        return super.getMinFlingVelocity();
+//    }
+//
+//    @Override
+//    public int getMaxFlingVelocity() {
+//        LUtils.e(TAG, " = " );
+//
+//        return super.getMaxFlingVelocity();
+//    }
+//
+//    @Override
+//    public View focusSearch(View focused, int direction) {
+//        LUtils.e(TAG, " = " );
+//
+//        return super.focusSearch(focused, direction);
+//    }
+//
+//    @Override
+//    public void requestChildFocus(View child, View focused) {
+//        LUtils.e(TAG, " = " );
+//
+//        super.requestChildFocus(child, focused);
+//    }
+//
+//    @Override
+//    public boolean requestChildRectangleOnScreen(View child, Rect rect, boolean immediate) {
+//        LUtils.e(TAG, " = " );
+//
+//        return super.requestChildRectangleOnScreen(child, rect, immediate);
+//    }
+//
+//    @Override
+//    public void addFocusables(ArrayList<View> views, int direction, int focusableMode) {
+//        LUtils.e(TAG, " = " );
+//
+//        super.addFocusables(views, direction, focusableMode);
+//    }
+//
+//    @Override
+//    protected boolean onRequestFocusInDescendants(int direction, Rect previouslyFocusedRect) {
+//        LUtils.e(TAG, " = " );
+//
+//        return super.onRequestFocusInDescendants(direction, previouslyFocusedRect);
+//    }
+//
+//    @Override
+//    protected void onAttachedToWindow() {
+//        LUtils.e(TAG, " = " );
+//
+//        super.onAttachedToWindow();
+//    }
+//
+//    @Override
+//    protected void onDetachedFromWindow() {
+//        LUtils.e(TAG, " = " );
+//
+//        super.onDetachedFromWindow();
+//    }
+//
+//    @Override
+//    public boolean isAttachedToWindow() {
+//        LUtils.e(TAG, " = " );
+//
+//        return super.isAttachedToWindow();
+//    }
+//
+//    @Override
+//    public void addOnItemTouchListener(OnItemTouchListener listener) {
+//        LUtils.e(TAG, " = " );
+//
+//        super.addOnItemTouchListener(listener);
+//    }
+//
+//    @Override
+//    public void removeOnItemTouchListener(OnItemTouchListener listener) {
+//        LUtils.e(TAG, " = " );
+//
+//        super.removeOnItemTouchListener(listener);
+//    }
+//
+//    @Override
+//    public boolean onInterceptTouchEvent(MotionEvent e) {
+//        LUtils.e(TAG, " = " );
+//
+//        return super.onInterceptTouchEvent(e);
+//    }
+//
+//    @Override
+//    public void requestDisallowInterceptTouchEvent(boolean disallowIntercept) {
+//        LUtils.e(TAG, " = " );
+//
+//        super.requestDisallowInterceptTouchEvent(disallowIntercept);
+//    }
+//
+//    @Override
+//    public boolean onTouchEvent(MotionEvent e) {
+//        LUtils.e(TAG, " = " );
+//
+//        return super.onTouchEvent(e);
+//    }
+//
+//    @Override
+//    public boolean onGenericMotionEvent(MotionEvent event) {
+//        LUtils.e(TAG, " = " );
+//
+//        return super.onGenericMotionEvent(event);
+//    }
+//
+//    @Override
+//    protected void onMeasure(int widthSpec, int heightSpec) {
+//        LUtils.e(TAG, " = " );
+//
+//        super.onMeasure(widthSpec, heightSpec);
+//    }
+//
+//    @Override
+//    protected void onSizeChanged(int w, int h, int oldw, int oldh) {
+//        LUtils.e(TAG, " = " );
+//
+//        super.onSizeChanged(w, h, oldw, oldh);
+//    }
+//
+//    @Override
+//    public void setItemAnimator(ItemAnimator animator) {
+//        LUtils.e(TAG, " = " );
+//
+//        super.setItemAnimator(animator);
+//    }
+//
+//    @Override
+//    public boolean isComputingLayout() {
+//        LUtils.e(TAG, " = " );
+//
+//        return super.isComputingLayout();
+//    }
+//
+//    @Override
+//    public void sendAccessibilityEventUnchecked(AccessibilityEvent event) {
+//        LUtils.e(TAG, " = " );
+//
+//        super.sendAccessibilityEventUnchecked(event);
+//    }
+//
+//    @Override
+//    public ItemAnimator getItemAnimator() {
+//        LUtils.e(TAG, " = " );
+//
+//        return super.getItemAnimator();
+//    }
+//
+//    @Override
+//    protected void removeDetachedView(View child, boolean animate) {
+//        LUtils.e(TAG, " = " );
+//
+//        super.removeDetachedView(child, animate);
+//    }
+//
+//    @Override
+//    protected void onLayout(boolean changed, int l, int t, int r, int b) {
+//        LUtils.e(TAG, " = " );
+//
+//        super.onLayout(changed, l, t, r, b);
+//    }
+//
+//    @Override
+//    public void requestLayout() {
+//        LUtils.e(TAG, " = " );
+//
+//        super.requestLayout();
+//    }
+//
+//    @Override
+//    public void draw(Canvas c) {
+//        LUtils.e(TAG, " = " );
+//
+//        super.draw(c);
+//    }
+//
+//    @Override
+//    public void onDraw(Canvas c) {
+//        LUtils.e(TAG, " = " );
+//
+//        super.onDraw(c);
+//    }
+//
+//    @Override
+//    protected boolean checkLayoutParams(ViewGroup.LayoutParams p) {
+//        LUtils.e(TAG, " = " );
+//
+//        return super.checkLayoutParams(p);
+//    }
+//
+//    @Override
+//    protected ViewGroup.LayoutParams generateDefaultLayoutParams() {
+//        LUtils.e(TAG, " = " );
+//
+//        return super.generateDefaultLayoutParams();
+//    }
+//
+//    @Override
+//    public ViewGroup.LayoutParams generateLayoutParams(AttributeSet attrs) {
+//        LUtils.e(TAG, " = " );
+//
+//        return super.generateLayoutParams(attrs);
+//    }
+//
+//    @Override
+//    protected ViewGroup.LayoutParams generateLayoutParams(ViewGroup.LayoutParams p) {
+//        LUtils.e(TAG, " = " );
+//
+//        return super.generateLayoutParams(p);
+//    }
+//
+//    @Override
+//    public boolean isAnimating() {
+//        LUtils.e(TAG, " = " );
+//
+//        return super.isAnimating();
+//    }
+//
+//    @Override
+//    public void invalidateItemDecorations() {
+//        LUtils.e(TAG, " = " );
+//
+//        super.invalidateItemDecorations();
+//    }
+//
+//    @Override
+//    public boolean getPreserveFocusAfterLayout() {
+//        LUtils.e(TAG, " = " );
+//
+//        return super.getPreserveFocusAfterLayout();
+//    }
+//
+//    @Override
+//    public void setPreserveFocusAfterLayout(boolean preserveFocusAfterLayout) {
+//        LUtils.e(TAG, " = " );
+//
+//        super.setPreserveFocusAfterLayout(preserveFocusAfterLayout);
+//    }
+//
+//    @Override
+//    public ViewHolder getChildViewHolder(View child) {
+//        LUtils.e(TAG, " = " );
+//
+//        return super.getChildViewHolder(child);
+//    }
+//
+//    @Nullable
+//    @Override
+//    public View findContainingItemView(View view) {
+//        LUtils.e(TAG, " = " );
+//
+//        return super.findContainingItemView(view);
+//    }
+//
+//    @Nullable
+//    @Override
+//    public ViewHolder findContainingViewHolder(View view) {
+//        LUtils.e(TAG, " = " );
+//
+//        return super.findContainingViewHolder(view);
+//    }
+//
+//    @Override
+//    public int getChildPosition(View child) {
+//        LUtils.e(TAG, " = " );
+//
+//        return super.getChildPosition(child);
+//    }
+//
+//    @Override
+//    public int getChildAdapterPosition(View child) {
+//        LUtils.e(TAG, " = " );
+//
+//        return super.getChildAdapterPosition(child);
+//    }
+//
+//    @Override
+//    public int getChildLayoutPosition(View child) {
+//        LUtils.e(TAG, " = " );
+//
+//        return super.getChildLayoutPosition(child);
+//    }
+//
+//    @Override
+//    public long getChildItemId(View child) {
+//        LUtils.e(TAG, " = " );
+//
+//        return super.getChildItemId(child);
+//    }
+//
+//    @Override
+//    public ViewHolder findViewHolderForPosition(int position) {
+//        LUtils.e(TAG, " = " );
+//
+//        return super.findViewHolderForPosition(position);
+//    }
+//
+//    @Override
+//    public ViewHolder findViewHolderForLayoutPosition(int position) {
+//        LUtils.e(TAG, " = " );
+//
+//        return super.findViewHolderForLayoutPosition(position);
+//    }
+//
+//    @Override
+//    public ViewHolder findViewHolderForAdapterPosition(int position) {
+//        LUtils.e(TAG, " = " );
+//
+//        return super.findViewHolderForAdapterPosition(position);
+//    }
+//
+//    @Override
+//    public ViewHolder findViewHolderForItemId(long id) {
+//        LUtils.e(TAG, " = " );
+//
+//        return super.findViewHolderForItemId(id);
+//    }
+//
+//    @Override
+//    public View findChildViewUnder(float x, float y) {
+//        LUtils.e(TAG, " = " );
+//
+//        return super.findChildViewUnder(x, y);
+//    }
+//
+//    @Override
+//    public boolean drawChild(Canvas canvas, View child, long drawingTime) {
+//        LUtils.e(TAG, " = " );
+//
+//        return super.drawChild(canvas, child, drawingTime);
+//    }
+//
+//    @Override
+//    public void offsetChildrenVertical(int dy) {
+//        LUtils.e(TAG, " = " );
+//
+//        super.offsetChildrenVertical(dy);
+//    }
+//
+//    @Override
+//    public void onChildAttachedToWindow(View child) {
+//        LUtils.e(TAG, " = " );
+//
+//        super.onChildAttachedToWindow(child);
+//    }
+//
+//    @Override
+//    public void onChildDetachedFromWindow(View child) {
+//        LUtils.e(TAG, " = " );
+//
+//        super.onChildDetachedFromWindow(child);
+//    }
+//
+//    @Override
+//    public void offsetChildrenHorizontal(int dx) {
+//        LUtils.e(TAG, " = " );
+//
+//        super.offsetChildrenHorizontal(dx);
+//    }
+//
+//    @Override
+//    public void getDecoratedBoundsWithMargins(View view, Rect outBounds) {
+//        LUtils.e(TAG, " = " );
+//
+//        super.getDecoratedBoundsWithMargins(view, outBounds);
+//    }
+//
+//    @Override
+//    public void onScrolled(int dx, int dy) {
+//        LUtils.e(TAG, " = " );
+//
+//        super.onScrolled(dx, dy);
+//    }
+//
+//    @Override
+//    public void onScrollStateChanged(int state) {
+//        LUtils.e(TAG, " = " );
+//
+//        super.onScrollStateChanged(state);
+//    }
+//
+//    @Override
+//    public boolean hasPendingAdapterUpdates() {
+//        LUtils.e(TAG, " = " );
+//
+//        return super.hasPendingAdapterUpdates();
+//    }
+//
+//    @Override
+//    public void setNestedScrollingEnabled(boolean enabled) {
+//        LUtils.e(TAG, " = " );
+//
+//        super.setNestedScrollingEnabled(enabled);
+//    }
+//
+//    @Override
+//    public boolean isNestedScrollingEnabled() {
+//        LUtils.e(TAG, " = " );
+//
+//        return super.isNestedScrollingEnabled();
+//    }
+//
+//    @Override
+//    public boolean startNestedScroll(int axes) {
+//        LUtils.e(TAG, " = " );
+//
+//        return super.startNestedScroll(axes);
+//    }
+//
+//    @Override
+//    public void stopNestedScroll() {
+//        LUtils.e(TAG, " = " );
+//
+//        super.stopNestedScroll();
+//    }
+//
+//    @Override
+//    public boolean hasNestedScrollingParent() {
+//        LUtils.e(TAG, " = " );
+//
+//        return super.hasNestedScrollingParent();
+//    }
+//
+//    @Override
+//    public boolean dispatchNestedScroll(int dxConsumed, int dyConsumed, int dxUnconsumed, int dyUnconsumed, int[] offsetInWindow) {
+//        LUtils.e(TAG, " = " );
+//
+//        return super.dispatchNestedScroll(dxConsumed, dyConsumed, dxUnconsumed, dyUnconsumed, offsetInWindow);
+//    }
+//
+//    @Override
+//    public boolean dispatchNestedPreScroll(int dx, int dy, int[] consumed, int[] offsetInWindow) {
+//        LUtils.e(TAG, " = " );
+//
+//        return super.dispatchNestedPreScroll(dx, dy, consumed, offsetInWindow);
+//    }
+//
+//    @Override
+//    public boolean dispatchNestedFling(float velocityX, float velocityY, boolean consumed) {
+//        LUtils.e(TAG, " = " );
+//
+//        return super.dispatchNestedFling(velocityX, velocityY, consumed);
+//    }
+//
+//    @Override
+//    public boolean dispatchNestedPreFling(float velocityX, float velocityY) {
+//        LUtils.e(TAG, " = " );
+//
+//        return super.dispatchNestedPreFling(velocityX, velocityY);
+//    }
+//
+//    @Override
+//    protected int getChildDrawingOrder(int childCount, int i) {
+//        LUtils.e(TAG, " = " );
+//
+//        return super.getChildDrawingOrder(childCount, i);
+//    }
+//
+//    @Override
+//    public int getDescendantFocusability() {
+//        LUtils.e(TAG, " = " );
+//
+//        return super.getDescendantFocusability();
+//    }
+//
+//    @Override
+//    public void setDescendantFocusability(int focusability) {
+//        LUtils.e(TAG, " = " );
+//
+//        super.setDescendantFocusability(focusability);
+//    }
+//
+//    @Override
+//    public void focusableViewAvailable(View v) {
+//        LUtils.e(TAG, " = " );
+//
+//        super.focusableViewAvailable(v);
+//    }
+//
+//    @Override
+//    public boolean showContextMenuForChild(View originalView) {
+//        LUtils.e(TAG, " = " );
+//
+//        return super.showContextMenuForChild(originalView);
+//    }
+//
+//    @Override
+//    public boolean showContextMenuForChild(View originalView, float x, float y) {
+//        LUtils.e(TAG, " = " );
+//
+//        return super.showContextMenuForChild(originalView, x, y);
+//    }
+//
+//    @Override
+//    public ActionMode startActionModeForChild(View originalView, ActionMode.Callback callback) {
+//        LUtils.e(TAG, " = " );
+//
+//        return super.startActionModeForChild(originalView, callback);
+//    }
+//
+//    @Override
+//    public ActionMode startActionModeForChild(View originalView, ActionMode.Callback callback, int type) {
+//        LUtils.e(TAG, " = " );
+//
+//        return super.startActionModeForChild(originalView, callback, type);
+//    }
+//
+//    @Override
+//    public boolean requestSendAccessibilityEvent(View child, AccessibilityEvent event) {
+//        LUtils.e(TAG, " = " );
+//
+//        return super.requestSendAccessibilityEvent(child, event);
+//    }
+//
+//    @Override
+//    public boolean onRequestSendAccessibilityEvent(View child, AccessibilityEvent event) {
+//        LUtils.e(TAG, " = " );
+//
+//        return super.onRequestSendAccessibilityEvent(child, event);
+//    }
+//
+//    @Override
+//    public void childHasTransientStateChanged(View child, boolean childHasTransientState) {
+//        LUtils.e(TAG, " = " );
+//
+//        super.childHasTransientStateChanged(child, childHasTransientState);
+//    }
+//
+//    @Override
+//    public boolean hasTransientState() {
+//        LUtils.e(TAG, " = " );
+//
+//        return super.hasTransientState();
+//    }
+//
+//    @Override
+//    public boolean dispatchUnhandledMove(View focused, int direction) {
+//        LUtils.e(TAG, " = " );
+//
+//        return super.dispatchUnhandledMove(focused, direction);
+//    }
+//
+//    @Override
+//    public void clearChildFocus(View child) {
+//        LUtils.e(TAG, " = " );
+//
+//        super.clearChildFocus(child);
+//    }
+//
+//    @Override
+//    public void clearFocus() {
+//        LUtils.e(TAG, " = " );
+//
+//        super.clearFocus();
+//    }
+//
+//    @Override
+//    public View getFocusedChild() {
+//        LUtils.e(TAG, " = " );
+//
+//        return super.getFocusedChild();
+//    }
+//
+//    @Override
+//    public boolean hasFocus() {
+//        LUtils.e(TAG, " = " );
+//
+//        return super.hasFocus();
+//    }
+//
+//    @Override
+//    public View findFocus() {
+//        LUtils.e(TAG, " = " );
+//
+//        return super.findFocus();
+//    }
+//
+//    @Override
+//    public void addKeyboardNavigationClusters(Collection<View> views, int direction) {
+//        LUtils.e(TAG, " = " );
+//
+//        super.addKeyboardNavigationClusters(views, direction);
+//    }
+//
+//    @Override
+//    public void setTouchscreenBlocksFocus(boolean touchscreenBlocksFocus) {
+//        LUtils.e(TAG, " = " );
+//
+//        super.setTouchscreenBlocksFocus(touchscreenBlocksFocus);
+//    }
+//
+//    @Override
+//    public boolean getTouchscreenBlocksFocus() {
+//        LUtils.e(TAG, " = " );
+//
+//        return super.getTouchscreenBlocksFocus();
+//    }
+//
+//    @Override
+//    public void findViewsWithText(ArrayList<View> outViews, CharSequence text, int flags) {
+//        LUtils.e(TAG, " = " );
+//
+//        super.findViewsWithText(outViews, text, flags);
+//    }
+//
+//    @Override
+//    public void dispatchWindowFocusChanged(boolean hasFocus) {
+//        LUtils.e(TAG, " = " );
+//
+//        super.dispatchWindowFocusChanged(hasFocus);
+//    }
+//
+//    @Override
+//    public void addTouchables(ArrayList<View> views) {
+//        LUtils.e(TAG, " = " );
+//
+//        super.addTouchables(views);
+//    }
+//
+//    @Override
+//    public void dispatchDisplayHint(int hint) {
+//        LUtils.e(TAG, " = " );
+//
+//        super.dispatchDisplayHint(hint);
+//    }
+//
+//    @Override
+//    protected void dispatchVisibilityChanged(View changedView, int visibility) {
+//        LUtils.e(TAG, " = " );
+//
+//        super.dispatchVisibilityChanged(changedView, visibility);
+//    }
+//
+//    @Override
+//    public void dispatchWindowVisibilityChanged(int visibility) {
+//        LUtils.e(TAG, " = " );
+//
+//        super.dispatchWindowVisibilityChanged(visibility);
+//    }
+//
+//    @Override
+//    public void dispatchConfigurationChanged(Configuration newConfig) {
+//        LUtils.e(TAG, " = " );
+//
+//        super.dispatchConfigurationChanged(newConfig);
+//    }
+//
+//    @Override
+//    public void recomputeViewAttributes(View child) {
+//        LUtils.e(TAG, " = " );
+//
+//        super.recomputeViewAttributes(child);
+//    }
+//
+//    @Override
+//    public void bringChildToFront(View child) {
+//        LUtils.e(TAG, " = " );
+//
+//        super.bringChildToFront(child);
+//    }
+//
+//    @Override
+//    public boolean dispatchDragEvent(DragEvent event) {
+//        LUtils.e(TAG, " = " );
+//
+//        return super.dispatchDragEvent(event);
+//    }
+//
+//    @Override
+//    public void dispatchWindowSystemUiVisiblityChanged(int visible) {
+//        LUtils.e(TAG, " = " );
+//
+//        super.dispatchWindowSystemUiVisiblityChanged(visible);
+//    }
+//
+//    @Override
+//    public void dispatchSystemUiVisibilityChanged(int visible) {
+//        LUtils.e(TAG, " = " );
+//
+//        super.dispatchSystemUiVisibilityChanged(visible);
+//    }
+//
+//    @Override
+//    public boolean dispatchKeyEventPreIme(KeyEvent event) {
+//        LUtils.e(TAG, " = " );
+//
+//        return super.dispatchKeyEventPreIme(event);
+//    }
+//
+//    @Override
+//    public boolean dispatchKeyShortcutEvent(KeyEvent event) {
+//        LUtils.e(TAG, " = " );
+//
+//        return super.dispatchKeyShortcutEvent(event);
+//    }
+//
+//    @Override
+//    public boolean dispatchTrackballEvent(MotionEvent event) {
+//        LUtils.e(TAG, " = " );
+//
+//        return super.dispatchTrackballEvent(event);
+//    }
+//
+//    @Override
+//    public boolean dispatchCapturedPointerEvent(MotionEvent event) {
+//        LUtils.e(TAG, " = " );
+//
+//        return super.dispatchCapturedPointerEvent(event);
+//    }
+//
+//    @Override
+//    public void dispatchPointerCaptureChanged(boolean hasCapture) {
+//        LUtils.e(TAG, " = " );
+//
+//        super.dispatchPointerCaptureChanged(hasCapture);
+//    }
+//
+//    @Override
+//    public PointerIcon onResolvePointerIcon(MotionEvent event, int pointerIndex) {
+//        LUtils.e(TAG, " = " );
+//
+//        return super.onResolvePointerIcon(event, pointerIndex);
+//    }
+//
+//    @Override
+//    protected boolean dispatchHoverEvent(MotionEvent event) {
+//        LUtils.e(TAG, " = " );
+//
+//        return super.dispatchHoverEvent(event);
+//    }
+//
+//    @Override
+//    public void addChildrenForAccessibility(ArrayList<View> outChildren) {
+//        LUtils.e(TAG, " = " );
+//
+//        super.addChildrenForAccessibility(outChildren);
+//    }
+//
+//    @Override
+//    public boolean onInterceptHoverEvent(MotionEvent event) {
+//        LUtils.e(TAG, " = " );
+//
+//        return super.onInterceptHoverEvent(event);
+//    }
+//
+//    @Override
+//    protected boolean dispatchGenericPointerEvent(MotionEvent event) {
+//        LUtils.e(TAG, " = " );
+//
+//        return super.dispatchGenericPointerEvent(event);
+//    }
+//
+//    @Override
+//    protected boolean dispatchGenericFocusedEvent(MotionEvent event) {
+//        LUtils.e(TAG, " = " );
+//
+//        return super.dispatchGenericFocusedEvent(event);
+//    }
+//
+//    @Override
+//    public boolean dispatchTouchEvent(MotionEvent ev) {
+//        LUtils.e(TAG, " = " );
+//
+//        return super.dispatchTouchEvent(ev);
+//    }
+//
+//    @Override
+//    public void setMotionEventSplittingEnabled(boolean split) {
+//        LUtils.e(TAG, " = " );
+//
+//        super.setMotionEventSplittingEnabled(split);
+//    }
+//
+//    @Override
+//    public boolean isMotionEventSplittingEnabled() {
+//        LUtils.e(TAG, " = " );
+//
+//        return super.isMotionEventSplittingEnabled();
+//    }
+//
+//    @Override
+//    public boolean isTransitionGroup() {
+//        LUtils.e(TAG, " = " );
+//
+//        return super.isTransitionGroup();
+//    }
+//
+//    @Override
+//    public void setTransitionGroup(boolean isTransitionGroup) {
+//        LUtils.e(TAG, " = " );
+//
+//        super.setTransitionGroup(isTransitionGroup);
+//    }
+//
+//    @Override
+//    public boolean requestFocus(int direction, Rect previouslyFocusedRect) {
+//        LUtils.e(TAG, " = " );
+//
+//        return super.requestFocus(direction, previouslyFocusedRect);
+//    }
+//
+//    @Override
+//    public void dispatchStartTemporaryDetach() {
+//        LUtils.e(TAG, " = " );
+//
+//        super.dispatchStartTemporaryDetach();
+//    }
+//
+//    @Override
+//    public void dispatchFinishTemporaryDetach() {
+//        LUtils.e(TAG, " = " );
+//
+//        super.dispatchFinishTemporaryDetach();
+//    }
+//
+//    @Override
+//    public void dispatchProvideStructure(ViewStructure structure) {
+//        LUtils.e(TAG, " = " );
+//
+//        super.dispatchProvideStructure(structure);
+//    }
+//
+//    @Override
+//    public void dispatchProvideAutofillStructure(ViewStructure structure, int flags) {
+//        LUtils.e(TAG, " = " );
+//
+//        super.dispatchProvideAutofillStructure(structure, flags);
+//    }
+//
+//    @Override
+//    public CharSequence getAccessibilityClassName() {
+//        LUtils.e(TAG, " = " );
+//
+//        return super.getAccessibilityClassName();
+//    }
+//
+//    @Override
+//    public void notifySubtreeAccessibilityStateChanged(View child, View source, int changeType) {
+//        LUtils.e(TAG, " = " );
+//
+//        super.notifySubtreeAccessibilityStateChanged(child, source, changeType);
+//    }
+//
+//    @Override
+//    public boolean onNestedPrePerformAccessibilityAction(View target, int action, Bundle args) {
+//        LUtils.e(TAG, " = " );
+//
+//        return super.onNestedPrePerformAccessibilityAction(target, action, args);
+//    }
+//
+//    @Override
+//    protected void dispatchFreezeSelfOnly(SparseArray<Parcelable> container) {
+//        LUtils.e(TAG, " = " );
+//
+//        super.dispatchFreezeSelfOnly(container);
+//    }
+//
+//    @Override
+//    protected void dispatchThawSelfOnly(SparseArray<Parcelable> container) {
+//        LUtils.e(TAG, " = " );
+//
+//        super.dispatchThawSelfOnly(container);
+//    }
+//
+//    @Override
+//    protected void setChildrenDrawingCacheEnabled(boolean enabled) {
+//        LUtils.e(TAG, " = " );
+//
+//        super.setChildrenDrawingCacheEnabled(enabled);
+//    }
+//
+//    @Override
+//    protected void dispatchDraw(Canvas canvas) {
+//        LUtils.e(TAG, " = " );
+//
+//        super.dispatchDraw(canvas);
+//    }
+//
+//    @Override
+//    public ViewGroupOverlay getOverlay() {
+//        LUtils.e(TAG, " = " );
+//
+//        return super.getOverlay();
+//    }
+//
+//    @Override
+//    public boolean getClipChildren() {
+//        LUtils.e(TAG, " = " );
+//
+//        return super.getClipChildren();
+//    }
+//
+//    @Override
+//    public void setClipChildren(boolean clipChildren) {
+//        LUtils.e(TAG, " = " );
+//
+//        super.setClipChildren(clipChildren);
+//    }
+//
+//    @Override
+//    public void dispatchSetSelected(boolean selected) {
+//        LUtils.e(TAG, " = " );
+//
+//        super.dispatchSetSelected(selected);
+//    }
+//
+//    @Override
+//    public void dispatchSetActivated(boolean activated) {
+//        LUtils.e(TAG, " = " );
+//
+//        super.dispatchSetActivated(activated);
+//    }
+//
+//    @Override
+//    protected void dispatchSetPressed(boolean pressed) {
+//        LUtils.e(TAG, " = " );
+//
+//        super.dispatchSetPressed(pressed);
+//    }
+//
+//    @Override
+//    public void dispatchDrawableHotspotChanged(float x, float y) {
+//        LUtils.e(TAG, " = " );
+//
+//        super.dispatchDrawableHotspotChanged(x, y);
+//    }
+//
+//    @Override
+//    protected void setStaticTransformationsEnabled(boolean enabled) {
+//        LUtils.e(TAG, " = " );
+//
+//        super.setStaticTransformationsEnabled(enabled);
+//    }
+//
+//    @Override
+//    protected boolean getChildStaticTransformation(View child, Transformation t) {
+//        LUtils.e(TAG, " = " );
+//
+//        return super.getChildStaticTransformation(child, t);
+//    }
+//
+//    @Override
+//    public void addView(View child) {
+//        LUtils.e(TAG, " = " );
+//
+//        super.addView(child);
+//    }
+//
+//    @Override
+//    public void addView(View child, int index) {
+//        LUtils.e(TAG, " = " );
+//
+//        super.addView(child, index);
+//    }
+//
+//    @Override
+//    public void addView(View child, int width, int height) {
+//        LUtils.e(TAG, " = " );
+//
+//        super.addView(child, width, height);
+//    }
+//
+//    @Override
+//    public void addView(View child, ViewGroup.LayoutParams params) {
+//        LUtils.e(TAG, " = " );
+//
+//        super.addView(child, params);
+//    }
+//
+//    @Override
+//    public void addView(View child, int index, ViewGroup.LayoutParams params) {
+//        LUtils.e(TAG, " = " );
+//
+//        super.addView(child, index, params);
+//    }
+//
+//    @Override
+//    public void updateViewLayout(View view, ViewGroup.LayoutParams params) {
+//        LUtils.e(TAG, " = " );
+//
+//        super.updateViewLayout(view, params);
+//    }
+//
+//    @Override
+//    public void setOnHierarchyChangeListener(OnHierarchyChangeListener listener) {
+//        LUtils.e(TAG, " = " );
+//
+//        super.setOnHierarchyChangeListener(listener);
+//    }
+//
+//    @Override
+//    public void onViewAdded(View child) {
+//        LUtils.e(TAG, " = " );
+//
+//        super.onViewAdded(child);
+//    }
+//
+//    @Override
+//    public void onViewRemoved(View child) {
+//        LUtils.e(TAG, " = " );
+//
+//        super.onViewRemoved(child);
+//    }
+//
+//    @Override
+//    protected boolean addViewInLayout(View child, int index, ViewGroup.LayoutParams params) {
+//        LUtils.e(TAG, " = " );
+//
+//        return super.addViewInLayout(child, index, params);
+//    }
+//
+//    @Override
+//    protected boolean addViewInLayout(View child, int index, ViewGroup.LayoutParams params, boolean preventRequestLayout) {
+//        LUtils.e(TAG, " = " );
+//
+//        return super.addViewInLayout(child, index, params, preventRequestLayout);
+//    }
+//
+//    @Override
+//    protected void cleanupLayoutState(View child) {
+//        LUtils.e(TAG, " = " );
+//
+//        super.cleanupLayoutState(child);
+//    }
+//
+//    @Override
+//    protected void attachLayoutAnimationParameters(View child, ViewGroup.LayoutParams params, int index, int count) {
+//        LUtils.e(TAG, " = " );
+//
+//        super.attachLayoutAnimationParameters(child, params, index, count);
+//    }
+//
+//    @Override
+//    public void removeView(View view) {
+//        LUtils.e(TAG, " = " );
+//
+//        super.removeView(view);
+//    }
+//
+//    @Override
+//    public void removeViewInLayout(View view) {
+//        LUtils.e(TAG, " = " );
+//
+//        super.removeViewInLayout(view);
+//    }
+//
+//    @Override
+//    public void removeViewsInLayout(int start, int count) {
+//        LUtils.e(TAG, " = " );
+//
+//        super.removeViewsInLayout(start, count);
+//    }
+//
+//    @Override
+//    public void removeViewAt(int index) {
+//        LUtils.e(TAG, " = " );
+//
+//        super.removeViewAt(index);
+//    }
+//
+//    @Override
+//    public void removeViews(int start, int count) {
+//        LUtils.e(TAG, " = " );
+//
+//        super.removeViews(start, count);
+//    }
+//
+//    @Override
+//    public void setLayoutTransition(LayoutTransition transition) {
+//        LUtils.e(TAG, " = " );
+//
+//        super.setLayoutTransition(transition);
+//    }
+//
+//    @Override
+//    public LayoutTransition getLayoutTransition() {
+//        LUtils.e(TAG, " = " );
+//
+//        return super.getLayoutTransition();
+//    }
+//
+//    @Override
+//    public void removeAllViews() {
+//        LUtils.e(TAG, " = " );
+//
+//        super.removeAllViews();
+//    }
+//
+//    @Override
+//    public void removeAllViewsInLayout() {
+//        LUtils.e(TAG, " = " );
+//
+//        super.removeAllViewsInLayout();
+//    }
+//
+//    @Override
+//    protected void attachViewToParent(View child, int index, ViewGroup.LayoutParams params) {
+//        LUtils.e(TAG, " = " );
+//
+//        super.attachViewToParent(child, index, params);
+//    }
+//
+//    @Override
+//    protected void detachViewFromParent(View child) {
+//        LUtils.e(TAG, " = " );
+//
+//        super.detachViewFromParent(child);
+//    }
+//
+//    @Override
+//    protected void detachViewFromParent(int index) {
+//        LUtils.e(TAG, " = " );
+//
+//        super.detachViewFromParent(index);
+//    }
+//
+//    @Override
+//    protected void detachViewsFromParent(int start, int count) {
+//        LUtils.e(TAG, " = " );
+//
+//        super.detachViewsFromParent(start, count);
+//    }
+//
+//    @Override
+//    protected void detachAllViewsFromParent() {
+//        LUtils.e(TAG, " = " );
+//
+//        super.detachAllViewsFromParent();
+//    }
+//
+//    @Override
+//    public void onDescendantInvalidated(@NonNull View child, @NonNull View target) {
+//        LUtils.e(TAG, " = " );
+//
+//        super.onDescendantInvalidated(child, target);
+//    }
+//
+//    @Override
+//    public ViewParent invalidateChildInParent(int[] location, Rect dirty) {
+//        LUtils.e(TAG, " = " );
+//
+//        return super.invalidateChildInParent(location, dirty);
+//    }
+//
+//    @Override
+//    public boolean getChildVisibleRect(View child, Rect r, Point offset) {
+//        LUtils.e(TAG, " = " );
+//
+//        return super.getChildVisibleRect(child, r, offset);
+//    }
+//
+//    @Override
+//    protected boolean canAnimate() {
+//        LUtils.e(TAG, " = " );
+//
+//        return super.canAnimate();
+//    }
+//
+//    @Override
+//    public void startLayoutAnimation() {
+//        LUtils.e(TAG, " = " );
+//
+//        super.startLayoutAnimation();
+//    }
+//
+//    @Override
+//    public void scheduleLayoutAnimation() {
+//        LUtils.e(TAG, " = " );
+//
+//        super.scheduleLayoutAnimation();
+//    }
+//
+//    @Override
+//    public void setLayoutAnimation(LayoutAnimationController controller) {
+//        LUtils.e(TAG, " = " );
+//
+//        super.setLayoutAnimation(controller);
+//    }
+//
+//    @Override
+//    public LayoutAnimationController getLayoutAnimation() {
+//        LUtils.e(TAG, " = " );
+//
+//        return super.getLayoutAnimation();
+//    }
+//
+//    @Override
+//    public boolean isAnimationCacheEnabled() {
+//        LUtils.e(TAG, " = " );
+//
+//        return super.isAnimationCacheEnabled();
+//    }
+//
+//    @Override
+//    public void setAnimationCacheEnabled(boolean enabled) {
+//        LUtils.e(TAG, " = " );
+//
+//        super.setAnimationCacheEnabled(enabled);
+//    }
+//
+//    @Override
+//    public boolean isAlwaysDrawnWithCacheEnabled() {
+//        LUtils.e(TAG, " = " );
+//
+//        return super.isAlwaysDrawnWithCacheEnabled();
+//    }
+//
+//    @Override
+//    public void setAlwaysDrawnWithCacheEnabled(boolean always) {
+//        LUtils.e(TAG, " = " );
+//
+//        super.setAlwaysDrawnWithCacheEnabled(always);
+//    }
+//
+//    @Override
+//    protected boolean isChildrenDrawnWithCacheEnabled() {
+//        LUtils.e(TAG, " = " );
+//
+//        return super.isChildrenDrawnWithCacheEnabled();
+//    }
+//
+//    @Override
+//    protected void setChildrenDrawnWithCacheEnabled(boolean enabled) {
+//        LUtils.e(TAG, " = " );
+//
+//        super.setChildrenDrawnWithCacheEnabled(enabled);
+//    }
+//
+//    @Override
+//    protected boolean isChildrenDrawingOrderEnabled() {
+//        LUtils.e(TAG, " = " );
+//
+//        return super.isChildrenDrawingOrderEnabled();
+//    }
+//
+//    @Override
+//    protected void setChildrenDrawingOrderEnabled(boolean enabled) {
+//        LUtils.e(TAG, " = " );
+//
+//        super.setChildrenDrawingOrderEnabled(enabled);
+//    }
+//
+//    @Override
+//    public int getPersistentDrawingCache() {
+//        LUtils.e(TAG, " = " );
+//
+//        return super.getPersistentDrawingCache();
+//    }
+//
+//    @Override
+//    public void setPersistentDrawingCache(int drawingCacheToKeep) {
+//        LUtils.e(TAG, " = " );
+//
+//        super.setPersistentDrawingCache(drawingCacheToKeep);
+//    }
+//
+//    @Override
+//    public int getLayoutMode() {
+//        LUtils.e(TAG, " = " );
+//
+//        return super.getLayoutMode();
+//    }
+//
+//    @Override
+//    public void setLayoutMode(int layoutMode) {
+//        LUtils.e(TAG, " = " );
+//
+//        super.setLayoutMode(layoutMode);
+//    }
+//
+//    @Override
+//    protected void debug(int depth) {
+//        LUtils.e(TAG, " = " );
+//
+//        super.debug(depth);
+//    }
+//
+//    @Override
+//    public int indexOfChild(View child) {
+//        LUtils.e(TAG, " = " );
+//
+//        return super.indexOfChild(child);
+//    }
+//
+//    @Override
+//    public int getChildCount() {
+//        LUtils.e(TAG, " = " );
+//
+//        return super.getChildCount();
+//    }
+//
+//    @Override
+//    public View getChildAt(int index) {
+//        LUtils.e(TAG, " = " );
+//
+//        return super.getChildAt(index);
+//    }
+//
+//    @Override
+//    protected void measureChildren(int widthMeasureSpec, int heightMeasureSpec) {
+//        LUtils.e(TAG, " = " );
+//
+//        super.measureChildren(widthMeasureSpec, heightMeasureSpec);
+//    }
+//
+//    @Override
+//    protected void measureChild(View child, int parentWidthMeasureSpec, int parentHeightMeasureSpec) {
+//        LUtils.e(TAG, " = " );
+//
+//        super.measureChild(child, parentWidthMeasureSpec, parentHeightMeasureSpec);
+//    }
+//
+//    @Override
+//    protected void measureChildWithMargins(View child, int parentWidthMeasureSpec, int widthUsed, int parentHeightMeasureSpec, int heightUsed) {
+//        LUtils.e(TAG, " = " );
+//
+//        super.measureChildWithMargins(child, parentWidthMeasureSpec, widthUsed, parentHeightMeasureSpec, heightUsed);
+//    }
+//
+//    @Override
+//    public void clearDisappearingChildren() {
+//        LUtils.e(TAG, " = " );
+//
+//        super.clearDisappearingChildren();
+//    }
+//
+//    @Override
+//    public void startViewTransition(View view) {
+//        LUtils.e(TAG, " = " );
+//
+//        super.startViewTransition(view);
+//    }
+//
+//    @Override
+//    public void endViewTransition(View view) {
+//        LUtils.e(TAG, " = " );
+//
+//        super.endViewTransition(view);
+//    }
+//
+//    @Override
+//    public boolean gatherTransparentRegion(Region region) {
+//        LUtils.e(TAG, " = " );
+//
+//        return super.gatherTransparentRegion(region);
+//    }
+//
+//    @Override
+//    public void requestTransparentRegion(View child) {
+//        LUtils.e(TAG, " = " );
+//
+//        super.requestTransparentRegion(child);
+//    }
+//
+//    @Override
+//    public WindowInsets dispatchApplyWindowInsets(WindowInsets insets) {
+//        LUtils.e(TAG, " = " );
+//
+//        return super.dispatchApplyWindowInsets(insets);
+//    }
+//
+//    @Override
+//    public Animation.AnimationListener getLayoutAnimationListener() {
+//        LUtils.e(TAG, " = " );
+//
+//        return super.getLayoutAnimationListener();
+//    }
+//
+//    @Override
+//    protected void drawableStateChanged() {
+//        LUtils.e(TAG, " = " );
+//
+//        super.drawableStateChanged();
+//    }
+//
+//    @Override
+//    public void jumpDrawablesToCurrentState() {
+//        LUtils.e(TAG, " = " );
+//
+//        super.jumpDrawablesToCurrentState();
+//    }
+//
+//    @Override
+//    protected int[] onCreateDrawableState(int extraSpace) {
+//        LUtils.e(TAG, " = " );
+//
+//        return super.onCreateDrawableState(extraSpace);
+//    }
+//
+//    @Override
+//    public void setAddStatesFromChildren(boolean addsStates) {
+//        LUtils.e(TAG, " = " );
+//
+//        super.setAddStatesFromChildren(addsStates);
+//    }
+//
+//    @Override
+//    public boolean addStatesFromChildren() {
+//        LUtils.e(TAG, " = " );
+//
+//        return super.addStatesFromChildren();
+//    }
+//
+//    @Override
+//    public void childDrawableStateChanged(View child) {
+//        LUtils.e(TAG, " = " );
+//
+//        super.childDrawableStateChanged(child);
+//    }
+//
+//    @Override
+//    public void setLayoutAnimationListener(Animation.AnimationListener animationListener) {
+//        LUtils.e(TAG, " = " );
+//
+//        super.setLayoutAnimationListener(animationListener);
+//    }
+//
+//    @Override
+//    public boolean shouldDelayChildPressedState() {
+//        LUtils.e(TAG, " = " );
+//
+//        return super.shouldDelayChildPressedState();
+//    }
+//
+//    @Override
+//    public boolean onStartNestedScroll(View child, View target, int nestedScrollAxes) {
+//        LUtils.e(TAG, " = " );
+//
+//        return super.onStartNestedScroll(child, target, nestedScrollAxes);
+//    }
+//
+//    @Override
+//    public void onNestedScrollAccepted(View child, View target, int axes) {
+//        LUtils.e(TAG, " = " );
+//
+//        super.onNestedScrollAccepted(child, target, axes);
+//    }
+//
+//    @Override
+//    public void onStopNestedScroll(View child) {
+//        LUtils.e(TAG, " = " );
+//
+//        super.onStopNestedScroll(child);
+//    }
+//
+//    @Override
+//    public void onNestedScroll(View target, int dxConsumed, int dyConsumed, int dxUnconsumed, int dyUnconsumed) {
+//        LUtils.e(TAG, " = " );
+//
+//        super.onNestedScroll(target, dxConsumed, dyConsumed, dxUnconsumed, dyUnconsumed);
+//    }
+//
+//    @Override
+//    public void onNestedPreScroll(View target, int dx, int dy, int[] consumed) {
+//        LUtils.e(TAG, " = " );
+//
+//        super.onNestedPreScroll(target, dx, dy, consumed);
+//    }
+//
+//    @Override
+//    public boolean onNestedFling(View target, float velocityX, float velocityY, boolean consumed) {
+//        LUtils.e(TAG, " = " );
+//
+//        return super.onNestedFling(target, velocityX, velocityY, consumed);
+//    }
+//
+//    @Override
+//    public boolean onNestedPreFling(View target, float velocityX, float velocityY) {
+//        LUtils.e(TAG, " = " );
+//
+//        return super.onNestedPreFling(target, velocityX, velocityY);
+//    }
+//
+//    @Override
+//    public int getNestedScrollAxes() {
+//        LUtils.e(TAG, " = " );
+//
+//        return super.getNestedScrollAxes();
+//    }
+//
+//    @Override
+//    public String toString() {
+//        LUtils.e(TAG, " = " );
+//
+//        return super.toString();
+//    }
+//
+//    @Override
+//    public int getVerticalFadingEdgeLength() {
+//        LUtils.e(TAG, " = " );
+//
+//        return super.getVerticalFadingEdgeLength();
+//    }
+//
+//    @Override
+//    public void setFadingEdgeLength(int length) {
+//        LUtils.e(TAG, " = " );
+//
+//        super.setFadingEdgeLength(length);
+//    }
+//
+//    @Override
+//    public int getHorizontalFadingEdgeLength() {
+//        LUtils.e(TAG, " = " );
+//
+//        return super.getHorizontalFadingEdgeLength();
+//    }
+//
+//    @Override
+//    public int getVerticalScrollbarWidth() {
+//        LUtils.e(TAG, " = " );
+//
+//        return super.getVerticalScrollbarWidth();
+//    }
+//
+//    @Override
+//    protected int getHorizontalScrollbarHeight() {
+//        LUtils.e(TAG, " = " );
+//
+//        return super.getHorizontalScrollbarHeight();
+//    }
+//
+//    @Override
+//    public void setVerticalScrollbarPosition(int position) {
+//        LUtils.e(TAG, " = " );
+//
+//        super.setVerticalScrollbarPosition(position);
+//    }
+//
+//    @Override
+//    public int getVerticalScrollbarPosition() {
+//        LUtils.e(TAG, " = " );
+//
+//        return super.getVerticalScrollbarPosition();
+//    }
+//
+//    @Override
+//    public void setScrollIndicators(int indicators) {
+//        LUtils.e(TAG, " = " );
+//
+//        super.setScrollIndicators(indicators);
+//    }
+//
+//    @Override
+//    public void setScrollIndicators(int indicators, int mask) {
+//        LUtils.e(TAG, " = " );
+//
+//        super.setScrollIndicators(indicators, mask);
+//    }
+//
+//    @Override
+//    public int getScrollIndicators() {
+//        LUtils.e(TAG, " = " );
+//
+//        return super.getScrollIndicators();
+//    }
+//
+//    @Override
+//    public void setOnScrollChangeListener(OnScrollChangeListener l) {
+//        LUtils.e(TAG, " = " );
+//
+//        super.setOnScrollChangeListener(l);
+//    }
+//
+//    @Override
+//    public void setOnFocusChangeListener(OnFocusChangeListener l) {
+//        LUtils.e(TAG, " = " );
+//
+//        super.setOnFocusChangeListener(l);
+//    }
+//
+//    @Override
+//    public void addOnLayoutChangeListener(OnLayoutChangeListener listener) {
+//        LUtils.e(TAG, " = " );
+//
+//        super.addOnLayoutChangeListener(listener);
+//    }
+//
+//    @Override
+//    public void removeOnLayoutChangeListener(OnLayoutChangeListener listener) {
+//        LUtils.e(TAG, " = " );
+//
+//        super.removeOnLayoutChangeListener(listener);
+//    }
+//
+//    @Override
+//    public void addOnAttachStateChangeListener(OnAttachStateChangeListener listener) {
+//        LUtils.e(TAG, " = " );
+//
+//        super.addOnAttachStateChangeListener(listener);
+//    }
+//
+//    @Override
+//    public void removeOnAttachStateChangeListener(OnAttachStateChangeListener listener) {
+//        LUtils.e(TAG, " = " );
+//
+//        super.removeOnAttachStateChangeListener(listener);
+//    }
+//
+//    @Override
+//    public OnFocusChangeListener getOnFocusChangeListener() {
+//        LUtils.e(TAG, " = " );
+//
+//        return super.getOnFocusChangeListener();
+//    }
+//
+//    @Override
+//    public void setOnClickListener(@Nullable OnClickListener l) {
+//        LUtils.e(TAG, " = " );
+//
+//        super.setOnClickListener(l);
+//    }
+//
+//    @Override
+//    public boolean hasOnClickListeners() {
+//        LUtils.e(TAG, " = " );
+//
+//        return super.hasOnClickListeners();
+//    }
+//
+//    @Override
+//    public void setOnLongClickListener(@Nullable OnLongClickListener l) {
+//        LUtils.e(TAG, " = " );
+//
+//        super.setOnLongClickListener(l);
+//    }
+//
+//    @Override
+//    public void setOnContextClickListener(@Nullable OnContextClickListener l) {
+//        LUtils.e(TAG, " = " );
+//
+//        super.setOnContextClickListener(l);
+//    }
+//
+//    @Override
+//    public void setOnCreateContextMenuListener(OnCreateContextMenuListener l) {
+//        LUtils.e(TAG, " = " );
+//
+//        super.setOnCreateContextMenuListener(l);
+//    }
+//
+//    @Override
+//    public boolean performClick() {
+//        LUtils.e(TAG, " = " );
+//
+//        return super.performClick();
+//    }
+//
+//    @Override
+//    public boolean callOnClick() {
+//        LUtils.e(TAG, " = " );
+//
+//        return super.callOnClick();
+//    }
+//
+//    @Override
+//    public boolean performLongClick() {
+//        LUtils.e(TAG, " = " );
+//
+//        return super.performLongClick();
+//    }
+//
+//    @Override
+//    public boolean performLongClick(float x, float y) {
+//        LUtils.e(TAG, " = " );
+//
+//        return super.performLongClick(x, y);
+//    }
+//
+//    @Override
+//    public boolean performContextClick(float x, float y) {
+//        LUtils.e(TAG, " = " );
+//
+//        return super.performContextClick(x, y);
+//    }
+//
+//    @Override
+//    public boolean performContextClick() {
+//        LUtils.e(TAG, " = " );
+//
+//        return super.performContextClick();
+//    }
+//
+//    @Override
+//    public boolean showContextMenu() {
+//        LUtils.e(TAG, " = " );
+//
+//        return super.showContextMenu();
+//    }
+//
+//    @Override
+//    public boolean showContextMenu(float x, float y) {
+//        LUtils.e(TAG, " = " );
+//
+//        return super.showContextMenu(x, y);
+//    }
+//
+//    @Override
+//    public ActionMode startActionMode(ActionMode.Callback callback) {
+//        LUtils.e(TAG, " = " );
+//
+//        return super.startActionMode(callback);
+//    }
+//
+//    @Override
+//    public ActionMode startActionMode(ActionMode.Callback callback, int type) {
+//        LUtils.e(TAG, " = " );
+//
+//        return super.startActionMode(callback, type);
+//    }
+//
+//    @Override
+//    public void setOnKeyListener(OnKeyListener l) {
+//        LUtils.e(TAG, " = " );
+//
+//        super.setOnKeyListener(l);
+//    }
+//
+//    @Override
+//    public void setOnTouchListener(OnTouchListener l) {
+//        LUtils.e(TAG, " = " );
+//
+//        super.setOnTouchListener(l);
+//    }
+//
+//    @Override
+//    public void setOnGenericMotionListener(OnGenericMotionListener l) {
+//        LUtils.e(TAG, " = " );
+//
+//        super.setOnGenericMotionListener(l);
+//    }
+//
+//    @Override
+//    public void setOnHoverListener(OnHoverListener l) {
+//        LUtils.e(TAG, " = " );
+//
+//        super.setOnHoverListener(l);
+//    }
+//
+//    @Override
+//    public void setOnDragListener(OnDragListener l) {
+//        LUtils.e(TAG, " = " );
+//
+//        super.setOnDragListener(l);
+//    }
+//
+//    @Override
+//    public boolean requestRectangleOnScreen(Rect rectangle) {
+//        LUtils.e(TAG, " = " );
+//
+//        return super.requestRectangleOnScreen(rectangle);
+//    }
+//
+//    @Override
+//    public boolean requestRectangleOnScreen(Rect rectangle, boolean immediate) {
+//        LUtils.e(TAG, " = " );
+//
+//        return super.requestRectangleOnScreen(rectangle, immediate);
+//    }
+//
+//    @Override
+//    public boolean hasFocusable() {
+//        LUtils.e(TAG, " = " );
+//
+//        return super.hasFocusable();
+//    }
+//
+//    @Override
+//    public boolean hasExplicitFocusable() {
+//        LUtils.e(TAG, " = " );
+//
+//        return super.hasExplicitFocusable();
+//    }
+//
+//    @Override
+//    protected void onFocusChanged(boolean gainFocus, int direction, @Nullable Rect previouslyFocusedRect) {
+//        LUtils.e(TAG, " = " );
+//
+//        super.onFocusChanged(gainFocus, direction, previouslyFocusedRect);
+//    }
+//
+//    @Override
+//    public void setAccessibilityPaneTitle(@Nullable CharSequence accessibilityPaneTitle) {
+//        LUtils.e(TAG, " = " );
+//
+//        super.setAccessibilityPaneTitle(accessibilityPaneTitle);
+//    }
+//
+//    @Nullable
+//    @Override
+//    public CharSequence getAccessibilityPaneTitle() {
+//        LUtils.e(TAG, " = " );
+//
+//        return super.getAccessibilityPaneTitle();
+//    }
+//
+//    @Override
+//    public void sendAccessibilityEvent(int eventType) {
+//        LUtils.e(TAG, " = " );
+//
+//        super.sendAccessibilityEvent(eventType);
+//    }
+//
+//    @Override
+//    public void announceForAccessibility(CharSequence text) {
+//        LUtils.e(TAG, " = " );
+//
+//        super.announceForAccessibility(text);
+//    }
+//
+//    @Override
+//    public boolean dispatchPopulateAccessibilityEvent(AccessibilityEvent event) {
+//        LUtils.e(TAG, " = " );
+//
+//        return super.dispatchPopulateAccessibilityEvent(event);
+//    }
+//
+//    @Override
+//    public void onPopulateAccessibilityEvent(AccessibilityEvent event) {
+//        LUtils.e(TAG, " = " );
+//
+//        super.onPopulateAccessibilityEvent(event);
+//    }
+//
+//    @Override
+//    public void onInitializeAccessibilityEvent(AccessibilityEvent event) {
+//        LUtils.e(TAG, " = " );
+//
+//        super.onInitializeAccessibilityEvent(event);
+//    }
+//
+//    @Override
+//    public AccessibilityNodeInfo createAccessibilityNodeInfo() {
+//        LUtils.e(TAG, " = " );
+//
+//        return super.createAccessibilityNodeInfo();
+//    }
+//
+//    @Override
+//    public void onInitializeAccessibilityNodeInfo(AccessibilityNodeInfo info) {
+//        LUtils.e(TAG, " = " );
+//
+//        super.onInitializeAccessibilityNodeInfo(info);
+//    }
+//
+//    @Override
+//    public void onProvideStructure(ViewStructure structure) {
+//        LUtils.e(TAG, " = " );
+//
+//        super.onProvideStructure(structure);
+//    }
+//
+//    @Override
+//    public void onProvideAutofillStructure(ViewStructure structure, int flags) {
+//        LUtils.e(TAG, " = " );
+//
+//        super.onProvideAutofillStructure(structure, flags);
+//    }
+//
+//    @Override
+//    public void onProvideVirtualStructure(ViewStructure structure) {
+//        LUtils.e(TAG, " = " );
+//
+//        super.onProvideVirtualStructure(structure);
+//    }
+//
+//    @Override
+//    public void onProvideAutofillVirtualStructure(ViewStructure structure, int flags) {
+//        LUtils.e(TAG, " = " );
+//
+//        super.onProvideAutofillVirtualStructure(structure, flags);
+//    }
+//
+//    @Override
+//    public void autofill(AutofillValue value) {
+//        LUtils.e(TAG, " = " );
+//
+//        super.autofill(value);
+//    }
+//
+//    @Override
+//    public void autofill(@NonNull SparseArray<AutofillValue> values) {
+//        LUtils.e(TAG, " = " );
+//
+//        super.autofill(values);
+//    }
+//
+//    @Override
+//    public void setAutofillId(@Nullable AutofillId id) {
+//        LUtils.e(TAG, " = " );
+//
+//        super.setAutofillId(id);
+//    }
+//
+//    @Override
+//    public int getAutofillType() {
+//        LUtils.e(TAG, " = " );
+//
+//        return super.getAutofillType();
+//    }
+//
+//    @Nullable
+//    @Override
+//    public String[] getAutofillHints() {
+//        LUtils.e(TAG, " = " );
+//
+//        return super.getAutofillHints();
+//    }
+//
+//    @Nullable
+//    @Override
+//    public AutofillValue getAutofillValue() {
+//        LUtils.e(TAG, " = " );
+//
+//        return super.getAutofillValue();
+//    }
+//
+//    @Override
+//    public int getImportantForAutofill() {
+//        LUtils.e(TAG, " = " );
+//
+//        return super.getImportantForAutofill();
+//    }
+//
+//    @Override
+//    public void setImportantForAutofill(int mode) {
+//        LUtils.e(TAG, " = " );
+//
+//        super.setImportantForAutofill(mode);
+//    }
+//
+//    @Override
+//    public void addExtraDataToAccessibilityNodeInfo(@NonNull AccessibilityNodeInfo info, @NonNull String extraDataKey, @Nullable Bundle arguments) {
+//        LUtils.e(TAG, " = " );
+//
+//        super.addExtraDataToAccessibilityNodeInfo(info, extraDataKey, arguments);
+//    }
+//
+//    @Override
+//    public boolean isVisibleToUserForAutofill(int virtualId) {
+//        LUtils.e(TAG, " = " );
+//
+//        return super.isVisibleToUserForAutofill(virtualId);
+//    }
+//
+//    @Override
+//    public void setAccessibilityDelegate(@Nullable AccessibilityDelegate delegate) {
+//        LUtils.e(TAG, " = " );
+//
+//        super.setAccessibilityDelegate(delegate);
+//    }
+//
+//    @Override
+//    public AccessibilityNodeProvider getAccessibilityNodeProvider() {
+//        LUtils.e(TAG, " = " );
+//
+//        return super.getAccessibilityNodeProvider();
+//    }
+//
+//    @Override
+//    public CharSequence getContentDescription() {
+//        LUtils.e(TAG, " = " );
+//
+//        return super.getContentDescription();
+//    }
+//
+//    @Override
+//    public void setContentDescription(CharSequence contentDescription) {
+//        LUtils.e(TAG, " = " );
+//
+//        super.setContentDescription(contentDescription);
+//    }
+//
+//    @Override
+//    public void setAccessibilityTraversalBefore(int beforeId) {
+//        LUtils.e(TAG, " = " );
+//
+//        super.setAccessibilityTraversalBefore(beforeId);
+//    }
+//
+//    @Override
+//    public int getAccessibilityTraversalBefore() {
+//        LUtils.e(TAG, " = " );
+//
+//        return super.getAccessibilityTraversalBefore();
+//    }
+//
+//    @Override
+//    public void setAccessibilityTraversalAfter(int afterId) {
+//        LUtils.e(TAG, " = " );
+//
+//        super.setAccessibilityTraversalAfter(afterId);
+//    }
+//
+//    @Override
+//    public int getAccessibilityTraversalAfter() {
+//        LUtils.e(TAG, " = " );
+//
+//        return super.getAccessibilityTraversalAfter();
+//    }
+//
+//    @Override
+//    public int getLabelFor() {
+//        LUtils.e(TAG, " = " );
+//
+//        return super.getLabelFor();
+//    }
+//
+//    @Override
+//    public void setLabelFor(int id) {
+//        LUtils.e(TAG, " = " );
+//
+//        super.setLabelFor(id);
+//    }
+//
+//    @Override
+//    public boolean isFocused() {
+//        LUtils.e(TAG, " = " );
+//
+//        return super.isFocused();
+//    }
+//
+//    @Override
+//    public boolean isScrollContainer() {
+//        LUtils.e(TAG, " = " );
+//
+//        return super.isScrollContainer();
+//    }
+//
+//    @Override
+//    public void setScrollContainer(boolean isScrollContainer) {
+//        LUtils.e(TAG, " = " );
+//
+//        super.setScrollContainer(isScrollContainer);
+//    }
+//
+//    @Override
+//    public int getDrawingCacheQuality() {
+//        LUtils.e(TAG, " = " );
+//
+//        return super.getDrawingCacheQuality();
+//    }
+//
+//    @Override
+//    public void setDrawingCacheQuality(int quality) {
+//        LUtils.e(TAG, " = " );
+//
+//        super.setDrawingCacheQuality(quality);
+//    }
+//
+//    @Override
+//    public boolean getKeepScreenOn() {
+//        LUtils.e(TAG, " = " );
+//
+//        return super.getKeepScreenOn();
+//    }
+//
+//    @Override
+//    public void setKeepScreenOn(boolean keepScreenOn) {
+//        LUtils.e(TAG, " = " );
+//
+//        super.setKeepScreenOn(keepScreenOn);
+//    }
+//
+//    @Override
+//    public int getNextFocusLeftId() {
+//        LUtils.e(TAG, " = " );
+//
+//        return super.getNextFocusLeftId();
+//    }
+//
+//    @Override
+//    public void setNextFocusLeftId(int nextFocusLeftId) {
+//        LUtils.e(TAG, " = " );
+//
+//        super.setNextFocusLeftId(nextFocusLeftId);
+//    }
+//
+//    @Override
+//    public int getNextFocusRightId() {
+//        LUtils.e(TAG, " = " );
+//
+//        return super.getNextFocusRightId();
+//    }
+//
+//    @Override
+//    public void setNextFocusRightId(int nextFocusRightId) {
+//        LUtils.e(TAG, " = " );
+//
+//        super.setNextFocusRightId(nextFocusRightId);
+//    }
+//
+//    @Override
+//    public int getNextFocusUpId() {
+//        LUtils.e(TAG, " = " );
+//
+//        return super.getNextFocusUpId();
+//    }
+//
+//    @Override
+//    public void setNextFocusUpId(int nextFocusUpId) {
+//        LUtils.e(TAG, " = " );
+//
+//        super.setNextFocusUpId(nextFocusUpId);
+//    }
+//
+//    @Override
+//    public int getNextFocusDownId() {
+//        LUtils.e(TAG, " = " );
+//
+//        return super.getNextFocusDownId();
+//    }
+//
+//    @Override
+//    public void setNextFocusDownId(int nextFocusDownId) {
+//        LUtils.e(TAG, " = " );
+//
+//        super.setNextFocusDownId(nextFocusDownId);
+//    }
+//
+//    @Override
+//    public int getNextFocusForwardId() {
+//        LUtils.e(TAG, " = " );
+//
+//        return super.getNextFocusForwardId();
+//    }
+//
+//    @Override
+//    public void setNextFocusForwardId(int nextFocusForwardId) {
+//        LUtils.e(TAG, " = " );
+//
+//        super.setNextFocusForwardId(nextFocusForwardId);
+//    }
+//
+//    @Override
+//    public int getNextClusterForwardId() {
+//        LUtils.e(TAG, " = " );
+//
+//        return super.getNextClusterForwardId();
+//    }
+//
+//    @Override
+//    public void setNextClusterForwardId(int nextClusterForwardId) {
+//        LUtils.e(TAG, " = " );
+//
+//        super.setNextClusterForwardId(nextClusterForwardId);
+//    }
+//
+//    @Override
+//    public boolean isShown() {
+//        LUtils.e(TAG, " = " );
+//
+//        return super.isShown();
+//    }
+//
+//    @Override
+//    protected boolean fitSystemWindows(Rect insets) {
+//        LUtils.e(TAG, " = " );
+//
+//        return super.fitSystemWindows(insets);
+//    }
+//
+//    @Override
+//    public WindowInsets onApplyWindowInsets(WindowInsets insets) {
+//        LUtils.e(TAG, " = " );
+//
+//        return super.onApplyWindowInsets(insets);
+//    }
+//
+//    @Override
+//    public void setOnApplyWindowInsetsListener(OnApplyWindowInsetsListener listener) {
+//        LUtils.e(TAG, " = " );
+//
+//        super.setOnApplyWindowInsetsListener(listener);
+//    }
+//
+//    @Override
+//    public WindowInsets getRootWindowInsets() {
+//        LUtils.e(TAG, " = " );
+//
+//        return super.getRootWindowInsets();
+//    }
+//
+//    @Override
+//    public WindowInsets computeSystemWindowInsets(WindowInsets in, Rect outLocalInsets) {
+//        LUtils.e(TAG, " = " );
+//
+//        return super.computeSystemWindowInsets(in, outLocalInsets);
+//    }
+//
+//    @Override
+//    public void setFitsSystemWindows(boolean fitSystemWindows) {
+//        LUtils.e(TAG, " = " );
+//
+//        super.setFitsSystemWindows(fitSystemWindows);
+//    }
+//
+//    @Override
+//    public boolean getFitsSystemWindows() {
+//        LUtils.e(TAG, " = " );
+//
+//        return super.getFitsSystemWindows();
+//    }
+//
+//    @Override
+//    public void requestFitSystemWindows() {
+//        LUtils.e(TAG, " = " );
+//
+//        super.requestFitSystemWindows();
+//    }
+//
+//    @Override
+//    public void requestApplyInsets() {
+//        LUtils.e(TAG, " = " );
+//
+//        super.requestApplyInsets();
+//    }
+//
+//    @Override
+//    public int getVisibility() {
+//        LUtils.e(TAG, " = " );
+//
+//        return super.getVisibility();
+//    }
+//
+//    @Override
+//    public void setVisibility(int visibility) {
+//        LUtils.e(TAG, " = " );
+//
+//        super.setVisibility(visibility);
+//    }
+//
+//    @Override
+//    public boolean isEnabled() {
+//        LUtils.e(TAG, " = " );
+//
+//        return super.isEnabled();
+//    }
+//
+//    @Override
+//    public void setEnabled(boolean enabled) {
+//        LUtils.e(TAG, " = " );
+//
+//        super.setEnabled(enabled);
+//    }
+//
+//    @Override
+//    public void setFocusable(boolean focusable) {
+//        LUtils.e(TAG, " = " );
+//
+//        super.setFocusable(focusable);
+//    }
+//
+//    @Override
+//    public void setFocusable(int focusable) {
+//        LUtils.e(TAG, " = " );
+//
+//        super.setFocusable(focusable);
+//    }
+//
+//    @Override
+//    public void setFocusableInTouchMode(boolean focusableInTouchMode) {
+//        LUtils.e(TAG, " = " );
+//
+//        super.setFocusableInTouchMode(focusableInTouchMode);
+//    }
+//
+//    @Override
+//    public void setAutofillHints(@Nullable String... autofillHints) {
+//        LUtils.e(TAG, " = " );
+//
+//        super.setAutofillHints(autofillHints);
+//    }
+//
+//    @Override
+//    public void setSoundEffectsEnabled(boolean soundEffectsEnabled) {
+//        LUtils.e(TAG, " = " );
+//
+//        super.setSoundEffectsEnabled(soundEffectsEnabled);
+//    }
+//
+//    @Override
+//    public boolean isSoundEffectsEnabled() {
+//        LUtils.e(TAG, " = " );
+//
+//        return super.isSoundEffectsEnabled();
+//    }
+//
+//    @Override
+//    public void setHapticFeedbackEnabled(boolean hapticFeedbackEnabled) {
+//        LUtils.e(TAG, " = " );
+//
+//        super.setHapticFeedbackEnabled(hapticFeedbackEnabled);
+//    }
+//
+//    @Override
+//    public boolean isHapticFeedbackEnabled() {
+//        LUtils.e(TAG, " = " );
+//
+//        return super.isHapticFeedbackEnabled();
+//    }
+//
+//    @Override
+//    public void setLayoutDirection(int layoutDirection) {
+//        LUtils.e(TAG, " = " );
+//
+//        super.setLayoutDirection(layoutDirection);
+//    }
+//
+//    @Override
+//    public int getLayoutDirection() {
+//        LUtils.e(TAG, " = " );
+//
+//        return super.getLayoutDirection();
+//    }
+//
+//    @Override
+//    public void setHasTransientState(boolean hasTransientState) {
+//        LUtils.e(TAG, " = " );
+//
+//        super.setHasTransientState(hasTransientState);
+//    }
+//
+//    @Override
+//    public boolean isLaidOut() {
+//        LUtils.e(TAG, " = " );
+//
+//        return super.isLaidOut();
+//    }
+//
+//    @Override
+//    public void setWillNotDraw(boolean willNotDraw) {
+//        LUtils.e(TAG, " = " );
+//
+//        super.setWillNotDraw(willNotDraw);
+//    }
+//
+//    @Override
+//    public boolean willNotDraw() {
+//        LUtils.e(TAG, " = " );
+//
+//        return super.willNotDraw();
+//    }
+//
+//    @Override
+//    public void setWillNotCacheDrawing(boolean willNotCacheDrawing) {
+//        LUtils.e(TAG, " = " );
+//
+//        super.setWillNotCacheDrawing(willNotCacheDrawing);
+//    }
+//
+//    @Override
+//    public boolean willNotCacheDrawing() {
+//        LUtils.e(TAG, " = " );
+//
+//        return super.willNotCacheDrawing();
+//    }
+//
+//    @Override
+//    public boolean isClickable() {
+//        LUtils.e(TAG, " = " );
+//
+//        return super.isClickable();
+//    }
+//
+//    @Override
+//    public void setClickable(boolean clickable) {
+//        LUtils.e(TAG, " = " );
+//
+//        super.setClickable(clickable);
+//    }
+//
+//    @Override
+//    public boolean isLongClickable() {
+//        LUtils.e(TAG, " = " );
+//
+//        return super.isLongClickable();
+//    }
+//
+//    @Override
+//    public void setLongClickable(boolean longClickable) {
+//        LUtils.e(TAG, " = " );
+//
+//        super.setLongClickable(longClickable);
+//    }
+//
+//    @Override
+//    public boolean isContextClickable() {
+//        LUtils.e(TAG, " = " );
+//
+//        return super.isContextClickable();
+//    }
+//
+//    @Override
+//    public void setContextClickable(boolean contextClickable) {
+//        LUtils.e(TAG, " = " );
+//
+//        super.setContextClickable(contextClickable);
+//    }
+//
+//    @Override
+//    public void setPressed(boolean pressed) {
+//        LUtils.e(TAG, " = " );
+//
+//        super.setPressed(pressed);
+//    }
+//
+//    @Override
+//    public boolean isPressed() {
+//        LUtils.e(TAG, " = " );
+//
+//        return super.isPressed();
+//    }
+//
+//    @Override
+//    public boolean isSaveEnabled() {
+//        LUtils.e(TAG, " = " );
+//
+//        return super.isSaveEnabled();
+//    }
+//
+//    @Override
+//    public void setSaveEnabled(boolean enabled) {
+//        LUtils.e(TAG, " = " );
+//
+//        super.setSaveEnabled(enabled);
+//    }
+//
+//    @Override
+//    public boolean getFilterTouchesWhenObscured() {
+//        LUtils.e(TAG, " = " );
+//
+//        return super.getFilterTouchesWhenObscured();
+//    }
+//
+//    @Override
+//    public void setFilterTouchesWhenObscured(boolean enabled) {
+//        LUtils.e(TAG, " = " );
+//
+//        super.setFilterTouchesWhenObscured(enabled);
+//    }
+//
+//    @Override
+//    public boolean isSaveFromParentEnabled() {
+//        LUtils.e(TAG, " = " );
+//
+//        return super.isSaveFromParentEnabled();
+//    }
+//
+//    @Override
+//    public void setSaveFromParentEnabled(boolean enabled) {
+//        LUtils.e(TAG, " = " );
+//
+//        super.setSaveFromParentEnabled(enabled);
+//    }
+//
+//    @Override
+//    public int getFocusable() {
+//        LUtils.e(TAG, " = " );
+//
+//        return super.getFocusable();
+//    }
+//
+//    @Override
+//    public boolean isScreenReaderFocusable() {
+//        LUtils.e(TAG, " = " );
+//
+//        return super.isScreenReaderFocusable();
+//    }
+//
+//    @Override
+//    public void setScreenReaderFocusable(boolean screenReaderFocusable) {
+//        LUtils.e(TAG, " = " );
+//
+//        super.setScreenReaderFocusable(screenReaderFocusable);
+//    }
+//
+//    @Override
+//    public boolean isAccessibilityHeading() {
+//        LUtils.e(TAG, " = " );
+//
+//        return super.isAccessibilityHeading();
+//    }
+//
+//    @Override
+//    public void setAccessibilityHeading(boolean isHeading) {
+//        LUtils.e(TAG, " = " );
+//
+//        super.setAccessibilityHeading(isHeading);
+//    }
+//
+//    @Override
+//    public View focusSearch(int direction) {
+//        LUtils.e(TAG, " = " );
+//
+//        return super.focusSearch(direction);
+//    }
+//
+//    @Override
+//    public void setKeyboardNavigationCluster(boolean isCluster) {
+//        LUtils.e(TAG, " = " );
+//
+//        super.setKeyboardNavigationCluster(isCluster);
+//    }
+//
+//    @Override
+//    public void setFocusedByDefault(boolean isFocusedByDefault) {
+//        LUtils.e(TAG, " = " );
+//
+//        super.setFocusedByDefault(isFocusedByDefault);
+//    }
+//
+//    @Override
+//    public View keyboardNavigationClusterSearch(View currentCluster, int direction) {
+//        LUtils.e(TAG, " = " );
+//
+//        return super.keyboardNavigationClusterSearch(currentCluster, direction);
+//    }
+//
+//    @Override
+//    public void setDefaultFocusHighlightEnabled(boolean defaultFocusHighlightEnabled) {
+//        LUtils.e(TAG, " = " );
+//
+//        super.setDefaultFocusHighlightEnabled(defaultFocusHighlightEnabled);
+//    }
+//
+//    @Override
+//    public ArrayList<View> getFocusables(int direction) {
+//        LUtils.e(TAG, " = " );
+//
+//        return super.getFocusables(direction);
+//    }
+//
+//    @Override
+//    public void addFocusables(ArrayList<View> views, int direction) {
+//        LUtils.e(TAG, " = " );
+//
+//        super.addFocusables(views, direction);
+//    }
+//
+//    @Override
+//    public ArrayList<View> getTouchables() {
+//        LUtils.e(TAG, " = " );
+//
+//        return super.getTouchables();
+//    }
+//
+//    @Override
+//    public boolean isAccessibilityFocused() {
+//        LUtils.e(TAG, " = " );
+//
+//        return super.isAccessibilityFocused();
+//    }
+//
+//    @Override
+//    public int getImportantForAccessibility() {
+//        LUtils.e(TAG, " = " );
+//
+//        return super.getImportantForAccessibility();
+//    }
+//
+//    @Override
+//    public void setAccessibilityLiveRegion(int mode) {
+//        LUtils.e(TAG, " = " );
+//
+//        super.setAccessibilityLiveRegion(mode);
+//    }
+//
+//    @Override
+//    public int getAccessibilityLiveRegion() {
+//        LUtils.e(TAG, " = " );
+//
+//        return super.getAccessibilityLiveRegion();
+//    }
+//
+//    @Override
+//    public void setImportantForAccessibility(int mode) {
+//        LUtils.e(TAG, " = " );
+//
+//        super.setImportantForAccessibility(mode);
+//    }
+//
+//    @Override
+//    public boolean isImportantForAccessibility() {
+//        LUtils.e(TAG, " = " );
+//
+//        return super.isImportantForAccessibility();
+//    }
+//
+//    @Override
+//    public ViewParent getParentForAccessibility() {
+//        LUtils.e(TAG, " = " );
+//
+//        return super.getParentForAccessibility();
+//    }
+//
+//    @Override
+//    public boolean dispatchNestedPrePerformAccessibilityAction(int action, Bundle arguments) {
+//        LUtils.e(TAG, " = " );
+//
+//        return super.dispatchNestedPrePerformAccessibilityAction(action, arguments);
+//    }
+//
+//    @Override
+//    public boolean performAccessibilityAction(int action, Bundle arguments) {
+//        LUtils.e(TAG, " = " );
+//
+//        return super.performAccessibilityAction(action, arguments);
+//    }
+//
+//    @Override
+//    public void onStartTemporaryDetach() {
+//        LUtils.e(TAG, " = " );
+//
+//        super.onStartTemporaryDetach();
+//    }
+//
+//    @Override
+//    public void onFinishTemporaryDetach() {
+//        LUtils.e(TAG, " = " );
+//
+//        super.onFinishTemporaryDetach();
+//    }
+//
+//    @Override
+//    public KeyEvent.DispatcherState getKeyDispatcherState() {
+//        LUtils.e(TAG, " = " );
+//
+//        return super.getKeyDispatcherState();
+//    }
+//
+//    @Override
+//    public boolean onFilterTouchEventForSecurity(MotionEvent event) {
+//        LUtils.e(TAG, " = " );
+//
+//        return super.onFilterTouchEventForSecurity(event);
+//    }
+//
+//    @Override
+//    public boolean dispatchGenericMotionEvent(MotionEvent event) {
+//        LUtils.e(TAG, " = " );
+//
+//        return super.dispatchGenericMotionEvent(event);
+//    }
+//
+//    @Override
+//    public void onWindowFocusChanged(boolean hasWindowFocus) {
+//        LUtils.e(TAG, " = " );
+//
+//        super.onWindowFocusChanged(hasWindowFocus);
+//    }
+//
+//    @Override
+//    public boolean hasWindowFocus() {
+//        LUtils.e(TAG, " = " );
+//
+//        return super.hasWindowFocus();
+//    }
+//
+//    @Override
+//    protected void onVisibilityChanged(@NonNull View changedView, int visibility) {
+//        LUtils.e(TAG, " = " );
+//
+//        super.onVisibilityChanged(changedView, visibility);
+//    }
+//
+//    @Override
+//    protected void onDisplayHint(int hint) {
+//        LUtils.e(TAG, " = " );
+//
+//        super.onDisplayHint(hint);
+//    }
+//
+//    @Override
+//    protected void onWindowVisibilityChanged(int visibility) {
+//        LUtils.e(TAG, " = " );
+//
+//        super.onWindowVisibilityChanged(visibility);
+//    }
+//
+//    @Override
+//    public void onVisibilityAggregated(boolean isVisible) {
+//        LUtils.e(TAG, " = " );
+//
+//        super.onVisibilityAggregated(isVisible);
+//    }
+//
+//    @Override
+//    public int getWindowVisibility() {
+//        LUtils.e(TAG, " = " );
+//
+//        return super.getWindowVisibility();
+//    }
+//
+//    @Override
+//    public void getWindowVisibleDisplayFrame(Rect outRect) {
+//        LUtils.e(TAG, " = " );
+//
+//        super.getWindowVisibleDisplayFrame(outRect);
+//    }
+//
+//    @Override
+//    protected void onConfigurationChanged(Configuration newConfig) {
+//        LUtils.e(TAG, " = " );
+//
+//        super.onConfigurationChanged(newConfig);
+//    }
+//
+//    @Override
+//    public boolean isInTouchMode() {
+//        LUtils.e(TAG, " = " );
+//
+//        return super.isInTouchMode();
+//    }
+//
+//    @Override
+//    public boolean onKeyPreIme(int keyCode, KeyEvent event) {
+//        LUtils.e(TAG, " = " );
+//
+//        return super.onKeyPreIme(keyCode, event);
+//    }
+//
+//    @Override
+//    public boolean onKeyDown(int keyCode, KeyEvent event) {
+//        LUtils.e(TAG, " = " );
+//
+//        return super.onKeyDown(keyCode, event);
+//    }
+//
+//    @Override
+//    public boolean onKeyLongPress(int keyCode, KeyEvent event) {
+//        LUtils.e(TAG, " = " );
+//
+//        return super.onKeyLongPress(keyCode, event);
+//    }
+//
+//    @Override
+//    public boolean onKeyUp(int keyCode, KeyEvent event) {
+//        LUtils.e(TAG, " = " );
+//
+//        return super.onKeyUp(keyCode, event);
+//    }
+//
+//    @Override
+//    public boolean onKeyMultiple(int keyCode, int repeatCount, KeyEvent event) {
+//        LUtils.e(TAG, " = " );
+//
+//        return super.onKeyMultiple(keyCode, repeatCount, event);
+//    }
+//
+//    @Override
+//    public boolean onKeyShortcut(int keyCode, KeyEvent event) {
+//        LUtils.e(TAG, " = " );
+//
+//        return super.onKeyShortcut(keyCode, event);
+//    }
+//
+//    @Override
+//    public boolean onCheckIsTextEditor() {
+//        LUtils.e(TAG, " = " );
+//
+//        return super.onCheckIsTextEditor();
+//    }
+//
+//    @Override
+//    public InputConnection onCreateInputConnection(EditorInfo outAttrs) {
+//        LUtils.e(TAG, " = " );
+//
+//        return super.onCreateInputConnection(outAttrs);
+//    }
+//
+//    @Override
+//    public boolean checkInputConnectionProxy(View view) {
+//        LUtils.e(TAG, " = " );
+//
+//        return super.checkInputConnectionProxy(view);
+//    }
+//
+//    @Override
+//    public void createContextMenu(ContextMenu menu) {
+//        LUtils.e(TAG, " = " );
+//
+//        super.createContextMenu(menu);
+//    }
+//
+//    @Override
+//    protected ContextMenu.ContextMenuInfo getContextMenuInfo() {
+//        LUtils.e(TAG, " = " );
+//
+//        return super.getContextMenuInfo();
+//    }
+//
+//    @Override
+//    protected void onCreateContextMenu(ContextMenu menu) {
+//        LUtils.e(TAG, " = " );
+//
+//        super.onCreateContextMenu(menu);
+//    }
+//
+//    @Override
+//    public boolean onTrackballEvent(MotionEvent event) {
+//        LUtils.e(TAG, " = " );
+//
+//        return super.onTrackballEvent(event);
+//    }
+//
+//    @Override
+//    public boolean onHoverEvent(MotionEvent event) {
+//        LUtils.e(TAG, " = " );
+//
+//        return super.onHoverEvent(event);
+//    }
+//
+//    @Override
+//    public boolean isHovered() {
+//        LUtils.e(TAG, " = " );
+//
+//        return super.isHovered();
+//    }
+//
+//    @Override
+//    public void setHovered(boolean hovered) {
+//        LUtils.e(TAG, " = " );
+//
+//        super.setHovered(hovered);
+//    }
+//
+//    @Override
+//    public void onHoverChanged(boolean hovered) {
+//        LUtils.e(TAG, " = " );
+//
+//        super.onHoverChanged(hovered);
+//    }
+//
+//    @Override
+//    public void cancelLongPress() {
+//        LUtils.e(TAG, " = " );
+//
+//        super.cancelLongPress();
+//    }
+//
+//    @Override
+//    public void setTouchDelegate(TouchDelegate delegate) {
+//        LUtils.e(TAG, " = " );
+//
+//        super.setTouchDelegate(delegate);
+//    }
+//
+//    @Override
+//    public TouchDelegate getTouchDelegate() {
+//        LUtils.e(TAG, " = " );
+//
+//        return super.getTouchDelegate();
+//    }
+//
+//    @Override
+//    public void bringToFront() {
+//        LUtils.e(TAG, " = " );
+//
+//        super.bringToFront();
+//    }
+//
+//    @Override
+//    protected void onScrollChanged(int l, int t, int oldl, int oldt) {
+//        LUtils.e(TAG, " = " );
+//
+//        super.onScrollChanged(l, t, oldl, oldt);
+//    }
+//
+//    @Override
+//    public void setScrollX(int value) {
+//        LUtils.e(TAG, " = " );
+//
+//        super.setScrollX(value);
+//    }
+//
+//    @Override
+//    public void setScrollY(int value) {
+//        LUtils.e(TAG, " = " );
+//
+//        super.setScrollY(value);
+//    }
+//
+//    @Override
+//    public void getDrawingRect(Rect outRect) {
+//        LUtils.e(TAG, " = " );
+//
+//        super.getDrawingRect(outRect);
+//    }
+//
+//    @Override
+//    public Matrix getMatrix() {
+//        LUtils.e(TAG, " = " );
+//
+//        return super.getMatrix();
+//    }
+//
+//    @Override
+//    public float getCameraDistance() {
+//        LUtils.e(TAG, " = " );
+//
+//        return super.getCameraDistance();
+//    }
+//
+//    @Override
+//    public void setCameraDistance(float distance) {
+//        LUtils.e(TAG, " = " );
+//
+//        super.setCameraDistance(distance);
+//    }
+//
+//    @Override
+//    public float getRotation() {
+//        LUtils.e(TAG, " = " );
+//
+//        return super.getRotation();
+//    }
+//
+//    @Override
+//    public void setRotation(float rotation) {
+//        LUtils.e(TAG, " = " );
+//
+//        super.setRotation(rotation);
+//    }
+//
+//    @Override
+//    public float getRotationY() {
+//        LUtils.e(TAG, " = " );
+//
+//        return super.getRotationY();
+//    }
+//
+//    @Override
+//    public void setRotationY(float rotationY) {
+//        LUtils.e(TAG, " = " );
+//
+//        super.setRotationY(rotationY);
+//    }
+//
+//    @Override
+//    public float getRotationX() {
+//        LUtils.e(TAG, " = " );
+//
+//        return super.getRotationX();
+//    }
+//
+//    @Override
+//    public void setRotationX(float rotationX) {
+//        LUtils.e(TAG, " = " );
+//
+//        super.setRotationX(rotationX);
+//    }
+//
+//    @Override
+//    public float getScaleX() {
+//        LUtils.e(TAG, " = " );
+//
+//        return super.getScaleX();
+//    }
+//
+//    @Override
+//    public void setScaleX(float scaleX) {
+//        LUtils.e(TAG, " = " );
+//
+//        super.setScaleX(scaleX);
+//    }
+//
+//    @Override
+//    public float getScaleY() {
+//        LUtils.e(TAG, " = " );
+//
+//        return super.getScaleY();
+//    }
+//
+//    @Override
+//    public void setScaleY(float scaleY) {
+//        LUtils.e(TAG, " = " );
+//
+//        super.setScaleY(scaleY);
+//    }
+//
+//    @Override
+//    public float getPivotX() {
+//        LUtils.e(TAG, " = " );
+//
+//        return super.getPivotX();
+//    }
+//
+//    @Override
+//    public void setPivotX(float pivotX) {
+//        LUtils.e(TAG, " = " );
+//
+//        super.setPivotX(pivotX);
+//    }
+//
+//    @Override
+//    public float getPivotY() {
+//        LUtils.e(TAG, " = " );
+//
+//        return super.getPivotY();
+//    }
+//
+//    @Override
+//    public void setPivotY(float pivotY) {
+//        LUtils.e(TAG, " = " );
+//
+//        super.setPivotY(pivotY);
+//    }
+//
+//    @Override
+//    public boolean isPivotSet() {
+//        LUtils.e(TAG, " = " );
+//
+//        return super.isPivotSet();
+//    }
+//
+//    @Override
+//    public void resetPivot() {
+//        LUtils.e(TAG, " = " );
+//
+//        super.resetPivot();
+//    }
+//
+//    @Override
+//    public float getAlpha() {
+//        LUtils.e(TAG, " = " );
+//
+//        return super.getAlpha();
+//    }
+//
+//    @Override
+//    public void forceHasOverlappingRendering(boolean hasOverlappingRendering) {
+//        LUtils.e(TAG, " = " );
+//
+//        super.forceHasOverlappingRendering(hasOverlappingRendering);
+//    }
+//
+//    @Override
+//    public boolean hasOverlappingRendering() {
+//        LUtils.e(TAG, " = " );
+//
+//        return super.hasOverlappingRendering();
+//    }
+//
+//    @Override
+//    public void setAlpha(float alpha) {
+//        LUtils.e(TAG, " = " );
+//
+//        super.setAlpha(alpha);
+//    }
+//
+//    @Override
+//    public boolean isDirty() {
+//        LUtils.e(TAG, " = " );
+//
+//        return super.isDirty();
+//    }
+//
+//    @Override
+//    public float getX() {
+//        LUtils.e(TAG, " = " );
+//
+//        return super.getX();
+//    }
+//
+//    @Override
+//    public void setX(float x) {
+//        LUtils.e(TAG, " = " );
+//
+//        super.setX(x);
+//    }
+//
+//    @Override
+//    public float getY() {
+//        LUtils.e(TAG, " = " );
+//
+//        return super.getY();
+//    }
+//
+//    @Override
+//    public void setY(float y) {
+//        LUtils.e(TAG, " = " );
+//
+//        super.setY(y);
+//    }
+//
+//    @Override
+//    public float getZ() {
+//        LUtils.e(TAG, " = " );
+//
+//        return super.getZ();
+//    }
+//
+//    @Override
+//    public void setZ(float z) {
+//        LUtils.e(TAG, " = " );
+//
+//        super.setZ(z);
+//    }
+//
+//    @Override
+//    public float getElevation() {
+//        LUtils.e(TAG, " = " );
+//
+//        return super.getElevation();
+//    }
+//
+//    @Override
+//    public void setElevation(float elevation) {
+//        LUtils.e(TAG, " = " );
+//
+//        super.setElevation(elevation);
+//    }
+//
+//    @Override
+//    public float getTranslationX() {
+//        LUtils.e(TAG, " = " );
+//
+//        return super.getTranslationX();
+//    }
+//
+//    @Override
+//    public void setTranslationX(float translationX) {
+//        LUtils.e(TAG, " = " );
+//
+//        super.setTranslationX(translationX);
+//    }
+//
+//    @Override
+//    public float getTranslationY() {
+//        LUtils.e(TAG, " = " );
+//
+//        return super.getTranslationY();
+//    }
+//
+//    @Override
+//    public void setTranslationY(float translationY) {
+//        LUtils.e(TAG, " = " );
+//
+//        super.setTranslationY(translationY);
+//    }
+//
+//    @Override
+//    public float getTranslationZ() {
+//        LUtils.e(TAG, " = " );
+//
+//        return super.getTranslationZ();
+//    }
+//
+//    @Override
+//    public void setTranslationZ(float translationZ) {
+//        LUtils.e(TAG, " = " );
+//
+//        super.setTranslationZ(translationZ);
+//    }
+//
+//    @Override
+//    public StateListAnimator getStateListAnimator() {
+//        LUtils.e(TAG, " = " );
+//
+//        return super.getStateListAnimator();
+//    }
+//
+//    @Override
+//    public void setStateListAnimator(StateListAnimator stateListAnimator) {
+//        LUtils.e(TAG, " = " );
+//
+//        super.setStateListAnimator(stateListAnimator);
+//    }
+//
+//    @Override
+//    public void setClipToOutline(boolean clipToOutline) {
+//        LUtils.e(TAG, " = " );
+//
+//        super.setClipToOutline(clipToOutline);
+//    }
+//
+//    @Override
+//    public void setOutlineProvider(ViewOutlineProvider provider) {
+//        LUtils.e(TAG, " = " );
+//
+//        super.setOutlineProvider(provider);
+//    }
+//
+//    @Override
+//    public ViewOutlineProvider getOutlineProvider() {
+//        LUtils.e(TAG, " = " );
+//
+//        return super.getOutlineProvider();
+//    }
+//
+//    @Override
+//    public void invalidateOutline() {
+//        LUtils.e(TAG, " = " );
+//
+//        super.invalidateOutline();
+//    }
+//
+//    @Override
+//    public void setOutlineSpotShadowColor(int color) {
+//        LUtils.e(TAG, " = " );
+//
+//        super.setOutlineSpotShadowColor(color);
+//    }
+//
+//    @Override
+//    public int getOutlineSpotShadowColor() {
+//        LUtils.e(TAG, " = " );
+//
+//        return super.getOutlineSpotShadowColor();
+//    }
+//
+//    @Override
+//    public void setOutlineAmbientShadowColor(int color) {
+//        LUtils.e(TAG, " = " );
+//
+//        super.setOutlineAmbientShadowColor(color);
+//    }
+//
+//    @Override
+//    public int getOutlineAmbientShadowColor() {
+//        LUtils.e(TAG, " = " );
+//
+//        return super.getOutlineAmbientShadowColor();
+//    }
+//
+//    @Override
+//    public void getHitRect(Rect outRect) {
+//        LUtils.e(TAG, " = " );
+//
+//        super.getHitRect(outRect);
+//    }
+//
+//    @Override
+//    public void getFocusedRect(Rect r) {
+//        LUtils.e(TAG, " = " );
+//
+//        super.getFocusedRect(r);
+//    }
+//
+//    @Override
+//    public boolean getGlobalVisibleRect(Rect r, Point globalOffset) {
+//        LUtils.e(TAG, " = " );
+//
+//        return super.getGlobalVisibleRect(r, globalOffset);
+//    }
+//
+//    @Override
+//    public void offsetTopAndBottom(int offset) {
+//        LUtils.e(TAG, " = " );
+//
+//        super.offsetTopAndBottom(offset);
+//    }
+//
+//    @Override
+//    public void offsetLeftAndRight(int offset) {
+//        LUtils.e(TAG, " = " );
+//
+//        super.offsetLeftAndRight(offset);
+//    }
+//
+//    @Override
+//    public ViewGroup.LayoutParams getLayoutParams() {
+//        LUtils.e(TAG, " = " );
+//
+//        return super.getLayoutParams();
+//    }
+//
+//    @Override
+//    public void setLayoutParams(ViewGroup.LayoutParams params) {
+//        LUtils.e(TAG, " = " );
+//
+//        super.setLayoutParams(params);
+//    }
+//
+//    @Override
+//    protected boolean awakenScrollBars() {
+//        LUtils.e(TAG, " = " );
+//
+//        return super.awakenScrollBars();
+//    }
+//
+//    @Override
+//    protected boolean awakenScrollBars(int startDelay) {
+//        LUtils.e(TAG, " = " );
+//
+//        return super.awakenScrollBars(startDelay);
+//    }
+//
+//    @Override
+//    protected boolean awakenScrollBars(int startDelay, boolean invalidate) {
+//        LUtils.e(TAG, " = " );
+//
+//        return super.awakenScrollBars(startDelay, invalidate);
+//    }
+//
+//    @Override
+//    public void invalidate(Rect dirty) {
+//        LUtils.e(TAG, " = " );
+//
+//        super.invalidate(dirty);
+//    }
+//
+//    @Override
+//    public void invalidate(int l, int t, int r, int b) {
+//        LUtils.e(TAG, " = " );
+//
+//        super.invalidate(l, t, r, b);
+//    }
+//
+//    @Override
+//    public void invalidate() {
+//        LUtils.e(TAG, " = " );
+//
+//        super.invalidate();
+//    }
+//
+//    @Override
+//    public boolean isOpaque() {
+//        LUtils.e(TAG, " = " );
+//
+//        return super.isOpaque();
+//    }
+//
+//    @Override
+//    public Handler getHandler() {
+//        LUtils.e(TAG, " = " );
+//
+//        return super.getHandler();
+//    }
+//
+//    @Override
+//    public boolean post(Runnable action) {
+//        LUtils.e(TAG, " = " );
+//
+//        return super.post(action);
+//    }
+//
+//    @Override
+//    public boolean postDelayed(Runnable action, long delayMillis) {
+//        LUtils.e(TAG, " = " );
+//
+//        return super.postDelayed(action, delayMillis);
+//    }
+//
+//    @Override
+//    public void postOnAnimation(Runnable action) {
+//        LUtils.e(TAG, " = " );
+//
+//        super.postOnAnimation(action);
+//    }
+//
+//    @Override
+//    public void postOnAnimationDelayed(Runnable action, long delayMillis) {
+//        LUtils.e(TAG, " = " );
+//
+//        super.postOnAnimationDelayed(action, delayMillis);
+//    }
+//
+//    @Override
+//    public boolean removeCallbacks(Runnable action) {
+//        LUtils.e(TAG, " = " );
+//
+//        return super.removeCallbacks(action);
+//    }
+//
+//    @Override
+//    public void postInvalidate() {
+//        LUtils.e(TAG, " = " );
+//
+//        super.postInvalidate();
+//    }
+//
+//    @Override
+//    public void postInvalidate(int left, int top, int right, int bottom) {
+//        LUtils.e(TAG, " = " );
+//
+//        super.postInvalidate(left, top, right, bottom);
+//    }
+//
+//    @Override
+//    public void postInvalidateDelayed(long delayMilliseconds) {
+//        LUtils.e(TAG, " = " );
+//
+//        super.postInvalidateDelayed(delayMilliseconds);
+//    }
+//
+//    @Override
+//    public void postInvalidateDelayed(long delayMilliseconds, int left, int top, int right, int bottom) {
+//        LUtils.e(TAG, " = " );
+//
+//        super.postInvalidateDelayed(delayMilliseconds, left, top, right, bottom);
+//    }
+//
+//    @Override
+//    public void postInvalidateOnAnimation() {
+//        LUtils.e(TAG, " = " );
+//
+//        super.postInvalidateOnAnimation();
+//    }
+//
+//    @Override
+//    public void postInvalidateOnAnimation(int left, int top, int right, int bottom) {
+//        LUtils.e(TAG, " = " );
+//
+//        super.postInvalidateOnAnimation(left, top, right, bottom);
+//    }
+//
+//    @Override
+//    public void computeScroll() {
+//        LUtils.e(TAG, " = " );
+//
+//        super.computeScroll();
+//    }
+//
+//    @Override
+//    public boolean isHorizontalFadingEdgeEnabled() {
+//        LUtils.e(TAG, " = " );
+//
+//        return super.isHorizontalFadingEdgeEnabled();
+//    }
+//
+//    @Override
+//    public void setHorizontalFadingEdgeEnabled(boolean horizontalFadingEdgeEnabled) {
+//        LUtils.e(TAG, " = " );
+//
+//        super.setHorizontalFadingEdgeEnabled(horizontalFadingEdgeEnabled);
+//    }
+//
+//    @Override
+//    public boolean isVerticalFadingEdgeEnabled() {
+//        LUtils.e(TAG, " = " );
+//
+//        return super.isVerticalFadingEdgeEnabled();
+//    }
+//
+//    @Override
+//    public void setVerticalFadingEdgeEnabled(boolean verticalFadingEdgeEnabled) {
+//        LUtils.e(TAG, " = " );
+//
+//        super.setVerticalFadingEdgeEnabled(verticalFadingEdgeEnabled);
+//    }
+//
+//    @Override
+//    protected float getTopFadingEdgeStrength() {
+//        LUtils.e(TAG, " = " );
+//
+//        return super.getTopFadingEdgeStrength();
+//    }
+//
+//    @Override
+//    protected float getBottomFadingEdgeStrength() {
+//        LUtils.e(TAG, " = " );
+//
+//        return super.getBottomFadingEdgeStrength();
+//    }
+//
+//    @Override
+//    protected float getLeftFadingEdgeStrength() {
+//        LUtils.e(TAG, " = " );
+//
+//        return super.getLeftFadingEdgeStrength();
+//    }
+//
+//    @Override
+//    protected float getRightFadingEdgeStrength() {
+//        LUtils.e(TAG, " = " );
+//
+//        return super.getRightFadingEdgeStrength();
+//    }
+//
+//    @Override
+//    public boolean isHorizontalScrollBarEnabled() {
+//        LUtils.e(TAG, " = " );
+//
+//        return super.isHorizontalScrollBarEnabled();
+//    }
+//
+//    @Override
+//    public void setHorizontalScrollBarEnabled(boolean horizontalScrollBarEnabled) {
+//        LUtils.e(TAG, " = " );
+//
+//        super.setHorizontalScrollBarEnabled(horizontalScrollBarEnabled);
+//    }
+//
+//    @Override
+//    public boolean isVerticalScrollBarEnabled() {
+//        LUtils.e(TAG, " = " );
+//
+//        return super.isVerticalScrollBarEnabled();
+//    }
+//
+//    @Override
+//    public void setVerticalScrollBarEnabled(boolean verticalScrollBarEnabled) {
+//        LUtils.e(TAG, " = " );
+//
+//        super.setVerticalScrollBarEnabled(verticalScrollBarEnabled);
+//    }
+//
+//    @Override
+//    public void setScrollbarFadingEnabled(boolean fadeScrollbars) {
+//        LUtils.e(TAG, " = " );
+//
+//        super.setScrollbarFadingEnabled(fadeScrollbars);
+//    }
+//
+//    @Override
+//    public boolean isScrollbarFadingEnabled() {
+//        LUtils.e(TAG, " = " );
+//
+//        return super.isScrollbarFadingEnabled();
+//    }
+//
+//    @Override
+//    public int getScrollBarDefaultDelayBeforeFade() {
+//        LUtils.e(TAG, " = " );
+//
+//        return super.getScrollBarDefaultDelayBeforeFade();
+//    }
+//
+//    @Override
+//    public void setScrollBarDefaultDelayBeforeFade(int scrollBarDefaultDelayBeforeFade) {
+//        LUtils.e(TAG, " = " );
+//
+//        super.setScrollBarDefaultDelayBeforeFade(scrollBarDefaultDelayBeforeFade);
+//    }
+//
+//    @Override
+//    public int getScrollBarFadeDuration() {
+//        LUtils.e(TAG, " = " );
+//
+//        return super.getScrollBarFadeDuration();
+//    }
+//
+//    @Override
+//    public void setScrollBarFadeDuration(int scrollBarFadeDuration) {
+//        LUtils.e(TAG, " = " );
+//
+//        super.setScrollBarFadeDuration(scrollBarFadeDuration);
+//    }
+//
+//    @Override
+//    public int getScrollBarSize() {
+//        LUtils.e(TAG, " = " );
+//
+//        return super.getScrollBarSize();
+//    }
+//
+//    @Override
+//    public void setScrollBarSize(int scrollBarSize) {
+//        LUtils.e(TAG, " = " );
+//
+//        super.setScrollBarSize(scrollBarSize);
+//    }
+//
+//    @Override
+//    public void setScrollBarStyle(int style) {
+//        LUtils.e(TAG, " = " );
+//
+//        super.setScrollBarStyle(style);
+//    }
+//
+//    @Override
+//    public int getScrollBarStyle() {
+//        LUtils.e(TAG, " = " );
+//
+//        return super.getScrollBarStyle();
+//    }
+//
+//    @Override
+//    public boolean canScrollHorizontally(int direction) {
+//        LUtils.e(TAG, " = " );
+//
+//        return super.canScrollHorizontally(direction);
+//    }
+//
+//    @Override
+//    public boolean canScrollVertically(int direction) {
+//        LUtils.e(TAG, " = " );
+//
+//        return super.canScrollVertically(direction);
+//    }
+//
+//    @Override
+//    public void onScreenStateChanged(int screenState) {
+//        LUtils.e(TAG, " = " );
+//
+//        super.onScreenStateChanged(screenState);
+//    }
+//
+//    @Override
+//    public void onRtlPropertiesChanged(int layoutDirection) {
+//        LUtils.e(TAG, " = " );
+//
+//        super.onRtlPropertiesChanged(layoutDirection);
+//    }
+//
+//    @Override
+//    public boolean canResolveLayoutDirection() {
+//        LUtils.e(TAG, " = " );
+//
+//        return super.canResolveLayoutDirection();
+//    }
+//
+//    @Override
+//    public boolean isLayoutDirectionResolved() {
+//        LUtils.e(TAG, " = " );
+//
+//        return super.isLayoutDirectionResolved();
+//    }
+//
+//    @Override
+//    protected int getWindowAttachCount() {
+//        LUtils.e(TAG, " = " );
+//
+//        return super.getWindowAttachCount();
+//    }
+//
+//    @Override
+//    public IBinder getWindowToken() {
+//        LUtils.e(TAG, " = " );
+//
+//        return super.getWindowToken();
+//    }
+//
+//    @Override
+//    public WindowId getWindowId() {
+//        LUtils.e(TAG, " = " );
+//
+//        return super.getWindowId();
+//    }
+//
+//    @Override
+//    public IBinder getApplicationWindowToken() {
+//        LUtils.e(TAG, " = " );
+//
+//        return super.getApplicationWindowToken();
+//    }
+//
+//    @Override
+//    public Display getDisplay() {
+//        LUtils.e(TAG, " = " );
+//
+//        return super.getDisplay();
+//    }
+//
+//    @Override
+//    public void onCancelPendingInputEvents() {
+//        LUtils.e(TAG, " = " );
+//
+//        super.onCancelPendingInputEvents();
+//    }
+//
+//    @Override
+//    public void saveHierarchyState(SparseArray<Parcelable> container) {
+//        LUtils.e(TAG, " = " );
+//
+//        super.saveHierarchyState(container);
+//    }
+//
+//    @Override
+//    public void restoreHierarchyState(SparseArray<Parcelable> container) {
+//        LUtils.e(TAG, " = " );
+//
+//        super.restoreHierarchyState(container);
+//    }
+//
+//    @Override
+//    public long getDrawingTime() {
+//        LUtils.e(TAG, " = " );
+//
+//        return super.getDrawingTime();
+//    }
+//
+//    @Override
+//    public void setDuplicateParentStateEnabled(boolean enabled) {
+//        LUtils.e(TAG, " = " );
+//
+//        super.setDuplicateParentStateEnabled(enabled);
+//    }
+//
+//    @Override
+//    public boolean isDuplicateParentStateEnabled() {
+//        LUtils.e(TAG, " = " );
+//
+//        return super.isDuplicateParentStateEnabled();
+//    }
+//
+//    @Override
+//    public void setLayerType(int layerType, @Nullable Paint paint) {
+//        LUtils.e(TAG, " = " );
+//
+//        super.setLayerType(layerType, paint);
+//    }
+//
+//    @Override
+//    public void setLayerPaint(@Nullable Paint paint) {
+//        LUtils.e(TAG, " = " );
+//
+//        super.setLayerPaint(paint);
+//    }
+//
+//    @Override
+//    public int getLayerType() {
+//        LUtils.e(TAG, " = " );
+//
+//        return super.getLayerType();
+//    }
+//
+//    @Override
+//    public void buildLayer() {
+//        LUtils.e(TAG, " = " );
+//
+//        super.buildLayer();
+//    }
+//
+//    @Override
+//    public void setDrawingCacheEnabled(boolean enabled) {
+//        LUtils.e(TAG, " = " );
+//
+//        super.setDrawingCacheEnabled(enabled);
+//    }
+//
+//    @Override
+//    public boolean isDrawingCacheEnabled() {
+//        LUtils.e(TAG, " = " );
+//
+//        return super.isDrawingCacheEnabled();
+//    }
+//
+//    @Override
+//    public Bitmap getDrawingCache() {
+//        LUtils.e(TAG, " = " );
+//
+//        return super.getDrawingCache();
+//    }
+//
+//    @Override
+//    public Bitmap getDrawingCache(boolean autoScale) {
+//        LUtils.e(TAG, " = " );
+//
+//        return super.getDrawingCache(autoScale);
+//    }
+//
+//    @Override
+//    public void destroyDrawingCache() {
+//        LUtils.e(TAG, " = " );
+//
+//        super.destroyDrawingCache();
+//    }
+//
+//    @Override
+//    public void setDrawingCacheBackgroundColor(int color) {
+//        LUtils.e(TAG, " = " );
+//
+//        super.setDrawingCacheBackgroundColor(color);
+//    }
+//
+//    @Override
+//    public int getDrawingCacheBackgroundColor() {
+//        LUtils.e(TAG, " = " );
+//
+//        return super.getDrawingCacheBackgroundColor();
+//    }
+//
+//    @Override
+//    public void buildDrawingCache() {
+//        LUtils.e(TAG, " = " );
+//
+//        super.buildDrawingCache();
+//    }
+//
+//    @Override
+//    public void buildDrawingCache(boolean autoScale) {
+//        LUtils.e(TAG, " = " );
+//
+//        super.buildDrawingCache(autoScale);
+//    }
+//
+//    @Override
+//    public boolean isInEditMode() {
+//        LUtils.e(TAG, " = " );
+//
+//        return super.isInEditMode();
+//    }
+//
+//    @Override
+//    protected boolean isPaddingOffsetRequired() {
+//        LUtils.e(TAG, " = " );
+//
+//        return super.isPaddingOffsetRequired();
+//    }
+//
+//    @Override
+//    protected int getLeftPaddingOffset() {
+//        LUtils.e(TAG, " = " );
+//
+//        return super.getLeftPaddingOffset();
+//    }
+//
+//    @Override
+//    protected int getRightPaddingOffset() {
+//        LUtils.e(TAG, " = " );
+//
+//        return super.getRightPaddingOffset();
+//    }
+//
+//    @Override
+//    protected int getTopPaddingOffset() {
+//        LUtils.e(TAG, " = " );
+//
+//        return super.getTopPaddingOffset();
+//    }
+//
+//    @Override
+//    protected int getBottomPaddingOffset() {
+//        LUtils.e(TAG, " = " );
+//
+//        return super.getBottomPaddingOffset();
+//    }
+//
+//    @Override
+//    public boolean isHardwareAccelerated() {
+//        LUtils.e(TAG, " = " );
+//
+//        return super.isHardwareAccelerated();
+//    }
+//
+//    @Override
+//    public void setClipBounds(Rect clipBounds) {
+//        LUtils.e(TAG, " = " );
+//
+//        super.setClipBounds(clipBounds);
+//    }
+//
+//    @Override
+//    public Rect getClipBounds() {
+//        LUtils.e(TAG, " = " );
+//
+//        return super.getClipBounds();
+//    }
+//
+//    @Override
+//    public boolean getClipBounds(Rect outRect) {
+//        LUtils.e(TAG, " = " );
+//
+//        return super.getClipBounds(outRect);
+//    }
+//
+//    @Override
+//    public int getSolidColor() {
+//        LUtils.e(TAG, " = " );
+//
+//        return super.getSolidColor();
+//    }
+//
+//    @Override
+//    public boolean isLayoutRequested() {
+//        LUtils.e(TAG, " = " );
+//
+//        return super.isLayoutRequested();
+//    }
+//
+//    @Override
+//    protected void onFinishInflate() {
+//        LUtils.e(TAG, " = " );
+//
+//        super.onFinishInflate();
+//    }
+//
+//    @Override
+//    public Resources getResources() {
+//        LUtils.e(TAG, " = " );
+//
+//        return super.getResources();
+//    }
+//
+//    @Override
+//    public void invalidateDrawable(@NonNull Drawable drawable) {
+//        LUtils.e(TAG, " = " );
+//
+//        super.invalidateDrawable(drawable);
+//    }
+//
+//    @Override
+//    public void scheduleDrawable(@NonNull Drawable who, @NonNull Runnable what, long when) {
+//        LUtils.e(TAG, " = " );
+//
+//        super.scheduleDrawable(who, what, when);
+//    }
+//
+//    @Override
+//    public void unscheduleDrawable(@NonNull Drawable who, @NonNull Runnable what) {
+//        LUtils.e(TAG, " = " );
+//
+//        super.unscheduleDrawable(who, what);
+//    }
+//
+//    @Override
+//    public void unscheduleDrawable(Drawable who) {
+//        LUtils.e(TAG, " = " );
+//
+//        super.unscheduleDrawable(who);
+//    }
+//
+//    @Override
+//    protected boolean verifyDrawable(@NonNull Drawable who) {
+//        LUtils.e(TAG, " = " );
+//
+//        return super.verifyDrawable(who);
+//    }
+//
+//    @Override
+//    public void drawableHotspotChanged(float x, float y) {
+//        LUtils.e(TAG, " = " );
+//
+//        super.drawableHotspotChanged(x, y);
+//    }
+//
+//    @Override
+//    public void refreshDrawableState() {
+//        LUtils.e(TAG, " = " );
+//
+//        super.refreshDrawableState();
+//    }
+//
+//    @Override
+//    public void setBackgroundColor(int color) {
+//        LUtils.e(TAG, " = " );
+//
+//        super.setBackgroundColor(color);
+//    }
+//
+//    @Override
+//    public void setBackgroundResource(int resid) {
+//        LUtils.e(TAG, " = " );
+//
+//        super.setBackgroundResource(resid);
+//    }
+//
+//    @Override
+//    public void setBackground(Drawable background) {
+//        LUtils.e(TAG, " = " );
+//
+//        super.setBackground(background);
+//    }
+//
+//    @Override
+//    public void setBackgroundDrawable(Drawable background) {
+//        LUtils.e(TAG, " = " );
+//
+//        super.setBackgroundDrawable(background);
+//    }
+//
+//    @Override
+//    public Drawable getBackground() {
+//        LUtils.e(TAG, " = " );
+//
+//        return super.getBackground();
+//    }
+//
+//    @Override
+//    public void setBackgroundTintList(@Nullable ColorStateList tint) {
+//        LUtils.e(TAG, " = " );
+//
+//        super.setBackgroundTintList(tint);
+//    }
+//
+//    @Nullable
+//    @Override
+//    public ColorStateList getBackgroundTintList() {
+//        LUtils.e(TAG, " = " );
+//
+//        return super.getBackgroundTintList();
+//    }
+//
+//    @Override
+//    public void setBackgroundTintMode(@Nullable PorterDuff.Mode tintMode) {
+//        LUtils.e(TAG, " = " );
+//
+//        super.setBackgroundTintMode(tintMode);
+//    }
+//
+//    @Nullable
+//    @Override
+//    public PorterDuff.Mode getBackgroundTintMode() {
+//        LUtils.e(TAG, " = " );
+//
+//        return super.getBackgroundTintMode();
+//    }
+//
+//    @Override
+//    public Drawable getForeground() {
+//        LUtils.e(TAG, " = " );
+//
+//        return super.getForeground();
+//    }
+//
+//    @Override
+//    public void setForeground(Drawable foreground) {
+//        LUtils.e(TAG, " = " );
+//
+//        super.setForeground(foreground);
+//    }
+//
+//    @Override
+//    public int getForegroundGravity() {
+//        LUtils.e(TAG, " = " );
+//
+//        return super.getForegroundGravity();
+//    }
+//
+//    @Override
+//    public void setForegroundGravity(int gravity) {
+//        LUtils.e(TAG, " = " );
+//
+//        super.setForegroundGravity(gravity);
+//    }
+//
+//    @Override
+//    public void setForegroundTintList(@Nullable ColorStateList tint) {
+//        LUtils.e(TAG, " = " );
+//
+//        super.setForegroundTintList(tint);
+//    }
+//
+//    @Nullable
+//    @Override
+//    public ColorStateList getForegroundTintList() {
+//        LUtils.e(TAG, " = " );
+//
+//        return super.getForegroundTintList();
+//    }
+//
+//    @Override
+//    public void setForegroundTintMode(@Nullable PorterDuff.Mode tintMode) {
+//        LUtils.e(TAG, " = " );
+//
+//        super.setForegroundTintMode(tintMode);
+//    }
+//
+//    @Nullable
+//    @Override
+//    public PorterDuff.Mode getForegroundTintMode() {
+//        LUtils.e(TAG, " = " );
+//
+//        return super.getForegroundTintMode();
+//    }
+//
+//    @Override
+//    public void onDrawForeground(Canvas canvas) {
+//        LUtils.e(TAG, " = " );
+//
+//        super.onDrawForeground(canvas);
+//    }
+//
+//    @Override
+//    public void setPadding(int left, int top, int right, int bottom) {
+//        LUtils.e(TAG, " = " );
+//
+//        super.setPadding(left, top, right, bottom);
+//    }
+//
+//    @Override
+//    public void setPaddingRelative(int start, int top, int end, int bottom) {
+//        LUtils.e(TAG, " = " );
+//
+//        super.setPaddingRelative(start, top, end, bottom);
+//    }
+//
+//    @Override
+//    public int getPaddingTop() {
+//        LUtils.e(TAG, " = " );
+//
+//        return super.getPaddingTop();
+//    }
+//
+//    @Override
+//    public int getPaddingBottom() {
+//        LUtils.e(TAG, " = " );
+//
+//        return super.getPaddingBottom();
+//    }
+//
+//    @Override
+//    public int getPaddingLeft() {
+//        LUtils.e(TAG, " = " );
+//
+//        return super.getPaddingLeft();
+//    }
+//
+//    @Override
+//    public int getPaddingStart() {
+//        LUtils.e(TAG, " = " );
+//
+//        return super.getPaddingStart();
+//    }
+//
+//    @Override
+//    public int getPaddingRight() {
+//        LUtils.e(TAG, " = " );
+//
+//        return super.getPaddingRight();
+//    }
+//
+//    @Override
+//    public int getPaddingEnd() {
+//        LUtils.e(TAG, " = " );
+//
+//        return super.getPaddingEnd();
+//    }
+//
+//    @Override
+//    public boolean isPaddingRelative() {
+//        LUtils.e(TAG, " = " );
+//
+//        return super.isPaddingRelative();
+//    }
+//
+//    @Override
+//    public void setSelected(boolean selected) {
+//        LUtils.e(TAG, " = " );
+//
+//        super.setSelected(selected);
+//    }
+//
+//    @Override
+//    public boolean isSelected() {
+//        LUtils.e(TAG, " = " );
+//
+//        return super.isSelected();
+//    }
+//
+//    @Override
+//    public void setActivated(boolean activated) {
+//        LUtils.e(TAG, " = " );
+//
+//        super.setActivated(activated);
+//    }
+//
+//    @Override
+//    public boolean isActivated() {
+//        LUtils.e(TAG, " = " );
+//
+//        return super.isActivated();
+//    }
+//
+//    @Override
+//    public ViewTreeObserver getViewTreeObserver() {
+//        LUtils.e(TAG, " = " );
+//
+//        return super.getViewTreeObserver();
+//    }
+//
+//    @Override
+//    public View getRootView() {
+//        LUtils.e(TAG, " = " );
+//
+//        return super.getRootView();
+//    }
+//
+//    @Override
+//    public void getLocationOnScreen(int[] outLocation) {
+//        LUtils.e(TAG, " = " );
+//
+//        super.getLocationOnScreen(outLocation);
+//    }
+//
+//    @Override
+//    public void getLocationInWindow(int[] outLocation) {
+//        LUtils.e(TAG, " = " );
+//
+//        super.getLocationInWindow(outLocation);
+//    }
+//
+//    @Override
+//    public void setId(int id) {
+//        LUtils.e(TAG, " = " );
+//
+//        super.setId(id);
+//    }
+//
+//    @Override
+//    public int getId() {
+//        LUtils.e(TAG, " = " );
+//
+//        return super.getId();
+//    }
+//
+//    @Override
+//    public Object getTag() {
+//        LUtils.e(TAG, " = " );
+//
+//        return super.getTag();
+//    }
+//
+//    @Override
+//    public void setTag(Object tag) {
+//        LUtils.e(TAG, " = " );
+//
+//        super.setTag(tag);
+//    }
+//
+//    @Override
+//    public Object getTag(int key) {
+//        LUtils.e(TAG, " = " );
+//
+//        return super.getTag(key);
+//    }
+//
+//    @Override
+//    public void setTag(int key, Object tag) {
+//        LUtils.e(TAG, " = " );
+//
+//        super.setTag(key, tag);
+//    }
+//
+//    @Override
+//    public boolean isInLayout() {
+//        LUtils.e(TAG, " = " );
+//
+//        return super.isInLayout();
+//    }
+//
+//    @Override
+//    public void forceLayout() {
+//        LUtils.e(TAG, " = " );
+//
+//        super.forceLayout();
+//    }
+//
+//    @Override
+//    protected int getSuggestedMinimumHeight() {
+//        LUtils.e(TAG, " = " );
+//
+//        return super.getSuggestedMinimumHeight();
+//    }
+//
+//    @Override
+//    protected int getSuggestedMinimumWidth() {
+//        LUtils.e(TAG, " = " );
+//
+//        return super.getSuggestedMinimumWidth();
+//    }
+//
+//    @Override
+//    public int getMinimumHeight() {
+//        LUtils.e(TAG, " = " );
+//
+//        return super.getMinimumHeight();
+//    }
+//
+//    @Override
+//    public void setMinimumHeight(int minHeight) {
+//        LUtils.e(TAG, " = " );
+//
+//        super.setMinimumHeight(minHeight);
+//    }
+//
+//    @Override
+//    public int getMinimumWidth() {
+//        LUtils.e(TAG, " = " );
+//
+//        return super.getMinimumWidth();
+//    }
+//
+//    @Override
+//    public void setMinimumWidth(int minWidth) {
+//        LUtils.e(TAG, " = " );
+//
+//        super.setMinimumWidth(minWidth);
+//    }
+//
+//    @Override
+//    public Animation getAnimation() {
+//        LUtils.e(TAG, " = " );
+//
+//        return super.getAnimation();
+//    }
+//
+//    @Override
+//    public void startAnimation(Animation animation) {
+//        LUtils.e(TAG, " = " );
+//
+//        super.startAnimation(animation);
+//    }
+//
+//    @Override
+//    public void clearAnimation() {
+//        LUtils.e(TAG, " = " );
+//
+//        super.clearAnimation();
+//    }
+//
+//    @Override
+//    public void setAnimation(Animation animation) {
+//        LUtils.e(TAG, " = " );
+//
+//        super.setAnimation(animation);
+//    }
+//
+//    @Override
+//    protected void onAnimationStart() {
+//        LUtils.e(TAG, " = " );
+//
+//        super.onAnimationStart();
+//    }
+//
+//    @Override
+//    protected void onAnimationEnd() {
+//        LUtils.e(TAG, " = " );
+//
+//        super.onAnimationEnd();
+//    }
+//
+//    @Override
+//    protected boolean onSetAlpha(int alpha) {
+//        LUtils.e(TAG, " = " );
+//
+//        return super.onSetAlpha(alpha);
+//    }
+//
+//    @Override
+//    public void playSoundEffect(int soundConstant) {
+//        LUtils.e(TAG, " = " );
+//
+//        super.playSoundEffect(soundConstant);
+//    }
+//
+//    @Override
+//    public boolean performHapticFeedback(int feedbackConstant) {
+//        LUtils.e(TAG, " = " );
+//
+//        return super.performHapticFeedback(feedbackConstant);
+//    }
+//
+//    @Override
+//    public boolean performHapticFeedback(int feedbackConstant, int flags) {
+//        LUtils.e(TAG, " = " );
+//
+//        return super.performHapticFeedback(feedbackConstant, flags);
+//    }
+//
+//    @Override
+//    public void setSystemUiVisibility(int visibility) {
+//        LUtils.e(TAG, " = " );
+//
+//        super.setSystemUiVisibility(visibility);
+//    }
+//
+//    @Override
+//    public int getSystemUiVisibility() {
+//        LUtils.e(TAG, " = " );
+//
+//        return super.getSystemUiVisibility();
+//    }
+//
+//    @Override
+//    public int getWindowSystemUiVisibility() {
+//        LUtils.e(TAG, " = " );
+//
+//        return super.getWindowSystemUiVisibility();
+//    }
+//
+//    @Override
+//    public void onWindowSystemUiVisibilityChanged(int visible) {
+//        LUtils.e(TAG, " = " );
+//
+//        super.onWindowSystemUiVisibilityChanged(visible);
+//    }
+//
+//    @Override
+//    public void setOnSystemUiVisibilityChangeListener(OnSystemUiVisibilityChangeListener l) {
+//        LUtils.e(TAG, " = " );
+//
+//        super.setOnSystemUiVisibilityChangeListener(l);
+//    }
+//
+//    @Override
+//    public boolean onDragEvent(DragEvent event) {
+//        LUtils.e(TAG, " = " );
+//
+//        return super.onDragEvent(event);
+//    }
+//
+//    @Override
+//    protected boolean overScrollBy(int deltaX, int deltaY, int scrollX, int scrollY, int scrollRangeX, int scrollRangeY, int maxOverScrollX, int maxOverScrollY, boolean isTouchEvent) {
+//        LUtils.e(TAG, " = " );
+//
+//        return super.overScrollBy(deltaX, deltaY, scrollX, scrollY, scrollRangeX, scrollRangeY, maxOverScrollX, maxOverScrollY, isTouchEvent);
+//    }
+//
+//    @Override
+//    protected void onOverScrolled(int scrollX, int scrollY, boolean clampedX, boolean clampedY) {
+//        LUtils.e(TAG, " = " );
+//
+//        super.onOverScrolled(scrollX, scrollY, clampedX, clampedY);
+//    }
+//
+//    @Override
+//    public int getOverScrollMode() {
+//        LUtils.e(TAG, " = " );
+//
+//        return super.getOverScrollMode();
+//    }
+//
+//    @Override
+//    public void setOverScrollMode(int overScrollMode) {
+//        LUtils.e(TAG, " = " );
+//
+//        super.setOverScrollMode(overScrollMode);
+//    }
+//
+//    @Override
+//    public void setTextDirection(int textDirection) {
+//        LUtils.e(TAG, " = " );
+//
+//        super.setTextDirection(textDirection);
+//    }
+//
+//    @Override
+//    public int getTextDirection() {
+//        LUtils.e(TAG, " = " );
+//
+//        return super.getTextDirection();
+//    }
+//
+//    @Override
+//    public boolean canResolveTextDirection() {
+//        LUtils.e(TAG, " = " );
+//
+//        return super.canResolveTextDirection();
+//    }
+//
+//    @Override
+//    public boolean isTextDirectionResolved() {
+//        LUtils.e(TAG, " = " );
+//
+//        return super.isTextDirectionResolved();
+//    }
+//
+//    @Override
+//    public void setTextAlignment(int textAlignment) {
+//        LUtils.e(TAG, " = " );
+//
+//        super.setTextAlignment(textAlignment);
+//    }
+//
+//    @Override
+//    public int getTextAlignment() {
+//        LUtils.e(TAG, " = " );
+//
+//        return super.getTextAlignment();
+//    }
+//
+//    @Override
+//    public boolean canResolveTextAlignment() {
+//        LUtils.e(TAG, " = " );
+//
+//        return super.canResolveTextAlignment();
+//    }
+//
+//    @Override
+//    public boolean isTextAlignmentResolved() {
+//        LUtils.e(TAG, " = " );
+//
+//        return super.isTextAlignmentResolved();
+//    }
+//
+//    @Override
+//    public void setPointerIcon(PointerIcon pointerIcon) {
+//        LUtils.e(TAG, " = " );
+//
+//        super.setPointerIcon(pointerIcon);
+//    }
+//
+//    @Override
+//    public PointerIcon getPointerIcon() {
+//        LUtils.e(TAG, " = " );
+//
+//        return super.getPointerIcon();
+//    }
+//
+//    @Override
+//    public boolean hasPointerCapture() {
+//        LUtils.e(TAG, " = " );
+//
+//        return super.hasPointerCapture();
+//    }
+//
+//    @Override
+//    public void requestPointerCapture() {
+//        LUtils.e(TAG, " = " );
+//
+//        super.requestPointerCapture();
+//    }
+//
+//    @Override
+//    public void releasePointerCapture() {
+//        LUtils.e(TAG, " = " );
+//
+//        super.releasePointerCapture();
+//    }
+//
+//    @Override
+//    public void onPointerCaptureChange(boolean hasCapture) {
+//        LUtils.e(TAG, " = " );
+//
+//        super.onPointerCaptureChange(hasCapture);
+//    }
+//
+//    @Override
+//    public boolean onCapturedPointerEvent(MotionEvent event) {
+//        LUtils.e(TAG, " = " );
+//
+//        return super.onCapturedPointerEvent(event);
+//    }
+//
+//    @Override
+//    public void setOnCapturedPointerListener(OnCapturedPointerListener l) {
+//        LUtils.e(TAG, " = " );
+//
+//        super.setOnCapturedPointerListener(l);
+//    }
+//
+//    @Override
+//    public ViewPropertyAnimator animate() {
+//        LUtils.e(TAG, " = " );
+//
+//        return super.animate();
+//    }
+//
+//    @Override
+//    public String getTransitionName() {
+//        LUtils.e(TAG, " = " );
+//
+//        return super.getTransitionName();
+//    }
+//
+//    @Override
+//    public void setTooltipText(@Nullable CharSequence tooltipText) {
+//        LUtils.e(TAG, " = " );
+//
+//        super.setTooltipText(tooltipText);
+//    }
+//
+//    @Nullable
+//    @Override
+//    public CharSequence getTooltipText() {
+//        LUtils.e(TAG, " = " );
+//
+//        return super.getTooltipText();
+//    }
+//
+//    @Override
+//    public void addOnUnhandledKeyEventListener(OnUnhandledKeyEventListener listener) {
+//        LUtils.e(TAG, " = " );
+//
+//        super.addOnUnhandledKeyEventListener(listener);
+//    }
+//
+//    @Override
+//    public void removeOnUnhandledKeyEventListener(OnUnhandledKeyEventListener listener) {
+//        LUtils.e(TAG, " = " );
+//
+//        super.removeOnUnhandledKeyEventListener(listener);
+//    }
+//
+//    @Override
+//    public int hashCode() {
+//        LUtils.e(TAG, " = " );
+//
+//        return super.hashCode();
+//    }
+//
+//    @Override
+//    public boolean equals(@Nullable Object obj) {
+//        LUtils.e(TAG, " = " );
+//
+//        return super.equals(obj);
+//    }
+//
+//    @Override
+//    protected Object clone() throws CloneNotSupportedException {
+//        LUtils.e(TAG, " = " );
+//
+//        return super.clone();
+//    }
+//
+//    @Override
+//    protected void finalize() throws Throwable {
+//        LUtils.e(TAG, " = " );
+//
+//        super.finalize();
+//    }
+
+}

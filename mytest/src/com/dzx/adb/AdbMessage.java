@@ -129,12 +129,12 @@ public class AdbMessage {
         msg.command = hdr.command;
         msg.arg0 = hdr.arg0;
         msg.arg1 = hdr.arg1;
-        LUtils.i(hdr.payloadLen);
+        LUtils.i("数据大小 ",hdr.payloadLen);
         if (hdr.payloadLen > 0) {
             msg.payload = ByteBuffer.allocate(hdr.payloadLen);
             msg.payload.put(buf.array(), buf.position() + headerLen, hdr.payloadLen);
             msg.payload.flip();
-            LUtils.i(charset.decode(msg.payload));
+            //LUtils.i(charset.decode(msg.payload));
             //这里能够输出所有的接收信息
             int checksum = computeChecksum(msg.payload);
 //            if (checksum != hdr.payloadChecksum) {
