@@ -2329,7 +2329,20 @@ public class SSRC {
     }
 
 
-    /** */
+    /**
+     * @param fpi    文件输入流
+     * @param fpo    文件输出流
+     * @param sfrq   输入文件采样率
+     * @param dfrq   输出文件采样率
+     * @param bps    输入文件位深
+     * @param dbps   输出文件位深
+     * @param nch    ??
+     * @param length ??Integer.MAX_VALUE  文件最大长度??
+     * @param att    ??
+     * @param dither ??抖动
+     * @param quiet_ 是否输出日志
+     * @throws IOException io异常
+     */
     public SSRC(InputStream fpi, OutputStream fpo, int sfrq, int dfrq, int bps, int dbps, int nch, int length, double att, int dither, boolean quiet_) throws IOException {
         String tmpfn = null;
         boolean twopass, normalize;

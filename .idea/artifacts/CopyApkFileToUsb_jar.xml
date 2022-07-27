@@ -4,7 +4,6 @@
     <root id="archive" name="CopyApkFileToUsb.jar">
       <element id="module-output" name="CopyApkFileToUsb" />
       <element id="module-output" name="SmartParse" />
-      <element id="library" level="project" name="mylibs" />
       <element id="library" level="project" name="KotlinJavaRuntime" />
     </root>
   </artifact>

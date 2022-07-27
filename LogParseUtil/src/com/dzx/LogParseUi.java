@@ -138,7 +138,7 @@ public class LogParseUi extends JFrame implements ActionListener {
     private static final String CHANGE_COMMAND = "改变adb命令";
     private static final String KILL_PROCESS = "杀死命令进程";
     private static final String CONNECT_DEVICE = "连接设备";
-    private static final String CLEAR_LOG = "清除日志";
+    private static final String CLEAR_LOG = "重命名apk文件";
     private static final String RENAME_FAIL = "重命名";
 
     /**
@@ -300,13 +300,13 @@ public class LogParseUi extends JFrame implements ActionListener {
         labelAndTextFieldSet(mUploadApkToFtpLabel, mUploadApkToFtpTextField, mMarginLeft, mMarginTop + (mLabelHeight + mLineGaps) * mUploadApkToFtpTextFieldPosition
                 , mMarginLeft + mLabelWidth + mLabelAndTextFieldGaps
                 , mMarginTop + (mLineGaps + mTextFieldHeight) * mUploadApkToFtpTextFieldPosition);
-        mUploadApkToFtpTextField.setText("#huixiangjia_.apk#存储当前apk序号.txt");
+        mUploadApkToFtpTextField.setText("E:\\work\\app\\tusou\\SmartImage\\SmartImage\\app\\build\\outputs\\apk\\FULL\\debug#tusou_.apk#存储当前apk序号.txt");
 
         //要下载的apk名称
         labelAndTextFieldSet(mDownloadApkFromFtpLabel, mDownloadApkFromFtpTextField, mMarginLeft, mMarginTop + (mLabelHeight + mLineGaps) * mDownloadApkFromFtpPosition
                 , mMarginLeft + mLabelWidth + mLabelAndTextFieldGaps
                 , mMarginTop + (mLineGaps + mTextFieldHeight) * mDownloadApkFromFtpPosition);
-        mDownloadApkFromFtpTextField.setText("huixiangjia_022");
+        mDownloadApkFromFtpTextField.setText("tusou_");
 
 
         //执行cmd命令
@@ -413,15 +413,15 @@ public class LogParseUi extends JFrame implements ActionListener {
         int positionY = mMarginTop + (mLineGaps + mTextFieldHeight) * mFtpInfoPosition;
         textFieldSet(mFtpIpTextField, mMarginLeft, positionY);
 //        mFtpIpTextField.setText("10.18.216.92");
-        mFtpIpTextField.setText("10.18.205.10");
-//        mFtpIpTextField.setText("192.168.0.12");
+//        mFtpIpTextField.setText("10.18.205.10");
+        mFtpIpTextField.setText("192.168.0.12");
         textFieldSet(mFtpPortTextField, mMarginLeft + mLabelAndTextFieldGaps + mFtpTextFieldWidth, positionY);
         mFtpPortTextField.setText("21");
         textFieldSet(mFtpNameTextField, mMarginLeft + (mLabelAndTextFieldGaps + mFtpTextFieldWidth) * 2, positionY);
 //        mFtpNameTextField.setText("testsd");
         mFtpNameTextField.setText("zhangxiaodong1");
         textFieldSet(mFtpPwdTextField, mMarginLeft + (mLabelAndTextFieldGaps + mFtpTextFieldWidth) * 3, positionY);
-//        mFtpPwdTextField.setText("testsd");
+//        mFtpPwdTextField.setText("testSD8&");
         mFtpPwdTextField.setText("zhangxiaodong1A@");
         textFieldSet(mConnectIpTextField, mMarginLeft + (mLabelAndTextFieldGaps + mFtpTextFieldWidth) * 4, positionY);
         mConnectIpTextField.setText("192.168.137.172");
@@ -586,7 +586,13 @@ public class LogParseUi extends JFrame implements ActionListener {
         } else if (CONNECT_DEVICE.equals(actionCommand)) {
             connectDevice();
         } else if (CLEAR_LOG.equals(actionCommand)) {
-            clearLog();
+            //用于云端使用,重命名apk文件
+            String target = mUploadApkToFtpTextField.getText();
+            String[] result = target.split("#");
+            boolean success = FileRenameUtil.renameApkFile(result[0], result[1], result[2]);
+            System.out.println("文件重命名成功  " + success);
+            mResultLabel.setText("<html><br>重命名失败文件成功   " + success + "<br></html>");
+            //clearLog();
         } else if ("更改apk名称".equals(actionCommand)) {
             String apkName = mDownloadApkFromFtpTextField.getText();
             int current = Integer.parseInt(apkName.split("_")[1]) + 1;
@@ -625,7 +631,7 @@ public class LogParseUi extends JFrame implements ActionListener {
             boolean isRename = FileRenameUtil.renameFailApkFile(result[0], result[1], result[2]);
             if (isRename) {
                 mResultLabel.setText("<html><br>重命名失败文件成功<br></html>");
-            }else {
+            } else {
                 mResultLabel.setText("<html><br>重命名失败文件失败<br></html>");
             }
 
@@ -791,7 +797,7 @@ public class LogParseUi extends JFrame implements ActionListener {
             String content = FileUtil.getFileContent(new File(result[0], result[2]));
             ApkFileSaveNameBean apkFileSaveNameBean = new Gson().fromJson(content, ApkFileSaveNameBean.class);
             File file = new File(apkFileSaveNameBean.getUploadPath());
-            ftpUpload.putFileToFTpFastByPath(apkFileSaveNameBean.getUploadPath(), "/dzx/" + file.getName());
+            ftpUpload.putFileToFTpFastByPath(apkFileSaveNameBean.getUploadPath(), mFtpPathTextField.getText() + file.getName());
             mResultInfo = mResultInfo + "<br>上传apk到ftp成功!   " + file.getName() + "<br>";
             mResultLabel.setText(mResultInfo + "</html>");
         }

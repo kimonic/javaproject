@@ -28,27 +28,30 @@ public class Test9 {
 
 
     public static void main(String[] args) {
-        new Thread() {
-            @Override
-            public void run() {
-                test1();
-            }
-        }.start();
-        new Thread() {
-            @Override
-            public void run() {
-                test2();
+//        new Thread() {
+//            @Override
+//            public void run() {
+//                test1();
+//            }
+//        }.start();
+//        new Thread() {
+//            @Override
+//            public void run() {
+//                test2();
+//
+//            }
+//        }.start();
+//        new Thread() {
+//            @Override
+//            public void run() {
+//                test3();
+//            }
+//        }.start();
+//
+//        test4();
 
-            }
-        }.start();
-        new Thread() {
-            @Override
-            public void run() {
-                test3();
-            }
-        }.start();
+        LUtils.i(URLDecoder.decode("%E5%92%95%E5%8A%9B%E5%92%95%E5%8A%9B%E5%AE%89%E5%85%A8%E6%95%99%E8%82%B2"));
 
-        test4();
     }
 
     private synchronized static void test1() {

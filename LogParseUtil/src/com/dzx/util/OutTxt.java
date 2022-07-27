@@ -92,7 +92,7 @@ public class OutTxt {
 //        String filePath = "C:\\Users\\dingzhixin.ex\\Desktop\\bug\\";
 //        String filePath = "C:\\Users\\dingzhixin.ex\\Desktop\\S7F截图，识别到小猪佩奇，局部识别截图小猪佩奇识别成猪妈妈.log";
 //        List<String> list = new ArrayList<>(Arrays.asList("uploadData","addPersonArg()","recognize  part"));
-//        List<String> list = new ArrayList<>(Arrays.asList("Monkey  :","ANR in com.hisense.smartimages"));
+        List<String> list = new ArrayList<>(Arrays.asList("onLowMemory","SmartImageApplication","libprocessgroup:"));
 ////        List<String> list = new ArrayList<>(Arrays.asList("lowmemorykiller: Killing 'nse.smartimages", "onReceive(), JuBao KeyEvent"));
 ////        for (File file11 : files) {
 ////            LUtils.i(file11.getAbsolutePath(),"\n\n\n");
@@ -116,13 +116,13 @@ public class OutTxt {
 //        System.out.println("===========================================间隔3=================================================================");
 //        filerFileAndOut("C:\\Users\\dingzhixin.ex\\Desktop\\bug\\log.txt.3", list);
 //        System.out.println("===========================================间隔4=================================================================");
-//        filerFileAndOut("C:\\Users\\dingzhixin.ex\\Desktop\\bug\\log.txt.4", list);
+        filerFileAndOut("C:\\Users\\dingzhixin.ex\\Desktop\\bug\\aosp_bugreport", list);
 //        filerFileAndOut("C:\\Users\\dingzhixin.ex\\Desktop\\A65E截图，焦点到搜索上，截图右侧展示内容识别.log", list);
 //        filerFileAndOut("C:\\Users\\dingzhixin.ex\\Desktop\\A65E截图，首页cardbar页面出现闪退现象.log", list);
 
 
         //分析内存泄漏
-        analysisMemInfo();
+        //analysisMemInfo();
 
 //        monitor("C:\\Users\\dingzhixin.ex\\Desktop\\1.txt", 500);
 

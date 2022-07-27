@@ -1,5 +1,6 @@
 package com.dzx.blurred;
 
+
 import com.dzx.util.LUtils;
 
 import javax.imageio.ImageIO;
@@ -37,7 +38,7 @@ public final class GaussianBlur {
                     picture[2][i][j] = (pixel & 0xff);
                 }
             }
-            picture = GaussianBlur.GaussianBlur(picture, 100);  // 快速高斯模糊
+            picture = GaussianBlur.GaussianBlur(picture, 300);  // 快速高斯模糊
             for (int i = image.getMinX(); i < width; i++) {
                 for (int j = image.getMinY(); j < height; j++) {
 //                    pixel = ((picture[0][i][j] & 0xff) << 16) + ((picture[1][i][j] & 0xff) << 8) + (picture[2][i][j] & 0xff);
@@ -55,7 +56,7 @@ public final class GaussianBlur {
 
     /**
      * 快速高斯模糊
-     *
+     * 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
      * @param picture 三维数组,picture[a][b][c]，a表示颜色，012分别为R,G,B;b和c代表尺寸，宽度为b，高度为c
      * @param radius  半径
      * @return 格式如同picture的数组

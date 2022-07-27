@@ -7,17 +7,441 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="13f98f43-fccf-402d-b4dd-e3034814c200" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/mytest/src/com/dzx/ColorMerge.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mytest/src/com/dzx/blurred/ArgbColorEntity.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mytest/src/com/dzx/blurred/AwtDrawSample.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mytest/src/com/dzx/blurred/ColorAssistEntity.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mytest/src/com/dzx/blurred/ColorTestEntity.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mytest/src/com/dzx/blurred/GaussianBlur.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/artifacts/CopyApkFileToUsb_jar.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/artifacts/CopyApkFileToUsb_jar.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/artifacts/LogParseUtil_jar.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/artifacts/LogParseUtil_jar.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/artifacts/packagetest_jar.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/artifacts/packagetest_jar.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/mylibs.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mytest/src/com/dzx/ImageTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/mytest/src/com/dzx/ImageTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mytest/src/com/dzx/adb/AdbConnection.java" beforeDir="false" afterPath="$PROJECT_DIR$/mytest/src/com/dzx/adb/AdbConnection.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mytest/src/com/dzx/adb/AdbMessage.java" beforeDir="false" afterPath="$PROJECT_DIR$/mytest/src/com/dzx/adb/AdbMessage.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mytest/src/com/dzx/adb/SimpleAdbClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/mytest/src/com/dzx/adb/SimpleAdbClient.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/LogParseUtil/LogParseUtil.iml" beforeDir="false" afterPath="$PROJECT_DIR$/LogParseUtil/LogParseUtil.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/LogParseUtil/src/com/dzx/LogParseUi.java" beforeDir="false" afterPath="$PROJECT_DIR$/LogParseUtil/src/com/dzx/LogParseUi.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/LogParseUtil/src/com/dzx/util/FileRenameUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/LogParseUtil/src/com/dzx/util/FileRenameUtil.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/LogParseUtil/src/com/dzx/util/OutTxt.java" beforeDir="false" afterPath="$PROJECT_DIR$/LogParseUtil/src/com/dzx/util/OutTxt.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SmartParse/SmartParse.iml" beforeDir="false" afterPath="$PROJECT_DIR$/SmartParse/SmartParse.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/killlol/src/dzx/maoyan/SSRC.java" beforeDir="false" afterPath="$PROJECT_DIR$/killlol/src/dzx/maoyan/SSRC.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mylibs/Zapktool_2.6.0.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/mylibs/commons-codec-1.11.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/mylibs/commons-io-2.4-sources.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/mylibs/commons-io-2.4.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/mylibs/commons-net-3.6.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/mylibs/commons-net-3.7.2.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/mylibs/httpclient-3.1.0-v201012070820.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/mylibs/httpclient-4.5.13.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/mylibs/httpcore-4.4.13.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/mylibs/jna-4.0.0.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/mylibs/jna-platform-4.0.0.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/mytest/mytest.iml" beforeDir="false" afterPath="$PROJECT_DIR$/mytest/mytest.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mytest/src/com/dzx/Test7.java" beforeDir="false" afterPath="$PROJECT_DIR$/mytest/src/com/dzx/Test7.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mytest/src/com/dzx/Test9.java" beforeDir="false" afterPath="$PROJECT_DIR$/mytest/src/com/dzx/Test9.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mytest/src/com/dzx/blurred/GaussianBlur.java" beforeDir="false" afterPath="$PROJECT_DIR$/mytest/src/com/dzx/blurred/GaussianBlur.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/CopyApkFileToUsb/META-INF/MANIFEST.MF" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/CopyApkFileToUsb/copyfile/CmdTest.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/CopyApkFileToUsb/copyfile/CopyFileFromJar.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/CopyApkFileToUsb/copyfile/CopyFileToUsb$1.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/CopyApkFileToUsb/copyfile/CopyFileToUsb$2.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/CopyApkFileToUsb/copyfile/CopyFileToUsb.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/CopyApkFileToUsb/copyfile/FileMd5Utils.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/CopyApkFileToUsb/copyfile/Mp4MergeUtils.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/LogParseUtil/META-INF/MANIFEST.MF" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/LogParseUtil/com/dzx/HomePage.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/LogParseUtil/com/dzx/LogParseUi$1.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/LogParseUtil/com/dzx/LogParseUi$2.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/LogParseUtil/com/dzx/LogParseUi$3.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/LogParseUtil/com/dzx/LogParseUi$4.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/LogParseUtil/com/dzx/LogParseUi$5.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/LogParseUtil/com/dzx/LogParseUi$6.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/LogParseUtil/com/dzx/LogParseUi$7.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/LogParseUtil/com/dzx/LogParseUi$8.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/LogParseUtil/com/dzx/LogParseUi$9.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/LogParseUtil/com/dzx/LogParseUi.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/LogParseUtil/com/dzx/battext" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/LogParseUtil/com/dzx/bean/ApkFileSaveNameBean.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/LogParseUtil/com/dzx/bean/ExceptionResultEntity.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/LogParseUtil/com/dzx/constants/Constants.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/LogParseUtil/com/dzx/ui/MyButton.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/LogParseUtil/com/dzx/ui/View.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/LogParseUtil/com/dzx/util/ArBaiKeExceptionTsvParseUtil$1.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/LogParseUtil/com/dzx/util/ArBaiKeExceptionTsvParseUtil$ArBaiKeExceptionEntity.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/LogParseUtil/com/dzx/util/ArBaiKeExceptionTsvParseUtil$StatisticsEntity.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/LogParseUtil/com/dzx/util/ArBaiKeExceptionTsvParseUtil.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/LogParseUtil/com/dzx/util/ExcelOperate.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/LogParseUtil/com/dzx/util/FileRenameUtil.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/LogParseUtil/com/dzx/util/FileUtil.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/LogParseUtil/com/dzx/util/FtpDownload.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/LogParseUtil/com/dzx/util/FtpUpload.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/LogParseUtil/com/dzx/util/FtpUploadContinueUtil$DownloadStatus.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/LogParseUtil/com/dzx/util/FtpUploadContinueUtil$UploadStatus.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/LogParseUtil/com/dzx/util/FtpUploadContinueUtil.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/LogParseUtil/com/dzx/util/GradleCacheJarFilterUtil.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/LogParseUtil/com/dzx/util/LUtils.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/LogParseUtil/com/dzx/util/MyTailer.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/LogParseUtil/com/dzx/util/ObjectSizeFetcher.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/LogParseUtil/com/dzx/util/OutTxt$1.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/LogParseUtil/com/dzx/util/OutTxt$2.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/LogParseUtil/com/dzx/util/OutTxt$3.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/LogParseUtil/com/dzx/util/OutTxt$4.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/LogParseUtil/com/dzx/util/OutTxt$5.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/LogParseUtil/com/dzx/util/OutTxt$6.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/LogParseUtil/com/dzx/util/OutTxt$DataParseBean.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/LogParseUtil/com/dzx/util/OutTxt.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/LogParseUtil/com/dzx/util/ParseLogUtil.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/LogParseUtil/com/dzx/util/PhaseListener.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/LogParseUtil/com/dzx/util/TextUtils.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/LogParseUtil/com/dzx/util/ThreadPoolUtil$1.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/LogParseUtil/com/dzx/util/ThreadPoolUtil$ExecutionHandler.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/LogParseUtil/com/dzx/util/ThreadPoolUtil$SingleHolder.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/LogParseUtil/com/dzx/util/ThreadPoolUtil.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/LogParseUtil/com/dzx/util/TsvParseUtil$1.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/LogParseUtil/com/dzx/util/TsvParseUtil$2.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/LogParseUtil/com/dzx/util/TsvParseUtil$3.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/LogParseUtil/com/dzx/util/TsvParseUtil$4.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/LogParseUtil/com/dzx/util/TsvParseUtil$5.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/LogParseUtil/com/dzx/util/TsvParseUtil$6.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/LogParseUtil/com/dzx/util/TsvParseUtil$7.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/LogParseUtil/com/dzx/util/TsvParseUtil$UnsatisfiedLinkErrorOutEntity.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/LogParseUtil/com/dzx/util/TsvParseUtil$UnsatisfiedLinkErrorRecordEntity.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/LogParseUtil/com/dzx/util/TsvParseUtil.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/LogParseUtil/com/dzx/util/UZipFile.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/LogParseUtil/com/dzx/util/Utils$CommandExecuteListener.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/LogParseUtil/com/dzx/util/Utils.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/LogParseUtil/com/dzx/watch/algorithm/Kmp.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/LogParseUtil/com/dzx/watch/compress/file/InputStreamHandler.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/LogParseUtil/com/dzx/watch/compress/file/ZipAndJarUtil.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/LogParseUtil/com/dzx/watch/dir/DirWatcher$1.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/LogParseUtil/com/dzx/watch/dir/DirWatcher.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/LogParseUtil/com/dzx/watch/dir/DiskUtil.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/LogParseUtil/com/dzx/watch/dir/WatcherResultHandler.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/LogParseUtil/com/dzx/watch/file/CommonFileVisitor.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/LogParseUtil/com/dzx/watch/file/CommonPathHandler.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/LogParseUtil/com/dzx/watch/file/FileDataMatchUtils.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/LogParseUtil/com/dzx/watch/file/FileFilter.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/LogParseUtil/com/dzx/watch/file/FileInfo.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/LogParseUtil/com/dzx/watch/file/FileUtils.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/LogParseUtil/com/dzx/watch/file/TreeCopier.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/LogParseUtil/com/dzx/watch/file/TreeDeleter.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/SmartParse/META-INF/MANIFEST.MF" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/SmartParse/com/kimonik/CpuMemoryTest$1.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/SmartParse/com/kimonik/CpuMemoryTest$2.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/SmartParse/com/kimonik/CpuMemoryTest.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/SmartParse/com/kimonik/LUtils.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/SmartParse/com/kimonik/MemoryCpuTestAndParseUi$1.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/SmartParse/com/kimonik/MemoryCpuTestAndParseUi.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/SmartParse/com/kimonik/MyButton.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/SmartParse/com/kimonik/SettingsEntity.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/SmartParse/com/kimonik/TextUtils.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/SmartParse/com/kimonik/UiHome.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/mytest/META-INF/MANIFEST.MF" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/mytest/android/util/TypedValue.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/mytest/com/dzx/BaikeBean$ContentMyBean$BaikeDefaultLemmaBean$CardBean.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/mytest/com/dzx/BaikeBean$ContentMyBean$BaikeDefaultLemmaBean$CatalogContentStructuredBean$ContentBean.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/mytest/com/dzx/BaikeBean$ContentMyBean$BaikeDefaultLemmaBean$CatalogContentStructuredBean$DataBeanX$ContentBeanX.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/mytest/com/dzx/BaikeBean$ContentMyBean$BaikeDefaultLemmaBean$CatalogContentStructuredBean$DataBeanX.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/mytest/com/dzx/BaikeBean$ContentMyBean$BaikeDefaultLemmaBean$CatalogContentStructuredBean$FloatBean$DataBean$BasicBean$SizesBean$_$150Bean.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/mytest/com/dzx/BaikeBean$ContentMyBean$BaikeDefaultLemmaBean$CatalogContentStructuredBean$FloatBean$DataBean$BasicBean$SizesBean$_$200Bean.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/mytest/com/dzx/BaikeBean$ContentMyBean$BaikeDefaultLemmaBean$CatalogContentStructuredBean$FloatBean$DataBean$BasicBean$SizesBean$_$209Bean.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/mytest/com/dzx/BaikeBean$ContentMyBean$BaikeDefaultLemmaBean$CatalogContentStructuredBean$FloatBean$DataBean$BasicBean$SizesBean$_$220Bean.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/mytest/com/dzx/BaikeBean$ContentMyBean$BaikeDefaultLemmaBean$CatalogContentStructuredBean$FloatBean$DataBean$BasicBean$SizesBean$_$268Bean.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/mytest/com/dzx/BaikeBean$ContentMyBean$BaikeDefaultLemmaBean$CatalogContentStructuredBean$FloatBean$DataBean$BasicBean$SizesBean.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/mytest/com/dzx/BaikeBean$ContentMyBean$BaikeDefaultLemmaBean$CatalogContentStructuredBean$FloatBean$DataBean$BasicBean$TypeBean.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/mytest/com/dzx/BaikeBean$ContentMyBean$BaikeDefaultLemmaBean$CatalogContentStructuredBean$FloatBean$DataBean$BasicBean.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/mytest/com/dzx/BaikeBean$ContentMyBean$BaikeDefaultLemmaBean$CatalogContentStructuredBean$FloatBean$DataBean$ToppicsBean.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/mytest/com/dzx/BaikeBean$ContentMyBean$BaikeDefaultLemmaBean$CatalogContentStructuredBean$FloatBean$DataBean.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/mytest/com/dzx/BaikeBean$ContentMyBean$BaikeDefaultLemmaBean$CatalogContentStructuredBean$FloatBean.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/mytest/com/dzx/BaikeBean$ContentMyBean$BaikeDefaultLemmaBean$CatalogContentStructuredBean.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/mytest/com/dzx/BaikeBean$ContentMyBean$BaikeDefaultLemmaBean.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/mytest/com/dzx/BaikeBean$ContentMyBean$BaikeTagsBean.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/mytest/com/dzx/BaikeBean$ContentMyBean.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/mytest/com/dzx/BaikeBean.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/mytest/com/dzx/ButtonRecyclerView.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/mytest/com/dzx/ColorMerge$ColorEntity.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/mytest/com/dzx/ColorMerge.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/mytest/com/dzx/CopyApkToUsbDisk.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/mytest/com/dzx/FinalTest1.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/mytest/com/dzx/FocusExecuteView.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/mytest/com/dzx/FuLiYeTest.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/mytest/com/dzx/ImageTest$1.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/mytest/com/dzx/ImageTest.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/mytest/com/dzx/JavaAssistTest.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/mytest/com/dzx/OpenUrl_Proxy$Entity.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/mytest/com/dzx/OpenUrl_Proxy.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/mytest/com/dzx/SubBaikeBean.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/mytest/com/dzx/SuperTest1.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/mytest/com/dzx/SuperTest2.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/mytest/com/dzx/SuperTest3.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/mytest/com/dzx/Test1.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/mytest/com/dzx/Test2$1.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/mytest/com/dzx/Test2$2.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/mytest/com/dzx/Test2.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/mytest/com/dzx/Test3$TestMethod.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/mytest/com/dzx/Test3.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/mytest/com/dzx/Test5$1.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/mytest/com/dzx/Test5$2.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/mytest/com/dzx/Test5$3.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/mytest/com/dzx/Test5$ResourceEntity.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/mytest/com/dzx/Test5.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/mytest/com/dzx/Test6$1.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/mytest/com/dzx/Test6$2.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/mytest/com/dzx/Test6$ConsumeEntity.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/mytest/com/dzx/Test6$SortLogEntity.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/mytest/com/dzx/Test6.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/mytest/com/dzx/Test7.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/mytest/com/dzx/Test8$1.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/mytest/com/dzx/Test8.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/mytest/com/dzx/Test9$1.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/mytest/com/dzx/Test9$2.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/mytest/com/dzx/Test9$3.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/mytest/com/dzx/Test9$4.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/mytest/com/dzx/Test9$5.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/mytest/com/dzx/Test9$6.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/mytest/com/dzx/Test9$7.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/mytest/com/dzx/Test9$TaoBaoBean.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/mytest/com/dzx/Test9.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/mytest/com/dzx/Tools$1.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/mytest/com/dzx/Tools.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/mytest/com/dzx/adb/AdbConnection.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/mytest/com/dzx/adb/AdbMessage$1.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/mytest/com/dzx/adb/AdbMessage$Command.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/mytest/com/dzx/adb/AdbMessage$MalformedMessageException.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/mytest/com/dzx/adb/AdbMessage$MessageHeader.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/mytest/com/dzx/adb/AdbMessage.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/mytest/com/dzx/adb/SimpleAdbClient.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/mytest/com/dzx/adb/TestSimpleAdbClient.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/mytest/com/dzx/analyze/ParseArBaikeMonkeyLog.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/mytest/com/dzx/autocheck/unicode/Big5Statistics.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/mytest/com/dzx/autocheck/unicode/EUCJPStatistics.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/mytest/com/dzx/autocheck/unicode/EUCKRStatistics.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/mytest/com/dzx/autocheck/unicode/EUCTWStatistics.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/mytest/com/dzx/autocheck/unicode/GB2312Statistics.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/mytest/com/dzx/autocheck/unicode/HtmlCharsetDetector$1.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/mytest/com/dzx/autocheck/unicode/HtmlCharsetDetector.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/mytest/com/dzx/autocheck/unicode/nsBIG5Verifier.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/mytest/com/dzx/autocheck/unicode/nsCP1252Verifier.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/mytest/com/dzx/autocheck/unicode/nsDetector.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/mytest/com/dzx/autocheck/unicode/nsEUCJPVerifier.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/mytest/com/dzx/autocheck/unicode/nsEUCKRVerifier.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/mytest/com/dzx/autocheck/unicode/nsEUCSampler.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/mytest/com/dzx/autocheck/unicode/nsEUCStatistics.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/mytest/com/dzx/autocheck/unicode/nsEUCTWVerifier.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/mytest/com/dzx/autocheck/unicode/nsGB18030Verifier.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/mytest/com/dzx/autocheck/unicode/nsGB2312Verifier.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/mytest/com/dzx/autocheck/unicode/nsHZVerifier.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/mytest/com/dzx/autocheck/unicode/nsICharsetDetectionObserver.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/mytest/com/dzx/autocheck/unicode/nsICharsetDetector.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/mytest/com/dzx/autocheck/unicode/nsISO2022CNVerifier.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/mytest/com/dzx/autocheck/unicode/nsISO2022JPVerifier.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/mytest/com/dzx/autocheck/unicode/nsISO2022KRVerifier.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/mytest/com/dzx/autocheck/unicode/nsPSMDetector.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/mytest/com/dzx/autocheck/unicode/nsSJISVerifier.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/mytest/com/dzx/autocheck/unicode/nsUCS2BEVerifier.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/mytest/com/dzx/autocheck/unicode/nsUCS2LEVerifier.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/mytest/com/dzx/autocheck/unicode/nsUTF8Verifier.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/mytest/com/dzx/autocheck/unicode/nsVerifier.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/mytest/com/dzx/bean/AlwaysListTypeAdapterFactory$1.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/mytest/com/dzx/bean/AlwaysListTypeAdapterFactory$AlwaysListTypeAdapter.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/mytest/com/dzx/bean/AlwaysListTypeAdapterFactory.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/mytest/com/dzx/bean/AnalyzeTimeConsumeBean.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/mytest/com/dzx/bean/BaiKeEntity$BaikeDefaultLemmaBean.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/mytest/com/dzx/bean/BaiKeEntity$BaikeTagsBean.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/mytest/com/dzx/bean/BaiKeEntity$CardBean.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/mytest/com/dzx/bean/BaiKeEntity$CatalogContentStructuredBean$1.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/mytest/com/dzx/bean/BaiKeEntity$CatalogContentStructuredBean.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/mytest/com/dzx/bean/BaiKeEntity$CellListBean.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/mytest/com/dzx/bean/BaiKeEntity$ConcertRecordCellListBean.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/mytest/com/dzx/bean/BaiKeEntity$ConcertRecordDataBean.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/mytest/com/dzx/bean/BaiKeEntity$ConcertRecordNameBean.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/mytest/com/dzx/bean/BaiKeEntity$ConcertRecordRowListBean.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/mytest/com/dzx/bean/BaiKeEntity$ConcertRecordTimeBean.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/mytest/com/dzx/bean/BaiKeEntity$ContentBean.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/mytest/com/dzx/bean/BaiKeEntity$JumingBeanX.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/mytest/com/dzx/bean/BaiKeEntity$ModuleDataBean.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/mytest/com/dzx/bean/BaiKeEntity$ModuleMusicAlbumBean.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/mytest/com/dzx/bean/BaiKeEntity$ModuleMusicAlbumsBean.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/mytest/com/dzx/bean/BaiKeEntity$ModuleMusicAlbumsTitleBean.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/mytest/com/dzx/bean/BaiKeEntity$ModuleMusicBean.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/mytest/com/dzx/bean/BaiKeEntity$ModuleMusicContentBean.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/mytest/com/dzx/bean/BaiKeEntity$ModuleMusicSinglesongsBean.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/mytest/com/dzx/bean/BaiKeEntity$ModuleMusicSongBean.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/mytest/com/dzx/bean/BaiKeEntity$ModuleMusicTitleBean.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/mytest/com/dzx/bean/BaiKeEntity$RowListBean.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/mytest/com/dzx/bean/BaiKeEntity$TableBean$1.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/mytest/com/dzx/bean/BaiKeEntity$TableBean$2.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/mytest/com/dzx/bean/BaiKeEntity$TableBean.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/mytest/com/dzx/bean/BaiKeEntity$TableContentBean.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/mytest/com/dzx/bean/BaiKeEntity$VarietyShowCellListBean.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/mytest/com/dzx/bean/BaiKeEntity$VarietyShowDataBean.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/mytest/com/dzx/bean/BaiKeEntity$VarietyShowNameBean.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/mytest/com/dzx/bean/BaiKeEntity$VarietyShowRowListBean.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/mytest/com/dzx/bean/BaiKeEntity$VarietyShowTimeBean.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/mytest/com/dzx/bean/BaiKeEntity.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/mytest/com/dzx/bean/BaiKeEntityJson$BaikeDefaultLemmaBean.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/mytest/com/dzx/bean/BaiKeEntityJson$BaikeTagsBean.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/mytest/com/dzx/bean/BaiKeEntityJson$CardBean.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/mytest/com/dzx/bean/BaiKeEntityJson$CatalogContentStructuredBean$1.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/mytest/com/dzx/bean/BaiKeEntityJson$CatalogContentStructuredBean.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/mytest/com/dzx/bean/BaiKeEntityJson$CellListBean.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/mytest/com/dzx/bean/BaiKeEntityJson$ConcertRecordCellListBean.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/mytest/com/dzx/bean/BaiKeEntityJson$ConcertRecordDataBean.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/mytest/com/dzx/bean/BaiKeEntityJson$ConcertRecordNameBean.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/mytest/com/dzx/bean/BaiKeEntityJson$ConcertRecordRowListBean.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/mytest/com/dzx/bean/BaiKeEntityJson$ConcertRecordTimeBean.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/mytest/com/dzx/bean/BaiKeEntityJson$ContentBean.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/mytest/com/dzx/bean/BaiKeEntityJson$JumingBeanX.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/mytest/com/dzx/bean/BaiKeEntityJson$ModuleDataBean.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/mytest/com/dzx/bean/BaiKeEntityJson$ModuleMusicAlbumBean.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/mytest/com/dzx/bean/BaiKeEntityJson$ModuleMusicAlbumsBean.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/mytest/com/dzx/bean/BaiKeEntityJson$ModuleMusicAlbumsTitleBean.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/mytest/com/dzx/bean/BaiKeEntityJson$ModuleMusicBean.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/mytest/com/dzx/bean/BaiKeEntityJson$ModuleMusicContentBean.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/mytest/com/dzx/bean/BaiKeEntityJson$ModuleMusicSinglesongsBean.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/mytest/com/dzx/bean/BaiKeEntityJson$ModuleMusicSongBean.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/mytest/com/dzx/bean/BaiKeEntityJson$ModuleMusicTitleBean.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/mytest/com/dzx/bean/BaiKeEntityJson$MusicAlbumCellListBean.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/mytest/com/dzx/bean/BaiKeEntityJson$MusicAlbumDataBean.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/mytest/com/dzx/bean/BaiKeEntityJson$MusicAlbumDateOfPublicationBean.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/mytest/com/dzx/bean/BaiKeEntityJson$MusicAlbumNameBean.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/mytest/com/dzx/bean/BaiKeEntityJson$MusicAlbumRowListBean.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/mytest/com/dzx/bean/BaiKeEntityJson$RowListBean.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/mytest/com/dzx/bean/BaiKeEntityJson$TableBean.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/mytest/com/dzx/bean/BaiKeEntityJson$TableContentBean.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/mytest/com/dzx/bean/BaiKeEntityJson$VarietyShowCellListBean.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/mytest/com/dzx/bean/BaiKeEntityJson$VarietyShowDataBean.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/mytest/com/dzx/bean/BaiKeEntityJson$VarietyShowNameBean.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/mytest/com/dzx/bean/BaiKeEntityJson$VarietyShowRowListBean.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/mytest/com/dzx/bean/BaiKeEntityJson$VarietyShowTimeBean.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/mytest/com/dzx/bean/BaiKeEntityJson.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/mytest/com/dzx/bean/BaiKeMapEntity$ContentBean.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/mytest/com/dzx/bean/BaiKeMapEntity.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/mytest/com/dzx/bean/EnumType.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/mytest/com/dzx/bean/PositionBean.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/mytest/com/dzx/bean/VcaDataBean$VcaBaiKeBean.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/mytest/com/dzx/bean/VcaDataBean.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/mytest/com/dzx/blurred/ArgbColorEntity.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/mytest/com/dzx/blurred/AwtDrawSample.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/mytest/com/dzx/blurred/ColorAssistEntity.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/mytest/com/dzx/blurred/ColorFilterUtil$1.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/mytest/com/dzx/blurred/ColorFilterUtil.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/mytest/com/dzx/blurred/ColorTestEntity.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/mytest/com/dzx/blurred/GaussianBlur.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/mytest/com/dzx/data/ImageRecsysEntity$DataEntity.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/mytest/com/dzx/data/ImageRecsysEntity$TopListEntity.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/mytest/com/dzx/data/ImageRecsysEntity$TopsEntity.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/mytest/com/dzx/data/ImageRecsysEntity$VideosEntity.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/mytest/com/dzx/data/ImageRecsysEntity.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/mytest/com/dzx/data/PersonEntity.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/mytest/com/dzx/data/RelativeVideoEntity$PersonVideo.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/mytest/com/dzx/data/RelativeVideoEntity$Video.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/mytest/com/dzx/data/RelativeVideoEntity.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/mytest/com/dzx/data/Temp.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/mytest/com/dzx/data/Test10$1.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/mytest/com/dzx/data/Test10$2.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/mytest/com/dzx/data/Test10$3.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/mytest/com/dzx/data/Test10$4.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/mytest/com/dzx/data/Test10.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/mytest/com/dzx/mysource/恋听网唐砖请求cookie.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/mytest/com/dzx/mysource/模拟.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/mytest/com/dzx/objectexplorer/Chain$1.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/mytest/com/dzx/objectexplorer/Chain$ArrayIndexChain.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/mytest/com/dzx/objectexplorer/Chain$FieldChain.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/mytest/com/dzx/objectexplorer/Chain.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/mytest/com/dzx/objectexplorer/InstrumentationGrabber.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/mytest/com/dzx/objectexplorer/MemoryMeasurer$DummyEnum.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/mytest/com/dzx/objectexplorer/MemoryMeasurer$MemoryMeasurerVisitor.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/mytest/com/dzx/objectexplorer/MemoryMeasurer.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/mytest/com/dzx/objectexplorer/ObjectExplorer$1.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/mytest/com/dzx/objectexplorer/ObjectExplorer$2.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/mytest/com/dzx/objectexplorer/ObjectExplorer$3.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/mytest/com/dzx/objectexplorer/ObjectExplorer$4.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/mytest/com/dzx/objectexplorer/ObjectExplorer$AtMostOncePredicate.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/mytest/com/dzx/objectexplorer/ObjectExplorer$Feature.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/mytest/com/dzx/objectexplorer/ObjectExplorer.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/mytest/com/dzx/objectexplorer/ObjectGraphMeasurer$Footprint.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/mytest/com/dzx/objectexplorer/ObjectGraphMeasurer$ObjectGraphVisitor.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/mytest/com/dzx/objectexplorer/ObjectGraphMeasurer.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/mytest/com/dzx/objectexplorer/ObjectSerializer$ObjectGraphVisitor.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/mytest/com/dzx/objectexplorer/ObjectSerializer.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/mytest/com/dzx/objectexplorer/ObjectVisitor$Traversal.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/mytest/com/dzx/objectexplorer/ObjectVisitor.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/mytest/com/dzx/util/AudioConvertUtils.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/mytest/com/dzx/util/BinaryOperationUtil.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/mytest/com/dzx/util/FilterLogUtil$1.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/mytest/com/dzx/util/FilterLogUtil$PointLong.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/mytest/com/dzx/util/FilterLogUtil.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/mytest/com/dzx/util/HttpClientUtil$1.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/mytest/com/dzx/util/HttpClientUtil$2.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/mytest/com/dzx/util/HttpClientUtil.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/mytest/com/dzx/util/LUtils.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/mytest/com/dzx/util/MThreadPoolExecutor.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/mytest/com/dzx/util/ObjectSizeFetcher.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/mytest/com/dzx/util/ParseMediaSourceUtil$1.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/mytest/com/dzx/util/ParseMediaSourceUtil$2.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/mytest/com/dzx/util/ParseMediaSourceUtil$3.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/mytest/com/dzx/util/ParseMediaSourceUtil$ResourceEntity.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/mytest/com/dzx/util/ParseMediaSourceUtil.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/mytest/com/dzx/util/StringUtil.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/mytest/com/dzx/util/ThreadPoolUtil$1.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/mytest/com/dzx/util/ThreadPoolUtil$ExecutionHandler.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/mytest/com/dzx/util/ThreadPoolUtil$SingleHolder.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/mytest/com/dzx/util/ThreadPoolUtil.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/mytest/com/dzx/util/UZipFile.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/mytest/com/dzx/util/UrlRequestUtil.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/mytest/luyao/parser/Main.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/mytest/luyao/parser/arsc/ResParser.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/mytest/luyao/parser/arsc/bean/ResArsc.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/mytest/luyao/parser/arsc/bean/ResChunkHeader.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/mytest/luyao/parser/arsc/bean/ResSpanStyle.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/mytest/luyao/parser/arsc/bean/ResStringPoolHeader.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/mytest/luyao/parser/arsc/bean/ResTableConfig.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/mytest/luyao/parser/arsc/bean/ResTableEntry.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/mytest/luyao/parser/arsc/bean/ResTableHeader.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/mytest/luyao/parser/arsc/bean/ResTableMap.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/mytest/luyao/parser/arsc/bean/ResTableMapEntry.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/mytest/luyao/parser/arsc/bean/ResTablePackageHeader.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/mytest/luyao/parser/arsc/bean/ResTableRefParent.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/mytest/luyao/parser/arsc/bean/ResTableType.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/mytest/luyao/parser/arsc/bean/ResTableTypeSpec.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/mytest/luyao/parser/arsc/bean/ResType.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/mytest/luyao/parser/arsc/bean/ResValue.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/mytest/luyao/parser/classes/ClassParser.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/mytest/luyao/parser/classes/bean/Attribute.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/mytest/luyao/parser/classes/bean/Clazz.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/mytest/luyao/parser/classes/bean/Constant.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/mytest/luyao/parser/classes/bean/ConstantClass.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/mytest/luyao/parser/classes/bean/ConstantFieldRef.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/mytest/luyao/parser/classes/bean/ConstantMethodref.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/mytest/luyao/parser/classes/bean/ConstantNameAndType.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/mytest/luyao/parser/classes/bean/ConstantString.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/mytest/luyao/parser/classes/bean/ConstantTag.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/mytest/luyao/parser/classes/bean/ConstantUtf8.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/mytest/luyao/parser/classes/bean/Field.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/mytest/luyao/parser/classes/bean/Method.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/mytest/luyao/parser/dex/DexParser.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/mytest/luyao/parser/dex/bean/Dex.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/mytest/luyao/parser/dex/bean/DexFieldId.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/mytest/luyao/parser/dex/bean/DexHeader.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/mytest/luyao/parser/dex/bean/DexMethodId.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/mytest/luyao/parser/dex/bean/DexProtoId.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/mytest/luyao/parser/dex/bean/DexStringId.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/mytest/luyao/parser/dex/bean/DexTypeId.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/mytest/luyao/parser/dex/bean/clazz/DexClass.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/mytest/luyao/parser/dex/bean/clazz/DexClassData.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/mytest/luyao/parser/dex/bean/clazz/DexCode.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/mytest/luyao/parser/dex/bean/clazz/EncodedField.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/mytest/luyao/parser/dex/bean/clazz/EncodedMethod.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/mytest/luyao/parser/utils/BytesReader.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/mytest/luyao/parser/utils/Reader.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/mytest/luyao/parser/utils/TransformUtils.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/mytest/luyao/parser/utils/Utils.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/mytest/luyao/parser/xml/XmlParser.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/mytest/luyao/parser/xml/bean/Attribute.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/mytest/luyao/parser/xml/bean/NameSpace.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/mytest/luyao/parser/xml/bean/Xml.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/mytest/luyao/parser/xml/bean/chunk/Chunk.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/mytest/luyao/parser/xml/bean/chunk/EndNameSpaceChunk.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/mytest/luyao/parser/xml/bean/chunk/EndTagChunk.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/mytest/luyao/parser/xml/bean/chunk/StartNameSpaceChunk.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/mytest/luyao/parser/xml/bean/chunk/StartTagChunk.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/packagetest/packagetest.iml" beforeDir="false" afterPath="$PROJECT_DIR$/packagetest/packagetest.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/voicehandle/src/com/dzx/SSRC.java" beforeDir="false" afterPath="$PROJECT_DIR$/voicehandle/src/com/dzx/SSRC.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -56,6 +480,13 @@
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
     <option name="UPDATE_TYPE" value="MERGE" />
   </component>
+  <component name="MavenImportPreferences">
+    <option name="importingSettings">
+      <MavenImportingSettings>
+        <option name="vmOptionsForImporter" value="-Xmx768m" />
+      </MavenImportingSettings>
+    </option>
+  </component>
   <component name="ProjectId" id="1aWXB0C0wgxotyHDtEno3fW0qbe" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
@@ -70,12 +501,12 @@
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/mytest/src/com/dzx/blurred" />
-    <property name="project.structure.last.edited" value="Artifacts" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/mylibs/commons-io-2.8.0.jar!/" />
+    <property name="project.structure.last.edited" value="Libraries" />
     <property name="project.structure.proportion" value="0.15234375" />
     <property name="project.structure.side.proportion" value="0.2" />
     <property name="run.code.analysis.last.selected.profile" value="pProject Default" />
-    <property name="settings.editor.selected.configurable" value="settings.github" />
+    <property name="settings.editor.selected.configurable" value="reference.settings.project.maven.importing" />
   </component>
   <component name="RecentsManager">
     <key name="CopyClassDialog.RECENTS_KEY">
@@ -85,29 +516,16 @@
       <recent name="com.dzx" />
     </key>
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="E:\work\app\mytoolsjavaproject\javaproject\mytest\src\com\dzx\util" />
       <recent name="E:\work\app\mytoolsjavaproject\javaproject\mytest\src\com\dzx\blurred" />
       <recent name="E:\work\app\mytoolsjavaproject\javaproject\mytest\src\com\dzx\adb" />
       <recent name="E:\work\app\mytoolsjavaproject\javaproject\mytest\src\com\dzx\data" />
       <recent name="E:\work\app\mytoolsjavaproject\javaproject\mytest\src\com\dzx\bean" />
-      <recent name="E:\work\app\mytoolsjavaproject\javaproject\mylibs" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.GaussianBlur">
+  <component name="RunManager" selected="Application.OutTxt">
     <configuration name="AwtDrawSample" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="com.dzx.blurred.AwtDrawSample" />
-      <module name="mytest" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="com.dzx.blurred.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="ColorMerge" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="com.dzx.ColorMerge" />
       <module name="mytest" />
       <extension name="coverage">
         <pattern>
@@ -132,12 +550,12 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="ImageTest" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="com.dzx.ImageTest" />
-      <module name="mytest" />
+    <configuration name="HomePage" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="com.dzx.HomePage" />
+      <module name="LogParseUtil" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="com.dzx.blurred.*" />
+          <option name="PATTERN" value="com.dzx.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
@@ -145,12 +563,25 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="TestSimpleAdbClient" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="com.dzx.adb.TestSimpleAdbClient" />
+    <configuration name="OutTxt" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="com.dzx.util.OutTxt" />
+      <module name="LogParseUtil" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.dzx.util.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="Test9" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="com.dzx.Test9" />
       <module name="mytest" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="com.dzx.adb.*" />
+          <option name="PATTERN" value="com.dzx.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
@@ -159,19 +590,19 @@
       </method>
     </configuration>
     <list>
-      <item itemvalue="Application.TestSimpleAdbClient" />
-      <item itemvalue="Application.ImageTest" />
-      <item itemvalue="Application.ColorMerge" />
       <item itemvalue="Application.AwtDrawSample" />
       <item itemvalue="Application.GaussianBlur" />
+      <item itemvalue="Application.Test9" />
+      <item itemvalue="Application.HomePage" />
+      <item itemvalue="Application.OutTxt" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Application.OutTxt" />
+        <item itemvalue="Application.HomePage" />
+        <item itemvalue="Application.Test9" />
         <item itemvalue="Application.GaussianBlur" />
         <item itemvalue="Application.AwtDrawSample" />
-        <item itemvalue="Application.ImageTest" />
-        <item itemvalue="Application.ColorMerge" />
-        <item itemvalue="Application.TestSimpleAdbClient" />
       </list>
     </recent_temporary>
   </component>
@@ -522,7 +953,12 @@
       <workItem from="1658193169958" duration="3254000" />
       <workItem from="1658286265085" duration="19645000" />
       <workItem from="1658380060451" duration="9428000" />
-      <workItem from="1658467601621" duration="11257000" />
+      <workItem from="1658467601621" duration="14069000" />
+      <workItem from="1658714500306" duration="548000" />
+      <workItem from="1658715126135" duration="405000" />
+      <workItem from="1658715677234" duration="9815000" />
+      <workItem from="1658801639380" duration="2231000" />
+      <workItem from="1658915479557" duration="1286000" />
     </task>
     <task id="LOCAL-00001" summary="202004141910  调整安装apk路径">
       <created>1586862711789</created>
@@ -804,7 +1240,14 @@
       <option name="project" value="LOCAL" />
       <updated>1657704976002</updated>
     </task>
-    <option name="localTasksCounter" value="41" />
+    <task id="LOCAL-00041" summary="20220722">
+      <created>1658486184433</created>
+      <option name="number" value="00041" />
+      <option name="presentableId" value="LOCAL-00041" />
+      <option name="project" value="LOCAL" />
+      <updated>1658486184433</updated>
+    </task>
+    <option name="localTasksCounter" value="42" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -824,7 +1267,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="202005061928   添加显示栈顶activity命令按钮,输出流改变编码显示中文" />
     <MESSAGE value="202005191921  添加多条adb命令" />
     <MESSAGE value="202006022001  合并代码" />
     <MESSAGE value="202006091934  添加更改apk名称" />
@@ -849,9 +1291,14 @@
     <MESSAGE value="20220708" />
     <MESSAGE value="20220711" />
     <MESSAGE value="20220713" />
-    <option name="LAST_COMMIT_MESSAGE" value="20220713" />
+    <MESSAGE value="20220722" />
+    <option name="LAST_COMMIT_MESSAGE" value="20220722" />
   </component>
   <component name="WindowStateProjectService">
+    <state x="352" y="10" key="#Project_Structure" timestamp="1658802596567">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="352" y="10" key="#Project_Structure/0.0.1920.1040@0.0.1920.1040" timestamp="1658802596567" />
     <state x="677" y="94" key="#com.intellij.ide.util.MemberChooser" timestamp="1658480462288">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
@@ -860,38 +1307,42 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="595" y="211" key="#com.intellij.ide.util.TreeClassChooserDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1657528833746" />
-    <state x="671" y="159" key="#com.intellij.util.ui.classpath.ChooseLibrariesDialog" timestamp="1657529051104">
+    <state x="565" y="147" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog" timestamp="1658715254309">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="671" y="159" key="#com.intellij.util.ui.classpath.ChooseLibrariesDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1657529051104" />
-    <state x="312" y="0" key="CommitChangelistDialog2" timestamp="1658486017796">
+    <state x="565" y="147" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1658715254309" />
+    <state x="671" y="159" key="#com.intellij.util.ui.classpath.ChooseLibrariesDialog" timestamp="1658728111662">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="312" y="0" key="CommitChangelistDialog2/0.0.1920.1040@0.0.1920.1040" timestamp="1658486017796" />
-    <state x="-15" y="57" width="1666" height="856" key="DiffContextDialog" timestamp="1657707927867">
+    <state x="671" y="159" key="#com.intellij.util.ui.classpath.ChooseLibrariesDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1658728111662" />
+    <state x="0" y="0" key="CommitChangelistDialog2" timestamp="1658486170681">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="-15" y="57" width="1666" height="856" key="DiffContextDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1657707927867" />
-    <state x="654" y="235" key="FileChooserDialogImpl" timestamp="1657765914367">
+    <state x="0" y="0" key="CommitChangelistDialog2/0.0.1920.1040@0.0.1920.1040" timestamp="1658486170681" />
+    <state x="-15" y="57" width="1666" height="856" key="DiffContextDialog" timestamp="1658731598260">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="654" y="235" key="FileChooserDialogImpl/0.0.1920.1040@0.0.1920.1040" timestamp="1657765914367" />
-    <state width="1855" height="300" key="GridCell.Tab.0.bottom" timestamp="1658485957046">
+    <state x="-15" y="57" width="1666" height="856" key="DiffContextDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1658731598260" />
+    <state x="654" y="235" key="FileChooserDialogImpl" timestamp="1658802558874">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1855" height="300" key="GridCell.Tab.0.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1658485957046" />
-    <state width="1855" height="300" key="GridCell.Tab.0.center" timestamp="1658485957046">
+    <state x="654" y="235" key="FileChooserDialogImpl/0.0.1920.1040@0.0.1920.1040" timestamp="1658802558874" />
+    <state width="1855" height="552" key="GridCell.Tab.0.bottom" timestamp="1658835280667">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1855" height="300" key="GridCell.Tab.0.center/0.0.1920.1040@0.0.1920.1040" timestamp="1658485957046" />
-    <state width="1855" height="300" key="GridCell.Tab.0.left" timestamp="1658485957046">
+    <state width="1855" height="552" key="GridCell.Tab.0.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1658835280667" />
+    <state width="1855" height="552" key="GridCell.Tab.0.center" timestamp="1658835280667">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1855" height="300" key="GridCell.Tab.0.left/0.0.1920.1040@0.0.1920.1040" timestamp="1658485957046" />
-    <state width="1855" height="300" key="GridCell.Tab.0.right" timestamp="1658485957046">
+    <state width="1855" height="552" key="GridCell.Tab.0.center/0.0.1920.1040@0.0.1920.1040" timestamp="1658835280667" />
+    <state width="1855" height="552" key="GridCell.Tab.0.left" timestamp="1658835280667">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1855" height="300" key="GridCell.Tab.0.right/0.0.1920.1040@0.0.1920.1040" timestamp="1658485957046" />
+    <state width="1855" height="552" key="GridCell.Tab.0.left/0.0.1920.1040@0.0.1920.1040" timestamp="1658835280667" />
+    <state width="1855" height="552" key="GridCell.Tab.0.right" timestamp="1658835280667">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1855" height="552" key="GridCell.Tab.0.right/0.0.1920.1040@0.0.1920.1040" timestamp="1658835280667" />
     <state width="1855" height="286" key="GridCell.Tab.1.bottom" timestamp="1651045027996">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
@@ -908,41 +1359,41 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state width="1855" height="286" key="GridCell.Tab.1.right/0.0.1920.1040@0.0.1920.1040" timestamp="1651045027996" />
-    <state x="213" y="0" width="1707" height="1040" key="SettingsEditor" timestamp="1657529304999">
+    <state x="213" y="0" width="1707" height="1040" key="SettingsEditor" timestamp="1658802561010">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="213" y="0" width="1707" height="1040" key="SettingsEditor/0.0.1920.1040@0.0.1920.1040" timestamp="1657529304999" />
-    <state width="762" height="596" key="SwitcherDM" timestamp="1658300807843">
+    <state x="213" y="0" width="1707" height="1040" key="SettingsEditor/0.0.1920.1040@0.0.1920.1040" timestamp="1658802561010" />
+    <state width="762" height="596" key="SwitcherDM" timestamp="1658714758650">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="762" height="596" key="SwitcherDM/0.0.1920.1040@0.0.1920.1040" timestamp="1658300807843" />
-    <state x="352" y="122" key="Vcs.Push.Dialog.v2" timestamp="1657710101463">
+    <state width="762" height="596" key="SwitcherDM/0.0.1920.1040@0.0.1920.1040" timestamp="1658714758650" />
+    <state x="352" y="122" key="Vcs.Push.Dialog.v2" timestamp="1658488413417">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="352" y="122" key="Vcs.Push.Dialog.v2/0.0.1920.1040@0.0.1920.1040" timestamp="1657710101463" />
+    <state x="352" y="122" key="Vcs.Push.Dialog.v2/0.0.1920.1040@0.0.1920.1040" timestamp="1658488413417" />
     <state x="821" y="323" key="classpath-attribute-editor" timestamp="1657527959999">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="821" y="323" key="classpath-attribute-editor/0.0.1920.1040@0.0.1920.1040" timestamp="1657527959999" />
-    <state x="489" y="259" key="com.intellij.ide.util.TipDialog" timestamp="1658467762494">
+    <state x="489" y="259" key="com.intellij.ide.util.TipDialog" timestamp="1658915589439">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="489" y="259" key="com.intellij.ide.util.TipDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1658467762494" />
-    <state x="376" y="48" width="1167" height="944" key="find.popup" timestamp="1658396593639">
+    <state x="489" y="259" key="com.intellij.ide.util.TipDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1658915589439" />
+    <state x="376" y="48" width="1167" height="944" key="find.popup" timestamp="1658915805721">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="376" y="48" width="1167" height="944" key="find.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1658396593639" />
+    <state x="376" y="48" width="1167" height="944" key="find.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1658915805721" />
     <state x="458" y="0" key="new project wizard" timestamp="1657188283802">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="458" y="0" key="new project wizard/0.0.1920.1040@0.0.1920.1040" timestamp="1657188283802" />
-    <state x="448" y="232" key="run.anything.popup" timestamp="1658217230183">
+    <state x="448" y="232" key="run.anything.popup" timestamp="1658727804598">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="448" y="232" key="run.anything.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1658217230183" />
-    <state x="453" y="0" width="1009" height="1036" key="search.everywhere.popup" timestamp="1658309629294">
+    <state x="448" y="232" key="run.anything.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1658727804598" />
+    <state x="453" y="0" width="1009" height="1036" key="search.everywhere.popup" timestamp="1658916130523">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="453" y="0" width="1009" height="1036" key="search.everywhere.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1658309629294" />
+    <state x="453" y="0" width="1009" height="1036" key="search.everywhere.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1658916130523" />
   </component>
 </project>

@@ -7,7 +7,7 @@ import java.io.File;
 
 public class FileRenameUtil {
     public static void main(String[] args) {
-        renameApkFile("D:\\work\\app\\BaseDemo\\app\\build\\outputs\\apk\\debug", "huixiangjia_.apk", "存储当前apk序号.txt");
+        renameApkFile("D:\\work\\app\\BaseDemo\\app\\build\\outputs\\apk\\debug", "tusou_.apk", "存储当前apk序号.txt");
     }
 
     /**

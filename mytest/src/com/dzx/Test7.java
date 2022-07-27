@@ -6,7 +6,10 @@ import com.univocity.parsers.tsv.TsvWriterSettings;
 import org.apache.commons.io.FileUtils;
 import org.jaudiotagger.audio.mp3.MP3File;
 import org.jaudiotagger.tag.TagField;
-import org.jaudiotagger.tag.id3.*;
+import org.jaudiotagger.tag.id3.AbstractID3v2Tag;
+import org.jaudiotagger.tag.id3.ID3v1TagField;
+import org.jaudiotagger.tag.id3.ID3v23Frame;
+import org.jaudiotagger.tag.id3.ID3v23Tag;
 import org.jaudiotagger.tag.id3.framebody.FrameBodyAPIC;
 
 import javax.swing.*;

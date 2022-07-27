@@ -3,7 +3,6 @@
     <output-path>$PROJECT_DIR$/out/artifacts/packagetest_jar</output-path>
     <root id="archive" name="packagetest.jar">
       <element id="module-output" name="packagetest" />
-      <element id="library" level="project" name="mylibs" />
       <element id="library" level="application" name="mylibs" />
       <element id="library" level="project" name="KotlinJavaRuntime" />
     </root>
