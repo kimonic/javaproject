@@ -27,30 +27,53 @@ import java.util.regex.Pattern;
 public class Test9 {
 
 
+    private static Thread mThread;
     public static void main(String[] args) {
-//        new Thread() {
-//            @Override
-//            public void run() {
-//                test1();
-//            }
-//        }.start();
-//        new Thread() {
-//            @Override
-//            public void run() {
-//                test2();
-//
-//            }
-//        }.start();
-//        new Thread() {
-//            @Override
-//            public void run() {
-//                test3();
-//            }
-//        }.start();
-//
-//        test4();
+        mThread = new Thread() {
+            @Override
+            public void run() {
+                LUtils.i(getName());
+                Thread thread = new Thread() {
+                    @Override
+                    public void run() {
+                        try {
+                            LUtils.i("子线程执行");
+                            Thread.sleep(5000);
+                            LUtils.i("子线程执行结束");
+                            String s = null;
+                            s.toCharArray();
+                        } catch (InterruptedException e) {
 
-        LUtils.i(URLDecoder.decode("%E5%92%95%E5%8A%9B%E5%92%95%E5%8A%9B%E5%AE%89%E5%85%A8%E6%95%99%E8%82%B2"));
+                        }
+                    }
+                };
+                thread.setUncaughtExceptionHandler(new UncaughtExceptionHandler() {
+                    @Override
+                    public void uncaughtException(Thread t, Throwable e) {
+                        LUtils.i("接收到了抛出异常  ", Thread.currentThread().getName());
+                        mThread.stop();
+                        String s = null;
+                        s.toCharArray();
+                        LUtils.i("异常收集器抛出异常结束 ");
+                    }
+                });
+                LUtils.i("子线程名称  ", thread.getName());
+                thread.start();
+                try {
+                    LUtils.i("主线程执行");
+                    //Thread.sleep(20000);
+                    while (true) {
+
+                    }
+                    //LUtils.i("主线程执行结束");
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        };
+        mThread.start();
+
+//        LUtils.i(URLDecoder.decode("%E5%92%95%E5%8A%9B%E5%92%95%E5%8A%9B%E5%AE%89%E5%85%A8%E6%95%99%E8%82%B2"));
 
     }
 
@@ -84,7 +107,7 @@ public class Test9 {
         LUtils.i("结束执行   3");
     }
 
-    private static void test4(){
+    private static void test4() {
         LUtils.i("未加锁");
     }
 

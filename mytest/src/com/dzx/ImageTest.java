@@ -4,7 +4,7 @@ import com.dzx.bean.PositionBean;
 import com.dzx.util.BinaryOperationUtil;
 import com.dzx.util.LUtils;
 import org.apache.commons.io.FileUtils;
-import org.apache.http.util.TextUtils;
+import org.apache.hc.core5.util.TextUtils;
 import org.apache.poi.hslf.blip.Bitmap;
 
 import javax.imageio.ImageIO;
