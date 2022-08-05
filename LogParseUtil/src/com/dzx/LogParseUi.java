@@ -5,6 +5,7 @@ import com.dzx.constants.Constants;
 import com.dzx.ui.MyButton;
 import com.dzx.util.*;
 import com.google.gson.Gson;
+import org.apache.commons.io.FileUtils;
 
 import javax.swing.*;
 import javax.swing.border.CompoundBorder;
@@ -16,6 +17,8 @@ import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.File;
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -131,7 +134,7 @@ public class LogParseUi extends JFrame implements ActionListener {
      */
     private static String mResultInfo = "<html>";
 
-    private static final String LOG_PARSE_BUTTON_NAME = "开始解析日志";
+    private static final String LOG_PARSE_BUTTON_NAME = "Windows上传Apk";
     private static final String INSTALL_APK_BUTTON_NAME = "下载安装apk到指定位置";
     private static final String UPLOAD_APK_TO_FTP = "上传apk到ftp";
     private static final String EXECUTE_COMMAND = "执行adb命令";
@@ -262,9 +265,7 @@ public class LogParseUi extends JFrame implements ActionListener {
 
         //要解析的log路径的说明标签相关设置
         //--在容器中左上角的坐标x,y,控件的宽度与高度
-        labelAndTextFieldSet(mTargetFilePathLabel, mTargetFilePathTextField, mMarginLeft, mMarginTop
-                , mMarginLeft + mLabelWidth + mLabelAndTextFieldGaps
-                , mMarginTop);
+        labelAndTextFieldSet(mTargetFilePathLabel, mTargetFilePathTextField, mMarginLeft, mMarginTop, mMarginLeft + mLabelWidth + mLabelAndTextFieldGaps, mMarginTop);
 
         //右边的button的开始x坐标
         int rightButtonStartX = mMarginLeft + mLabelWidth + mLabelAndTextFieldGaps * 2 + mTextFieldWidth;
@@ -283,42 +284,30 @@ public class LogParseUi extends JFrame implements ActionListener {
         mSpareButton2.setClickId(Constants.BUTTON_CLICK_ID_TOP_ACTIVITY);
 
         //过滤条件相关设置
-        labelAndTextFieldSet(mScreeningConditionsLabel, mScreeningConditionsTextField, mMarginLeft, mMarginTop + mLabelHeight + mLineGaps
-                , mMarginLeft + mLabelWidth + mLabelAndTextFieldGaps
-                , mMarginTop + mLineGaps + mTextFieldHeight);
+        labelAndTextFieldSet(mScreeningConditionsLabel, mScreeningConditionsTextField, mMarginLeft, mMarginTop + mLabelHeight + mLineGaps, mMarginLeft + mLabelWidth + mLabelAndTextFieldGaps, mMarginTop + mLineGaps + mTextFieldHeight);
 
 
         //筛选后的文件输出目录相关设置
 
-        labelAndTextFieldSet(mOutFilepathLabel, mOutFilepathTextField, mMarginLeft, mMarginTop + (mLabelHeight + mLineGaps) * mOutLogTextFieldPosition
-                , mMarginLeft + mLabelWidth + mLabelAndTextFieldGaps
-                , mMarginTop + (mLineGaps + mTextFieldHeight) * mOutLogTextFieldPosition);
+        labelAndTextFieldSet(mOutFilepathLabel, mOutFilepathTextField, mMarginLeft, mMarginTop + (mLabelHeight + mLineGaps) * mOutLogTextFieldPosition, mMarginLeft + mLabelWidth + mLabelAndTextFieldGaps, mMarginTop + (mLineGaps + mTextFieldHeight) * mOutLogTextFieldPosition);
         mOutFilepathTextField.setText("C:\\Users\\20313\\Desktop\\筛选结果.txt");
 
 
         //上传apk到ftp相关设置
-        labelAndTextFieldSet(mUploadApkToFtpLabel, mUploadApkToFtpTextField, mMarginLeft, mMarginTop + (mLabelHeight + mLineGaps) * mUploadApkToFtpTextFieldPosition
-                , mMarginLeft + mLabelWidth + mLabelAndTextFieldGaps
-                , mMarginTop + (mLineGaps + mTextFieldHeight) * mUploadApkToFtpTextFieldPosition);
+        labelAndTextFieldSet(mUploadApkToFtpLabel, mUploadApkToFtpTextField, mMarginLeft, mMarginTop + (mLabelHeight + mLineGaps) * mUploadApkToFtpTextFieldPosition, mMarginLeft + mLabelWidth + mLabelAndTextFieldGaps, mMarginTop + (mLineGaps + mTextFieldHeight) * mUploadApkToFtpTextFieldPosition);
         mUploadApkToFtpTextField.setText("E:\\work\\app\\tusou\\SmartImage\\SmartImage\\app\\build\\outputs\\apk\\FULL\\debug#tusou_.apk#存储当前apk序号.txt");
 
         //要下载的apk名称
-        labelAndTextFieldSet(mDownloadApkFromFtpLabel, mDownloadApkFromFtpTextField, mMarginLeft, mMarginTop + (mLabelHeight + mLineGaps) * mDownloadApkFromFtpPosition
-                , mMarginLeft + mLabelWidth + mLabelAndTextFieldGaps
-                , mMarginTop + (mLineGaps + mTextFieldHeight) * mDownloadApkFromFtpPosition);
+        labelAndTextFieldSet(mDownloadApkFromFtpLabel, mDownloadApkFromFtpTextField, mMarginLeft, mMarginTop + (mLabelHeight + mLineGaps) * mDownloadApkFromFtpPosition, mMarginLeft + mLabelWidth + mLabelAndTextFieldGaps, mMarginTop + (mLineGaps + mTextFieldHeight) * mDownloadApkFromFtpPosition);
         mDownloadApkFromFtpTextField.setText("tusou_");
 
 
         //执行cmd命令
-        buttonAndTextFieldSet(mExecuteCommandButton, mExecuteCommandTextField, mMarginLeft, mMarginTop + (mLabelHeight + mLineGaps) * mExecuteCommandPosition
-                , mMarginLeft + mLabelWidth + mLabelAndTextFieldGaps
-                , mMarginTop + (mLineGaps + mTextFieldHeight) * mExecuteCommandPosition);
+        buttonAndTextFieldSet(mExecuteCommandButton, mExecuteCommandTextField, mMarginLeft, mMarginTop + (mLabelHeight + mLineGaps) * mExecuteCommandPosition, mMarginLeft + mLabelWidth + mLabelAndTextFieldGaps, mMarginTop + (mLineGaps + mTextFieldHeight) * mExecuteCommandPosition);
         mExecuteCommandTextField.setText("adb connect " + mTargetIp);
         mExecuteCommandButton.addActionListener(this);
         //设置该命令按钮
-        setButton(mChangeCommandButton, mMarginLeft + mLabelWidth + mLabelAndTextFieldGaps * 2 + mTextFieldWidth
-                , mMarginTop + (mLabelHeight + mLineGaps) * mExecuteCommandPosition
-                , mLabelWidth, mLabelHeight);
+        setButton(mChangeCommandButton, mMarginLeft + mLabelWidth + mLabelAndTextFieldGaps * 2 + mTextFieldWidth, mMarginTop + (mLabelHeight + mLineGaps) * mExecuteCommandPosition, mLabelWidth, mLabelHeight);
 
 
         ftpInfoSet();
@@ -345,31 +334,23 @@ public class LogParseUi extends JFrame implements ActionListener {
 
 
         //执行按钮相关设置
-        mLogParseButton.setBounds(mMarginLeft, mMarginTop + (mLabelHeight + mLineGaps) * mButtonsPosition,
-                mLogParseButtonWidth, mLogParseButtonHeight);
+        mLogParseButton.setBounds(mMarginLeft, mMarginTop + (mLabelHeight + mLineGaps) * mButtonsPosition, mLogParseButtonWidth, mLogParseButtonHeight);
         mContainerPanel.add(mLogParseButton);
         mLogParseButton.addActionListener(this);
 
 
         //安装apk按钮相关设置
-        mInstallApkButton.setBounds(mMarginLeft + mButtonAndButtonGaps + mLogParseButtonWidth,
-                mMarginTop + (mLabelHeight + mLineGaps) * mButtonsPosition,
-                mInstallApkButtonWidth, mInstallApkButtonHeight);
+        mInstallApkButton.setBounds(mMarginLeft + mButtonAndButtonGaps + mLogParseButtonWidth, mMarginTop + (mLabelHeight + mLineGaps) * mButtonsPosition, mInstallApkButtonWidth, mInstallApkButtonHeight);
         mContainerPanel.add(mInstallApkButton);
         mInstallApkButton.addActionListener(this);
 
         //安装apk按钮相关设置
-        mUploadApkToFtpButton.setBounds(mMarginLeft + mButtonAndButtonGaps * 2 + mLogParseButtonWidth + mInstallApkButtonWidth,
-                mMarginTop + (mLabelHeight + mLineGaps) * mButtonsPosition,
-                mUploadApkToFtpButtonWidth, mUploadApkToFtpButtonHeight);
+        mUploadApkToFtpButton.setBounds(mMarginLeft + mButtonAndButtonGaps * 2 + mLogParseButtonWidth + mInstallApkButtonWidth, mMarginTop + (mLabelHeight + mLineGaps) * mButtonsPosition, mUploadApkToFtpButtonWidth, mUploadApkToFtpButtonHeight);
         mContainerPanel.add(mUploadApkToFtpButton);
         mUploadApkToFtpButton.addActionListener(this);
 
         //重命名失败文件
-        mRenameFail.setBounds(mMarginLeft + mButtonAndButtonGaps * 3 + mLogParseButtonWidth + mInstallApkButtonWidth
-                        + mUploadApkToFtpButtonWidth,
-                mMarginTop + (mLabelHeight + mLineGaps) * mButtonsPosition,
-                mRenameFailButtonWidth, mRenameFailButtonHeight);
+        mRenameFail.setBounds(mMarginLeft + mButtonAndButtonGaps * 3 + mLogParseButtonWidth + mInstallApkButtonWidth + mUploadApkToFtpButtonWidth, mMarginTop + (mLabelHeight + mLineGaps) * mButtonsPosition, mRenameFailButtonWidth, mRenameFailButtonHeight);
         mContainerPanel.add(mRenameFail);
         mRenameFail.addActionListener(this);
 
@@ -444,8 +425,7 @@ public class LogParseUi extends JFrame implements ActionListener {
     }
 
 
-    private void labelAndTextFieldSet(JLabel label, JTextField textField, int labelPositionX, int labelPositonY
-            , int textFieldPositionX, int textFieldPositionY) {
+    private void labelAndTextFieldSet(JLabel label, JTextField textField, int labelPositionX, int labelPositonY, int textFieldPositionX, int textFieldPositionY) {
         //设置label
         label.setBounds(labelPositionX, labelPositonY, mLabelWidth, mLabelHeight);
         mContainerPanel.add(label);
@@ -459,8 +439,7 @@ public class LogParseUi extends JFrame implements ActionListener {
     }
 
 
-    private void buttonAndTextFieldSet(JButton label, JTextField textField, int labelPositionX, int labelPositonY
-            , int textFieldPositionX, int textFieldPositionY) {
+    private void buttonAndTextFieldSet(JButton label, JTextField textField, int labelPositionX, int labelPositonY, int textFieldPositionX, int textFieldPositionY) {
         //设置label
         label.setBounds(labelPositionX, labelPositonY, mLabelWidth, mLabelHeight);
         mContainerPanel.add(label);
@@ -552,8 +531,14 @@ public class LogParseUi extends JFrame implements ActionListener {
             //启动消息服务广播
             executeInSub(" shell am startservice -a com.hisense.service.message.MESSAGE  ");
         } else if (LOG_PARSE_BUTTON_NAME.equals(actionCommand)) {
+            ThreadPoolUtil.getInstance().execute(new Runnable() {
+                @Override
+                public void run() {
+                    uploadApkToFtpByWindows();
+                }
+            });
             //解析log
-            executeLogParseButtonClick();
+            //executeLogParseButtonClick();
         } else if (INSTALL_APK_BUTTON_NAME.equals(actionCommand)) {
             //安装apk
             new Thread() {
@@ -589,7 +574,7 @@ public class LogParseUi extends JFrame implements ActionListener {
             //用于云端使用,重命名apk文件
             String target = mUploadApkToFtpTextField.getText();
             String[] result = target.split("#");
-            boolean success = FileRenameUtil.renameApkFile(result[0], result[1], result[2]);
+            String success = FileRenameUtil.renameApkFileAndReturnPath(result[0], result[1], result[2]);
             System.out.println("文件重命名成功  " + success);
             mResultLabel.setText("<html><br>重命名失败文件成功   " + success + "<br></html>");
             //clearLog();
@@ -791,9 +776,7 @@ public class LogParseUi extends JFrame implements ActionListener {
         boolean success = FileRenameUtil.renameApkFile(result[0], result[1], result[2]);
         System.out.println("文件重命名成功  " + success);
         if (success) {
-            FtpUpload ftpUpload = new FtpUpload(mFtpIpTextField.getText(),
-                    TextUtils.getStringInt(mFtpPortTextField.getText()), mFtpNameTextField.getText(),
-                    mFtpPwdTextField.getText());
+            FtpUpload ftpUpload = new FtpUpload(mFtpIpTextField.getText(), TextUtils.getStringInt(mFtpPortTextField.getText()), mFtpNameTextField.getText(), mFtpPwdTextField.getText());
             String content = FileUtil.getFileContent(new File(result[0], result[2]));
             ApkFileSaveNameBean apkFileSaveNameBean = new Gson().fromJson(content, ApkFileSaveNameBean.class);
             File file = new File(apkFileSaveNameBean.getUploadPath());
@@ -806,15 +789,48 @@ public class LogParseUi extends JFrame implements ActionListener {
         mResultLabel.setText(mResultInfo + "</html>");
     }
 
+    private String uploadApkToFtpByWindows() {
+        long startTime = System.currentTimeMillis();
+        mResultInfo = "<html>";
+        mResultLabel.setText(mResultInfo + "开始上传apk<br>正在上传中...</html>");
+        //使用bye退出极慢,使用quit可在上传成功后快速退出
+        String commnad = "open 192.168.0.12 21\n" + "zhangxiaodong1\n" + "zhangxiaodong1A@\n" + "Cd .\\dzx\n" + "binary\n" + "put \"SSSSSS\"\n" + "quit";
+
+        String uploadPath = "";
+        String target = mUploadApkToFtpTextField.getText();
+        String[] result = target.split("#");
+        uploadPath = FileRenameUtil.renameApkFileAndReturnPath(result[0], result[1], result[2]);
+        File upBatFile = new File(result[0], "upbat.txt");
+        String realCommand = commnad.replaceAll("SSSSSS", uploadPath.replaceAll("\\\\", "\\\\\\\\"));
+        LUtils.i("realCommand = ", realCommand);
+        try {
+            FileUtils.write(upBatFile, realCommand, StandardCharsets.UTF_8);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        StringBuilder builder = new StringBuilder();
+        try {
+            //执行命令
+            Process p = Runtime.getRuntime().exec("cmd.exe /c FTP -s:" + upBatFile.getAbsolutePath());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        mResultInfo = mResultInfo + "命令行输出结果" + builder.toString();
+        mResultInfo = mResultInfo + "<br>上传apk到ftp成功!  <br> " + "耗时:" + (System.currentTimeMillis() - startTime) + "<br>上传文件名:" + new File(uploadPath).getName() + "<br>";
+        mResultInfo = mResultInfo + "<br>上传apk到ftp已完成!<br>";
+        mResultLabel.setText(mResultInfo + "</html>");
+        return uploadPath;
+    }
+
     /**
      * 从ftp下载文件并安装
      */
     private void downloadFromFtpAndInstall() {
         String apkName = mDownloadApkFromFtpTextField.getText();
 
-        FtpDownload ftpDownload = new FtpDownload(mFtpIpTextField.getText(),
-                TextUtils.getStringInt(mFtpPortTextField.getText()), mFtpNameTextField.getText(),
-                mFtpPwdTextField.getText());
+        FtpDownload ftpDownload = new FtpDownload(mFtpIpTextField.getText(), TextUtils.getStringInt(mFtpPortTextField.getText()), mFtpNameTextField.getText(), mFtpPwdTextField.getText());
         ftpDownload.setPhaseListener(new PhaseListener() {
             @Override
             public void start(String startInfo) {

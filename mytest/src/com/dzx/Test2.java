@@ -158,7 +158,7 @@ public class Test2 {
 
         LUtils.i(BinaryOperationUtil.outByteArrayToHexString(bytes));
         LUtils.i(BinaryOperationUtil.outByteArrayToHexString(byteBuffer.array()));
-        LUtils.i(byteBuffer.array()==bytes);
+        LUtils.i(byteBuffer.array() == bytes);
 
     }
 
@@ -2985,6 +2985,7 @@ public class Test2 {
     }
 
     public static ExtMXSerializer getResXmlSerializer() {
+        //apktool.jar中的代码
         ExtMXSerializer serial = new ExtMXSerializer();
         serial.setProperty("http://xmlpull.org/v1/doc/properties.html#serializer-indentation", "    ");
         serial.setProperty("http://xmlpull.org/v1/doc/properties.html#serializer-line-separator", System.getProperty("line.separator"));
