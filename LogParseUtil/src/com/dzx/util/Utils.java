@@ -60,7 +60,7 @@ public class Utils {
 
     /**
      * Java执行cmd命令
-     *
+     * <p>
      * |grep -E  并列条件,满足任意一个则满足
      * |grep -v  排除条件,满足则排除,优先级高于-E
      * |grep 条件1 |grep  条件2   同时满足两个条件
@@ -93,7 +93,7 @@ public class Utils {
 
     }
 
-    private static SimpleDateFormat simpleDateFormat=new SimpleDateFormat("HH:mm:ss", Locale.getDefault());
+    private static SimpleDateFormat simpleDateFormat = new SimpleDateFormat("HH:mm:ss", Locale.getDefault());
 
     /**
      * 获取流的结果
@@ -107,7 +107,7 @@ public class Utils {
             while ((line = br.readLine()) != null) {
                 builder.append(line).append("\n");
             }
-            System.out.println("命令行输出结果   "+simpleDateFormat.format(new Date())+"\n" +  builder.toString());
+            System.out.println("命令行输出结果   " + simpleDateFormat.format(new Date()) + "\n" + builder.toString());
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -219,20 +219,28 @@ public class Utils {
 
     /**
      * 杀死指定进程数，即包括process进程的所有子进程
-     * @param process  进程
+     *
+     * @param process 进程
      */
     public static void killProcessTree(Process process) {
         try {
             if (process != null && process.isAlive()) {
-                Field f = process.getClass().getDeclaredField("handle");
-                f.setAccessible(true);
-                long handl = f.getLong(process);
-                Kernel32 kernel = Kernel32.INSTANCE;
-                WinNT.HANDLE handle = new WinNT.HANDLE();
-                handle.setPointer(Pointer.createConstant(handl));
-                int ret = kernel.GetProcessId(handle);
-                Long PID = Long.valueOf(ret);
+                long PID;
+                String jdkVersion = System.getProperty("java.version");
+                LUtils.i("jdkVersion = ", jdkVersion);
+                if (jdkVersion.contains("1.8.")) {
+                    Field f = process.getClass().getDeclaredField("handle");
+                    f.setAccessible(true);
+                    long handl = f.getLong(process);
+                    Kernel32 kernel = Kernel32.INSTANCE;
+                    WinNT.HANDLE handle = new WinNT.HANDLE();
+                    handle.setPointer(Pointer.createConstant(handl));
+                    PID = kernel.GetProcessId(handle);
+                } else {
+                    PID = process.pid();
+                }
                 String cmd = "cmd /c taskkill /PID " + PID + " /F /T ";
+                LUtils.i(cmd);
                 Runtime rt = Runtime.getRuntime();
                 Process killPrcess = rt.exec(cmd);
                 killPrcess.waitFor();

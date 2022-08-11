@@ -1,6 +1,6 @@
 package com.dzx.util;
 
-import com.sun.istack.internal.Nullable;
+import com.sun.istack.Nullable;
 
 public class TextUtils {
     public static boolean isEmpty(@Nullable CharSequence str) {
